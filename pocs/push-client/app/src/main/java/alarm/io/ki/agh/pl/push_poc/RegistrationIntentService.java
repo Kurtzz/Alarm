@@ -12,6 +12,10 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 
 public class RegistrationIntentService extends IntentService {
 
@@ -32,7 +36,6 @@ public class RegistrationIntentService extends IntentService {
                     GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
             Log.i(TAG, "GCM Registration Token: " + token);
 
-            // TODO: Implement this method to send any registration to your app's servers.
             sendRegistrationToServer(token);
 
             subscribeTopics(token);
@@ -46,9 +49,15 @@ public class RegistrationIntentService extends IntentService {
         LocalBroadcastManager.getInstance(this).sendBroadcast(registrationComplete);
     }
 
-    // TODO
-    private void sendRegistrationToServer(String token) {
-        // Add custom implementation, as needed.
+    private void sendRegistrationToServer(String token) throws IOException {
+
+        String serverUrl = "http://jdabrowa.pl/alarm/tokens";
+        String registerUrl = serverUrl + "/" + token;
+        String charset = "UTF-8";
+        URLConnection connection = new URL(registerUrl).openConnection();
+        while(connection.getInputStream().available() != 0) {
+            connection.getInputStream().read();
+        }
     }
 
     private void subscribeTopics(String token) throws IOException {

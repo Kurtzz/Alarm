@@ -1,4 +1,4 @@
-package com.vlizer.remotewakerui;
+package com.example.mateusz.remotewakerui;
 
 import org.junit.Test;
 

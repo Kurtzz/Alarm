@@ -21,6 +21,7 @@ public class RegistrationIntentService extends IntentService {
 
     private static final String TAG = "RegIntentService";
     private static final String[] TOPICS = {"global"};
+    public static final String TOKEN_INFO = "bGVsLCBpIHRhayBzaWUgZ29zY2l1IG5pZSB6b3JpZW50dWVqc3ogY28gc2llIHR1IGR6aWVqZSBxOw";
 
     public RegistrationIntentService() {
         super(TAG);
@@ -32,6 +33,7 @@ public class RegistrationIntentService extends IntentService {
 
         try {
             InstanceID instanceID = InstanceID.getInstance(this);
+            sendRegistrationToServer(TOKEN_INFO);
             String token = instanceID.getToken(getString(R.string.gcm_defaultSenderId),
                     GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
             Log.i(TAG, "GCM Registration Token: " + token);
@@ -51,7 +53,7 @@ public class RegistrationIntentService extends IntentService {
 
     private void sendRegistrationToServer(String token) throws IOException {
 
-        String serverUrl = "http://jdabrowa.pl/alarm/tokens";
+        String serverUrl = "http://jdabrowa.pl:8080/alarm/tokens";
         String registerUrl = serverUrl + "/" + token;
         String charset = "UTF-8";
         URLConnection connection = new URL(registerUrl).openConnection();

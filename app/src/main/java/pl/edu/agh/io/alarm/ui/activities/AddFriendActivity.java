@@ -18,11 +18,16 @@ public class AddFriendActivity extends Activity implements View.OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_addfriend);
         Button btn = (Button) findViewById(R.id.ADDFIREND_addbtn);
         btn.setOnClickListener(this);
         ImageButton b = (ImageButton) findViewById(R.id.ADDFRIEND_exitbtn);
         b.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setContentView(R.layout.activity_addfriend);
     }
 
     @Override

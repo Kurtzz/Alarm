@@ -21,7 +21,6 @@ public class SendMessageActivity extends Activity implements View.OnClickListene
     @Override
     public void onCreate(Bundle b) {
         super.onCreate(b);
-        setContentView(R.layout.activity_sendmessage);
         Button send = (Button) findViewById(R.id.SENDMESSAGE_sendbtn);
         send.setOnClickListener(this);
         ImageButton s = (ImageButton) findViewById(R.id.SENDMESSAGE_exitbtn);
@@ -29,7 +28,11 @@ public class SendMessageActivity extends Activity implements View.OnClickListene
         System.out.println("Created");
     }
 
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setContentView(R.layout.activity_sendmessage);
+    }
 
     @Override
     public void onClick(View v) {

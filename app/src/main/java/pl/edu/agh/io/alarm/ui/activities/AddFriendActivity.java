@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 import pl.edu.agh.io.alarm.R;
@@ -19,12 +20,22 @@ public class AddFriendActivity extends Activity implements View.OnClickListener 
         setContentView(R.layout.activity_addfriend);
         Button btn = (Button) findViewById(R.id.ADDFIREND_addbtn);
         btn.setOnClickListener(this);
-        ImageButton b = (ImageButton) findViewById(R.id.SENDMESSAGE_exitbtn);
+        ImageButton b = (ImageButton) findViewById(R.id.ADDFRIEND_exitbtn);
         b.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()){
+            case R.id.ADDFIREND_addbtn:
+                EditText editText = (EditText) findViewById(R.id.ADDFRIEND_friend_name);
+                if(editText != null){
+                    System.out.println("AddFriendActivity : Friend's Name: "+editText.getText().toString());
+                }
+                break;
+            case R.id.ADDFRIEND_exitbtn:
+                System.out.println("AddFriendActivity : ExitBtn Clicked");
+                break;
+        }
     }
 }

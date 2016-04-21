@@ -16,4 +16,9 @@ public class UI extends Activity {
         Intent intent = new Intent(this, SendMessageActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    public void startActivity(Intent intent) {
+        super.startActivity(intent);
+    }
 }

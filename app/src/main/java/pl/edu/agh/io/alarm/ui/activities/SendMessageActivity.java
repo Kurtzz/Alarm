@@ -36,7 +36,7 @@ public class SendMessageActivity extends Activity implements View.OnClickListene
         switch (v.getId()){
             case R.id.SENDMESSAGE_sendbtn:
                 EditText editText = (EditText) findViewById(R.id.SENDMESSAGE_msgtext);
-                if(editText != null){
+                if(editText.getText() != null){
                     System.out.println(editText.getText().toString());
                     Intent intent = new Intent(this, AddFriendActivity.class);
                     startActivity(intent);

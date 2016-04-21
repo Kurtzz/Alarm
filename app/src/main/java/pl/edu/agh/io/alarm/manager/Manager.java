@@ -8,8 +8,6 @@ import pl.edu.agh.io.alarm.ui.UI;
 
 public class Manager extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

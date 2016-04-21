@@ -1,6 +1,7 @@
 package pl.edu.agh.io.alarm.ui.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -37,6 +38,8 @@ public class SendMessageActivity extends Activity implements View.OnClickListene
                 EditText editText = (EditText) findViewById(R.id.SENDMESSAGE_msgtext);
                 if(editText != null){
                     System.out.println(editText.getText().toString());
+                    Intent intent = new Intent(this, AddFriendActivity.class);
+                    startActivity(intent);
                 }
                 break;
             case R.id.SENDMESSAGE_exitbtn:

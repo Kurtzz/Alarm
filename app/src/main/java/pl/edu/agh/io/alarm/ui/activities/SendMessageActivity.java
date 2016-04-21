@@ -39,7 +39,7 @@ public class SendMessageActivity extends Activity implements View.OnClickListene
                 if(editText != null){
                     System.out.println(editText.getText().toString());
                     Intent intent = new Intent(this, AddFriendActivity.class);
-                    startActivity(intent);
+//                    startActivity(intent);
                 }
                 break;
             case R.id.SENDMESSAGE_exitbtn:

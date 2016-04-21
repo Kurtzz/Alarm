@@ -14,14 +14,22 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        <!--Modules Activities-->
+        <activity android:name=".ui.UI">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
+
+        <!--UI Activities--></activity>
         <activity android:name=".ui.activities.SendMessageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.UI">
+        <activity android:name=".ui.activities.AddFriendActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

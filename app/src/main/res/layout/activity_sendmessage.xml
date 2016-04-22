@@ -90,6 +90,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/message"
                     android:textColorHint="#FFFFFFFF"
+                    android:textColor="#FFFFFFFF"
                     android:layout_weight="1" />
 
                 <Button

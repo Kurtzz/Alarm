@@ -16,6 +16,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/login"
             android:textColorHint="#FFFFFFFF"
+            android:textColor="#FFFFFFFF"
             android:layout_weight="1" />
         <EditText
             android:layout_width="match_parent"

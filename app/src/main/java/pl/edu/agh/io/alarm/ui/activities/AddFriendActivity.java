@@ -18,6 +18,8 @@ public class AddFriendActivity extends Activity implements View.OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("AddFriendActivity : Create");
+        setContentView(R.layout.activity_addfriend);
         Button btn = (Button) findViewById(R.id.ADDFIREND_addbtn);
         btn.setOnClickListener(this);
         ImageButton b = (ImageButton) findViewById(R.id.ADDFRIEND_exitbtn);
@@ -27,7 +29,32 @@ public class AddFriendActivity extends Activity implements View.OnClickListener 
     @Override
     protected void onStart() {
         super.onStart();
-        setContentView(R.layout.activity_addfriend);
+        System.out.println("AddFriendActivity : Start");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        System.out.println("AddFriendActivity : Restart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        System.out.println("AddFriendActivity : Resume");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        System.out.println("AddFriendActivity : Stop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        System.out.println("AddFriendActivity : Destory");
     }
 
     @Override

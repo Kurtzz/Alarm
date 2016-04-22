@@ -38,7 +38,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 EditText passwordText = (EditText) findViewById(R.id.LOGINpasswordText);
                 if(loginText != null && passwordText != null){
                     System.out.println("Login: "+loginText.getText().toString());
-                    System.out.println("Login: " + passwordText.getText().toString());
+                    System.out.println("Password: " + passwordText.getText().toString());
+                    //TODO: Send to login module to validate login and password, then wait for intent from Login Module then start MainPageActivity
                     Intent intent = new Intent(this, SendMessageActivity.class);
                     startActivity(intent);
                 }

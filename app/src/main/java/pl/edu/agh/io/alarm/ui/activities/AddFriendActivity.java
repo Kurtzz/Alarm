@@ -63,6 +63,7 @@ public class AddFriendActivity extends Activity implements View.OnClickListener 
             case R.id.ADDFIREND_addbtn:
                 EditText editText = (EditText) findViewById(R.id.ADDFRIEND_friend_name);
                 if(editText.getText() != null){
+                    //TODO: Send intent to Comunnicate Module, then wait for Respone;
                     System.out.println("AddFriendActivity : Friend's Name: "+editText.getText().toString());
                     Intent intent = new Intent(this,SendMessageActivity.class);
                     startActivity(intent);

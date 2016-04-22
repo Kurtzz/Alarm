@@ -40,6 +40,7 @@ public class SendMessageActivity extends Activity implements View.OnClickListene
             case R.id.SENDMESSAGE_sendbtn:
                 EditText editText = (EditText) findViewById(R.id.SENDMESSAGE_msgtext);
                 if(editText.getText() != null){
+                    //TODO: Send to Communicate Module Friend and Text, then change to MainPageActivity
                     System.out.println(editText.getText().toString());
                     Intent intent = new Intent(this, AddFriendActivity.class);
                     startActivity(intent);

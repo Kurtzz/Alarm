@@ -4,10 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import pl.edu.agh.io.alarm.R;
 import pl.edu.agh.io.alarm.ui.UI;
 
@@ -26,6 +31,26 @@ public class SendMessageActivity extends Activity implements View.OnClickListene
         send.setOnClickListener(this);
         ImageButton imageButton = (ImageButton) findViewById(R.id.SENDMESSAGE_exitbtn);
         imageButton.setOnClickListener(this);
+
+        final ListView listView = (ListView) findViewById(R.id.SENDMESSAGE_FriendListView);
+        String string[] = { "1", "2" , "3", "4"};
+        ArrayList<String> list = new ArrayList();
+        list.addAll(Arrays.asList(string));
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.simple_list_view_content, list);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println("------------------------");
+                System.out.println(parent.toString());
+                System.out.println(view.toString());
+                System.out.println(position);
+                System.out.println(id);
+
+                System.out.println(listView.getItemAtPosition(position).toString());
+                System.out.println("-------------------------");
+            }
+        });
         System.out.println("Created");
     }
 

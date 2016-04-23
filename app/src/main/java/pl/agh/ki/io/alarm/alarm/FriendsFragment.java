@@ -1,6 +1,7 @@
 package pl.agh.ki.io.alarm.alarm;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -59,8 +60,8 @@ public class FriendsFragment extends Fragment {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "It's Friends tab!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(view.getContext(), AddFriendActivity.class);
+                startActivity(intent);
             }
         });
         return rootView;

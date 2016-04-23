@@ -100,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
                     return MessagesFragment.newInstance();
                 case 1:
                     return FriendsFragment.newInstance();
+                case 2:
+                    return GroupsFragment.newInstance();
             }
             return PlaceholderFragment.newInstance(position + 1);
         }

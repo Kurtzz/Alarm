@@ -21,7 +21,8 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
-        <activity android:name=".AddFriendActivity"></activity>
+        <activity android:name=".AddFriendActivity" />
+        <activity android:name=".CreateGroupActivity"></activity>
     </application>
 
 </manifest>

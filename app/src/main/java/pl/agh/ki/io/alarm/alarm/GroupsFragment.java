@@ -1,6 +1,7 @@
 package pl.agh.ki.io.alarm.alarm;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -58,8 +59,8 @@ public class GroupsFragment extends Fragment {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "It's Groups tab!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(view.getContext(), CreateGroupActivity.class);
+                startActivity(intent);
             }
         });
         return rootView;

@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="pl.agh.ki.io.alarm.alarm.AddFriendActivity">
+    tools:context="pl.agh.ki.io.alarm.alarm.CreateGroupActivity">
 
     <EditText
         android:layout_width="fill_parent"
@@ -15,12 +15,12 @@
         android:id="@+id/editText"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:hint="Enter nickname" />
+        android:hint="Enter group name" />
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Add"
+        android:text="Create"
         android:id="@+id/button"
         android:layout_below="@+id/editText"
         android:layout_centerHorizontal="true" />

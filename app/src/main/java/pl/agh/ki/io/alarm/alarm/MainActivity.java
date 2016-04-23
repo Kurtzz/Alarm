@@ -98,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
             switch (position) {
                 case 0:
                     return MessagesFragment.newInstance();
+                case 1:
+                    return FriendsFragment.newInstance();
             }
             return PlaceholderFragment.newInstance(position + 1);
         }

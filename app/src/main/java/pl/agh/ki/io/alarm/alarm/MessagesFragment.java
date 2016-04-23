@@ -2,6 +2,8 @@ package pl.agh.ki.io.alarm.alarm;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +29,7 @@ public class MessagesFragment extends Fragment {
 //    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private FloatingActionButton floatingActionButton;
 
     public MessagesFragment() {
         // Required empty public constructor
@@ -61,7 +64,16 @@ public class MessagesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_messages, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_messages, container, false);
+        floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "It's Messages tab!", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+        return rootView;
     }
 
     /**

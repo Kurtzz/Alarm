@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 public class SendMessageActivity extends AppCompatActivity implements View.OnClickListener {
@@ -26,6 +27,11 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        EditText editText = (EditText) findViewById(R.id.message_editText);
+        System.out.println("Message: " + editText.getText() + " LEVEL: " + spinner.getSelectedItem().toString());
+
+        spinner.setSelection(0);
+        editText.setText("");
     }
 }

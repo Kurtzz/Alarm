@@ -80,4 +80,6 @@
     </string>
     <string name="add_friend_button">Add</string>
     <string name="create_group_button">Create</string>
+    <string name="send_button">Send</string>
+
 </resources>

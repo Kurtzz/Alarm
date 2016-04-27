@@ -55,7 +55,7 @@ public class GroupsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_groups, container, false);
-        floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.create_group_fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -20,8 +20,8 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Add"
-        android:id="@+id/button"
+        android:text="@string/add_friend_button"
+        android:id="@+id/add_friend_button"
         android:layout_below="@+id/editText"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

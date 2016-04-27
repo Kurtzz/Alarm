@@ -65,7 +65,7 @@ public class MessagesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_messages, container, false);
-        floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.create_message_fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

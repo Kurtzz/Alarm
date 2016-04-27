@@ -78,4 +78,6 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="add_friend_button">Add</string>
+    <string name="create_group_button">Create</string>
 </resources>

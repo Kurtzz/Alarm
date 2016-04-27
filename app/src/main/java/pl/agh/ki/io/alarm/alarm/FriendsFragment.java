@@ -56,7 +56,7 @@ public class FriendsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_friends, container, false);
-        floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.add_friend_fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

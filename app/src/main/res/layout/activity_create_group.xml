@@ -23,14 +23,14 @@
         android:id="@+id/listView"
         android:layout_below="@+id/editText"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/button"
+        android:layout_above="@+id/create_group_button"
         tools:listitem="@android:layout/simple_list_item_multiple_choice" />
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Create"
-        android:id="@+id/button"
+        android:text="@string/create_group_button"
+        android:id="@+id/create_group_button"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />

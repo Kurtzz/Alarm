@@ -1,5 +1,6 @@
 package pl.agh.ki.io.alarm.alarm;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,9 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
 
         Button addFriendButton = (Button) findViewById(R.id.add_friend_button);
         addFriendButton.setOnClickListener(this);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

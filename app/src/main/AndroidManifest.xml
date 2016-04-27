@@ -26,13 +26,24 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".SendMessageActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pl.agh.ki.io.alarm.alarm.MainActivity" />
         </activity>
-        <activity android:name=".AddFriendActivity" />
-        <activity android:name=".CreateGroupActivity" />
+        <activity
+            android:name=".AddFriendActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pl.agh.ki.io.alarm.alarm.MainActivity" />
+        </activity>
+        <activity android:name=".CreateGroupActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pl.agh.ki.io.alarm.alarm.MainActivity" />
+        </activity>
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
@@ -41,7 +52,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pl.agh.ki.io.alarm.alarm.MainActivity" />
         </activity>
-        <activity android:name=".SendMessageActivity"></activity>
     </application>
 
 </manifest>

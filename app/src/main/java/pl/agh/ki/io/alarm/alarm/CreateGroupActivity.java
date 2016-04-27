@@ -1,5 +1,6 @@
 package pl.agh.ki.io.alarm.alarm;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,9 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
 
         Button createGroupButton = (Button) findViewById(R.id.create_group_button);
         createGroupButton.setOnClickListener(this);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

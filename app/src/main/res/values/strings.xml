@@ -81,5 +81,11 @@
     <string name="add_friend_button">Add</string>
     <string name="create_group_button">Create</string>
     <string name="send_button">Send</string>
-
+    <string-array name="levels_array">
+        <item>Level 1</item>
+        <item>Level 2</item>
+        <item>Level 3</item>
+        <item>Level 4</item>
+        <item>Level 5</item>
+    </string-array>
 </resources>

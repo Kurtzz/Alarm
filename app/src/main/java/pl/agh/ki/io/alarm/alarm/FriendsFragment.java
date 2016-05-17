@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -29,6 +30,8 @@ public class FriendsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private FloatingActionButton floatingActionButton;
+
+    public static final String EXTRA_NICK = "pl.agh.ki.io.alarm.NICK";
 
     public FriendsFragment() {
         // Required empty public constructor
@@ -60,7 +63,7 @@ public class FriendsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_friends, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_friends, container, false);
         floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.add_friend_fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +79,15 @@ public class FriendsFragment extends Fragment {
 
         friendListAdapter.setArrayList(friends);
         friendList.setAdapter(friendListAdapter);
+
+        friendList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(rootView.getContext(), SendMessageActivity.class);
+                intent.putExtra(EXTRA_NICK, friendListAdapter.getItem(position));
+                startActivity(intent);
+            }
+        });
 
         return rootView;
     }

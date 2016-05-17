@@ -27,6 +27,9 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        String nick = getIntent().getStringExtra(FriendsFragment.EXTRA_NICK);
+        System.out.println("MESSAGE TO: " + nick);
     }
 
     @Override

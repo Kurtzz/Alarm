@@ -8,6 +8,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -19,6 +23,9 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class FriendsFragment extends Fragment {
+    private ListView friendList;
+    private FriendListAdapter friendListAdapter;
+    private List<String> friends;
 
     private OnFragmentInteractionListener mListener;
     private FloatingActionButton floatingActionButton;
@@ -62,6 +69,14 @@ public class FriendsFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        friends = new ArrayList<>();
+        friendList = (ListView) rootView.findViewById(R.id.friendList);
+        friendListAdapter = new FriendListAdapter(rootView.getContext(), R.layout.friend_list_item, friends);
+
+        friendListAdapter.setArrayList(friends);
+        friendList.setAdapter(friendListAdapter);
+
         return rootView;
     }
 

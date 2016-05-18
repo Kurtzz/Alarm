@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.agh.ki.io.alarm.sqlite.model.Friend;
+import pl.agh.ki.io.alarm.sqlite.model.Group;
 
 /**
  * Created by P on 18.05.2016.
@@ -132,7 +133,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         + " WHERE " + KEY_FRIEND_ID + " = " + friend_id;
 
         Cursor c = db.rawQuery(selectQuery, null);
-        if(c != null) {
+        if (c != null) {
             c.moveToFirst();
         }
 
@@ -172,6 +173,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     public void deleteFriend(long friend_id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_FRIEND, KEY_FRIEND_ID + " = ?", new String[] {String.valueOf(friend_id)});
+        db.delete(TABLE_FRIEND, KEY_FRIEND_ID + " = ?", new String[]{String.valueOf(friend_id)});
     }
+
+    // ------------------------ "friends" table methods ----------------//
+
+    /**
+     * Create group
+     */
+    public long createGroup(Group group) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_GROUP_NAME, group.getGroupName());
+        values.put(KEY_LEVEL, group.getGroupLevel());
+
+        long group_id = db.insert(TABLE_GROUP, null, values);
+
+
+        return group_id;
+    }
+
+    // ------------------------ "group friend" table methods ----------------//
+
+    /**
+     * Create group_friend
+     */
+    public void createGroupFriend(long group_id, List<Friend> friends) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        for (Friend friend : friends) {
+            ContentValues values = new ContentValues();
+            values.put(KEY_GROUP_ID, group_id);
+            values.put(KEY_FRIEND_ID, friend.getId());
+
+            db.insert(TABLE_FRIEND_GROUP, null, values);
+        }
+    }
+
 }

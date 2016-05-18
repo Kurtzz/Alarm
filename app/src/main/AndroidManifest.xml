@@ -63,6 +63,13 @@
             </intent-filter>
         </service>
 
+        <service android:name=".gcm.AlarmInstanceListenerService" android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID"/>
+            </intent-filter>
+        </service>
+
+
     </application>
 
 </manifest>

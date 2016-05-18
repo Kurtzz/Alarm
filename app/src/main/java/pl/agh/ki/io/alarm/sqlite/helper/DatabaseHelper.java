@@ -287,4 +287,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return friends;
     }
+
+    /**
+     * Delete Group_Friend by friend_id
+     */
+    public void deleteGroupFriend(Friend friend) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_FRIEND_GROUP, KEY_FRIEND_ID + " = ?", new String[]{String.valueOf(friend.getId())});
+    }
+
+    /**
+     * Delete Group_Friend by group_id
+     */
+    public void deleteGroupFriend(Group group) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_FRIEND_GROUP, KEY_GROUP_ID + " = ?", new String[]{String.valueOf(group.getId())});
+    }
 }

@@ -159,4 +159,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return friends;
     }
+
+    /**
+     * Delete friend
+     */
+    public void deleteFriend(long friend_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_FRIEND, KEY_FRIEND_ID + " = ?", new String[] {String.valueOf(friend_id)});
+    }
 }

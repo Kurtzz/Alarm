@@ -11,16 +11,17 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import pl.agh.ki.io.alarm.alarm.R;
+import pl.agh.ki.io.alarm.sqlite.helper.DatabaseHelper;
+import pl.agh.ki.io.alarm.sqlite.model.Friend;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link FriendsFragment.OnFragmentInteractionListener} interface
+ * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link FriendsFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -28,10 +29,11 @@ import pl.agh.ki.io.alarm.alarm.R;
 public class FriendsFragment extends Fragment {
     private ListView friendList;
     private FriendListAdapter friendListAdapter;
-    private List<String> friends;
 
     private OnFragmentInteractionListener mListener;
     private FloatingActionButton floatingActionButton;
+
+    private DatabaseHelper databaseHelper;
 
     public static final String EXTRA_NICK = "pl.agh.ki.io.alarm.NICK";
 
@@ -56,6 +58,7 @@ public class FriendsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        databaseHelper = new DatabaseHelper(getContext());
         if (getArguments() != null) {
 
         }
@@ -75,12 +78,8 @@ public class FriendsFragment extends Fragment {
             }
         });
 
-        friends = new ArrayList<>();
-        friends.add("Nick_1");
-        friends.add("Nick_2");
-        friends.add("Nick_3");
-        friends.add("Nick_4");
-        friends.add("Nick_5");
+        List<Friend> friends = databaseHelper.getFriends();
+
         friendList = (ListView) rootView.findViewById(R.id.friendList);
         friendListAdapter = new FriendListAdapter(rootView.getContext(), R.layout.friend_list_item, friends);
 
@@ -112,5 +111,11 @@ public class FriendsFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        friendListAdapter.setArrayList(databaseHelper.getFriends());
     }
 }

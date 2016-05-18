@@ -1,5 +1,8 @@
 package pl.agh.ki.io.alarm.sqlite.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by P on 18.05.2016.
  */
@@ -7,13 +10,14 @@ public class Group {
     private int id;
     private String groupName;
     private int groupLevel;
-
+    private List<Friend> friends;
 
     public Group() {
-
+        friends = new ArrayList<>();
     }
 
     public Group(int id, String groupName, int groupLevel) {
+        super();
         this.id = id;
         this.groupName = groupName;
         this.groupLevel = groupLevel;
@@ -41,5 +45,13 @@ public class Group {
 
     public void setGroupLevel(int groupLevel) {
         this.groupLevel = groupLevel;
+    }
+
+    public List<Friend> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<Friend> friends) {
+        this.friends = friends;
     }
 }

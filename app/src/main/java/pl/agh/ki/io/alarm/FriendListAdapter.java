@@ -10,15 +10,16 @@ import android.widget.TextView;
 import java.util.List;
 
 import pl.agh.ki.io.alarm.alarm.R;
+import pl.agh.ki.io.alarm.sqlite.model.Friend;
 
 /**
  * Created by P on 17.05.2016.
  */
 public class FriendListAdapter extends ArrayAdapter<String> {
     private Context context;
-    public List<String> friendList;
+    public List<Friend> friendList;
 
-    public FriendListAdapter(Context context, int textViewResourceId, List<String> objects) {
+    public FriendListAdapter(Context context, int textViewResourceId, List<Friend> objects) {
         super(context, textViewResourceId);
         this.context = context;
         this.friendList = objects;
@@ -37,8 +38,8 @@ public class FriendListAdapter extends ArrayAdapter<String> {
         } else {
             holder = (Holder) convertView.getTag();
         }
-        String friend = getItem(position);
-        holder.nick.setText(friend);
+        String nick = getItem(position);
+        holder.nick.setText(nick);
 
         return convertView;
     }
@@ -50,11 +51,11 @@ public class FriendListAdapter extends ArrayAdapter<String> {
 
     @Override
     public String getItem(int position) {
-        return friendList.get(position);
+        return friendList.get(position).getNick();
     }
 
-    public void setArrayList(List<String> messages) {
-        this.friendList = messages;
+    public void setArrayList(List<Friend> friends) {
+        this.friendList = friends;
         notifyDataSetChanged();
     }
 

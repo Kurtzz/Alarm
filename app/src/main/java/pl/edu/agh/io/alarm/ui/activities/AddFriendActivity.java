@@ -1,7 +1,6 @@
 package pl.edu.agh.io.alarm.ui.activities;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -65,12 +64,16 @@ public class AddFriendActivity extends Activity implements View.OnClickListener 
                 if(editText.getText() != null){
                     //TODO: Send intent to Comunnicate Module, then wait for Respone;
                     System.out.println("AddFriendActivity : Friend's Name: "+editText.getText().toString());
-                    Intent intent = new Intent(this,SendMessageActivity.class);
-                    startActivity(intent);
+//                    Intent sendMsg = new Intent(this,CommunicationModule.class);
+//                    sendMsg.setAction("ADDFRIEND");
+//                    sendMsg.putExtra("NICKNAME",nickname);
+//                    startActivity(sendMsg);
+                    this.finish();
                 }
                 break;
             case R.id.ADDFRIEND_exitbtn:
                 System.out.println("AddFriendActivity : ExitBtn Clicked");
+                this.finish();
                 break;
         }
     }

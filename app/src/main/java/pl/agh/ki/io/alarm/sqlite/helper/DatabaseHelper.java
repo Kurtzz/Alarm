@@ -139,6 +139,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Friend friend = new Friend();
         friend.setId(c.getInt(c.getColumnIndex(KEY_FRIEND_ID)));
         friend.setNick(c.getString(c.getColumnIndex(KEY_NICK)));
+        friend.setLevel(c.getInt(c.getColumnIndex(KEY_LEVEL)));
 
         return friend;
     }

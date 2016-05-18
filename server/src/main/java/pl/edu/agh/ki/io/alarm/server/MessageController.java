@@ -14,18 +14,22 @@ public class MessageController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageController.class);
 
-    private final MessageService messageService;
+    private final MessageService gcmService;
 
     @Autowired
     public MessageController(MessageService messageService) {
-        this.messageService = messageService;
+        this.gcmService = messageService;
     }
 
-    @RequestMapping(path = "/alarm/message/send/{body}")
-    public HttpStatus sendToBroadcast(@PathVariable String body) {
-        LOGGER.info("Received message: {}, sending to broadcast", body);
-        messageService.sendToAll(body);
-        return HttpStatus.OK;
+    @RequestMapping(path = "/send/{message}")
+    public HttpStatus sendMessage(@PathVariable String message) {
+        try {
+            gcmService.sendToAll(message);
+            return HttpStatus.OK;
+        } catch (Exception e) {
+            LOGGER.warn("Error when sending message", e);
+            return HttpStatus.INTERNAL_SERVER_ERROR;
+        }
     }
 
 }

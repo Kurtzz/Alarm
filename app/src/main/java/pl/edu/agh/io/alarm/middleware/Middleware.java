@@ -7,9 +7,11 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Binder;
 import android.os.IBinder;
+import android.util.Log;
 
 import java.util.List;
 
+import pl.edu.agh.io.alarm.gcm.GcmSendService;
 import pl.edu.agh.io.alarm.notifications.Notifications;
 import pl.edu.agh.io.alarm.sqlite.model.Friend;
 import pl.edu.agh.io.alarm.sqlite.model.Group;
@@ -20,12 +22,15 @@ import pl.edu.agh.io.alarm.sqlite.service.DatabaseService;
  */
 public class Middleware extends Service {
 
+    private static final String TAG = Middleware.class.getSimpleName();
+
     private final IBinder mBinder = new LocalBinder();
     private DatabaseService databaseService;
     private boolean databaseIsBound;
     private boolean notificationIsBound;
+    private boolean gcmIsBound;
     private Notifications notificationService;
-
+    private GcmSendService messagingService;
 
     public class LocalBinder extends Binder {
         public Middleware getService() {
@@ -41,7 +46,7 @@ public class Middleware extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        doBindService();
+        doBindServices();
     }
 
     @Override
@@ -53,6 +58,14 @@ public class Middleware extends Service {
 
     public void makeNotification(String nickname, String text){
         notificationService.makeNotification(nickname,text);
+    }
+
+    public void sendMessageToAll(String message) {
+        try {
+            messagingService.sendToAll(message);
+        } catch (Exception e) {
+            Log.i(TAG, "Sending error", e);
+        }
     }
 
     public long createFriend(Friend friend) {
@@ -148,7 +161,20 @@ public class Middleware extends Service {
         }
     };
 
-    void doBindService() {
+    private ServiceConnection gcmConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            messagingService = ((GcmSendService.GcmSendBinder) iBinder).getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            messagingService = null;
+        }
+    };
+
+    void doBindServices() {
         bindService(new Intent(getApplicationContext(),
                 DatabaseService.class), databaseConnection, Context.BIND_AUTO_CREATE);
         databaseIsBound = true;
@@ -157,6 +183,9 @@ public class Middleware extends Service {
                 Notifications.class), notificationConnection, Context.BIND_AUTO_CREATE);
         notificationIsBound = true;
 
+        bindService(new Intent(getApplicationContext(), GcmSendService.class),
+                gcmConnection, Context.BIND_AUTO_CREATE);
+        gcmIsBound = true;
     }
 
     void doUnbindService() {
@@ -167,6 +196,10 @@ public class Middleware extends Service {
         if (notificationIsBound) {
             unbindService(notificationConnection);
             notificationIsBound = false;
+        }
+        if(gcmIsBound) {
+            unbindService(gcmConnection);
+            gcmIsBound = false;
         }
     }
 

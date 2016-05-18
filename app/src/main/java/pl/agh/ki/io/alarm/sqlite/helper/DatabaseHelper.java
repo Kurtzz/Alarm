@@ -55,8 +55,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /*
     CREATE_TABLE friend_group (
         PRIMARY KEY (friend_id, group_id)
-        FOREIGN KEY (friend_id) REFERENCES friends(id),
-        FOREIGN KEY (group_id) REFERENCES groups(id),
+        FOREIGN KEY (friend_id) REFERENCES friends(friend_id),
+        FOREIGN KEY (group_id) REFERENCES groups(group_id),
         friend_id INTEGER NOT NULL,
         group_id INTEGER NOT NULL
     );
@@ -64,11 +64,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_FRIEND_GROUP =
             "CREATE_TABLE " + TABLE_FRIEND_GROUP
                     + "(" + "PRIMARY KEY (" + KEY_FRIEND_ID + ", " + KEY_GROUP_ID + "), "
-                    + "FOREIGN KEY (" + KEY_FRIEND_ID + ") REFERENCES " + TABLE_FRIEND + "(id), "
-                    + "FOREIGN KEY (" + KEY_GROUP_ID + ") REFERENCES " + TABLE_GROUP + "(id), "
+                    + "FOREIGN KEY (" + KEY_FRIEND_ID + ") REFERENCES " + TABLE_FRIEND + "(" + KEY_FRIEND_ID + "), "
+                    + "FOREIGN KEY (" + KEY_GROUP_ID + ") REFERENCES " + TABLE_GROUP + "(" + KEY_GROUP_ID + "), "
                     + KEY_FRIEND_ID + " INTEGER NOT NULL, "
                     + KEY_GROUP_ID + " INTEGER NOT NULL )";
-    
+
     // ------------------------ END TABLES ------------------------ //
 
     public DatabaseHelper(Context context) {

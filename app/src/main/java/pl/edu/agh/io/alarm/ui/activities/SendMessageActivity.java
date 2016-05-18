@@ -19,53 +19,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.edu.agh.io.alarm.R;
-import pl.edu.agh.io.alarm.notifications.Notifications;
-import pl.edu.agh.io.alarm.sqlite.helper.DatabaseHelper;
+import pl.edu.agh.io.alarm.middleware.Middleware;
 import pl.edu.agh.io.alarm.sqlite.model.Friend;
-import pl.edu.agh.io.alarm.ui.UI;
 
 /**
  * Created by Mateusz on 2016-04-21.
  */
 public class SendMessageActivity extends Activity implements View.OnClickListener {
-    private UI ui;
     private String nickname;
     private ArrayList<String> friendList = new ArrayList<>();
-    private boolean mIsBound;
-    private Notifications notificationsService;
-    private DatabaseHelper databaseHelper;
+    private boolean middlewareIsBound;
+    private Middleware middlewareService;
 
 
     @Override
     public void onCreate(Bundle b) {
         super.onCreate(b);
+        doBindService();
+
         setContentView(R.layout.activity_sendmessage);
         Button send = (Button) findViewById(R.id.SENDMESSAGE_sendbtn);
         send.setOnClickListener(this);
         ImageButton imageButton = (ImageButton) findViewById(R.id.SENDMESSAGE_exitbtn);
         imageButton.setOnClickListener(this);
-        doBindService();
-        databaseHelper = new DatabaseHelper(getApplicationContext());
+        Button refresh  = (Button) findViewById(R.id.SENDMESSAGE_refresh);
+        refresh.setOnClickListener(this);
+
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        friendList.clear();
-        List<Friend> fList = databaseHelper.getFriends();
-        for(Friend friend : fList){
-            friendList.add(friend.getNick());
-        }
-        final ListView listView = (ListView) findViewById(R.id.SENDMESSAGE_FriendListView);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.simple_list_view_content, friendList);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                nickname = listView.getItemAtPosition(position).toString();
-            }
-        });
+
 
     }
 
@@ -80,7 +66,7 @@ public class SendMessageActivity extends Activity implements View.OnClickListene
             case R.id.SENDMESSAGE_sendbtn:
                 EditText editText = (EditText) findViewById(R.id.SENDMESSAGE_msgtext);
                 if(!editText.getText().toString().isEmpty()){
-                    notificationsService.makeNotification(nickname,editText.getText().toString());
+                    middlewareService.makeNotification(nickname,editText.getText().toString());
                     this.finish();
 
                 }
@@ -88,31 +74,55 @@ public class SendMessageActivity extends Activity implements View.OnClickListene
             case R.id.SENDMESSAGE_exitbtn:
                 this.finish();
                 break;
+            case R.id.SENDMESSAGE_refresh:
+                friendList.clear();
+                if(middlewareService != null) {
+                    List<Friend> fList = middlewareService.getFriends();
+
+                    for (Friend friend : fList) {
+                        friendList.add(friend.getNick());
+                    }
+                    final ListView listView = (ListView) findViewById(R.id.SENDMESSAGE_FriendListView);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.simple_list_view_content, friendList);
+                    listView.setAdapter(adapter);
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            nickname = listView.getItemAtPosition(position).toString();
+                        }
+                    });
+                }
+
+
+                break;
         }
     }
-
-    private ServiceConnection mConnection = new ServiceConnection() {
+    private ServiceConnection middlewareConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
-            notificationsService = ((Notifications.LocalBinder)service).getService();
+            middlewareService = ((Middleware.LocalBinder)service).getService();
         }
 
         public void onServiceDisconnected(ComponentName className) {
-            notificationsService = null;
-           }
+            middlewareService = null;
+        }
     };
 
+
+
     void doBindService() {
+        System.out.println("BOUNDING");
         bindService(new Intent(getApplicationContext(),
-                Notifications.class), mConnection, Context.BIND_AUTO_CREATE);
-        mIsBound = true;
+                Middleware.class), middlewareConnection, Context.BIND_AUTO_CREATE);
+        middlewareIsBound = true;
     }
 
     void doUnbindService() {
-        if (mIsBound) {
-            unbindService(mConnection);
-            mIsBound = false;
+        if (middlewareIsBound) {
+            unbindService(middlewareConnection);
+            middlewareIsBound = false;
         }
     }
+
 
     @Override
     protected void onDestroy() {

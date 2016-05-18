@@ -13,8 +13,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import pl.edu.agh.io.alarm.R;
+import pl.edu.agh.io.alarm.middleware.Middleware;
 import pl.edu.agh.io.alarm.sqlite.model.Friend;
-import pl.edu.agh.io.alarm.sqlite.service.DatabaseService;
 
 /**
  * Created by Mateusz on 2016-04-21.
@@ -22,12 +22,13 @@ import pl.edu.agh.io.alarm.sqlite.service.DatabaseService;
 public class AddFriendActivity extends Activity implements View.OnClickListener {
 
 
-    private boolean mIsBound;
-    private DatabaseService databaseService;
+    private boolean middlewareIsBound;
+    private Middleware middlewareService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        doBindService();
         System.out.println("AddFriendActivity : Create");
         setContentView(R.layout.activity_addfriend);
         Button btn = (Button) findViewById(R.id.ADDFIREND_addbtn);
@@ -35,38 +36,12 @@ public class AddFriendActivity extends Activity implements View.OnClickListener 
         ImageButton b = (ImageButton) findViewById(R.id.ADDFRIEND_exitbtn);
         b.setOnClickListener(this);
 
-        doBindService();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        System.out.println("AddFriendActivity : Start");
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        System.out.println("AddFriendActivity : Restart");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        System.out.println("AddFriendActivity : Resume");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        System.out.println("AddFriendActivity : Stop");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         doUnbindService();
-        System.out.println("AddFriendActivity : Destory");
     }
 
     @Override
@@ -83,7 +58,7 @@ public class AddFriendActivity extends Activity implements View.OnClickListener 
 //                    startActivity(sendMsg);
                     Friend friend = new Friend();
                     friend.setNick(editText.getText().toString());
-                    databaseService.createFriend(friend);
+                    middlewareService.createFriend(friend);
                     this.finish();
                 }
                 break;
@@ -95,27 +70,31 @@ public class AddFriendActivity extends Activity implements View.OnClickListener 
     }
 
 
-    private ServiceConnection mConnection = new ServiceConnection() {
+    private ServiceConnection middlewareConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
-            databaseService = ((DatabaseService.LocalBinder)service).getService();
+            middlewareService = ((Middleware.LocalBinder)service).getService();
         }
 
         public void onServiceDisconnected(ComponentName className) {
-            databaseService = null;
+            middlewareService = null;
         }
     };
 
-    void doBindService() {
-        bindService(new Intent(getApplicationContext(),
-                DatabaseService.class), mConnection, Context.BIND_AUTO_CREATE);
 
-        mIsBound = true;
+
+    void doBindService() {
+        System.out.println("BOUNDING");
+        bindService(new Intent(getApplicationContext(),
+                Middleware.class), middlewareConnection, Context.BIND_AUTO_CREATE);
+        middlewareIsBound = true;
+
+
     }
 
     void doUnbindService() {
-        if (mIsBound) {
-            unbindService(mConnection);
-            mIsBound = false;
+        if (middlewareIsBound) {
+            unbindService(middlewareConnection);
+            middlewareIsBound = false;
         }
     }
 

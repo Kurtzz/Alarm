@@ -58,6 +58,9 @@
         <service android:name=".sqlite.service.DatabaseService">
 
         </service>
+        <service android:name=".middleware.Middleware">
+
+        </service>
     </application>
 
 </manifest>

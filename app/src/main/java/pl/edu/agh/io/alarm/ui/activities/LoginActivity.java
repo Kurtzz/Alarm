@@ -39,6 +39,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        registerIdentityWithGoogle();
         setContentView(R.layout.activity_login);
         Button send = (Button) findViewById(R.id.LOGINLoginbtn);
         send.setOnClickListener(this);
@@ -68,6 +69,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     }
 
     private void registerIdentityWithGoogle() {
+        Log.i(TAG, "Initializing token generation...");
         mRegistrationProgressBar = (ProgressBar) findViewById(R.id.registrationProgressBar);
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -82,6 +84,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 } else {
                     mInformationTextView.setText(getString(R.string.token_error_message));
                 }
+                Log.i(TAG, "Received broadcast: tokenSent - " + sentToken);
             }
         };
         mInformationTextView = (TextView) findViewById(R.id.informationTextView);
@@ -91,6 +94,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
         if (checkPlayServices()) {
             // Start IntentService to register this application with GCM.
+            Log.i(TAG, "Starting ID intent...");
             Intent intent = new Intent(this, InstanceRegistrationIntent.class);
             startService(intent);
         }

@@ -112,6 +112,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(KEY_NICK, friend.getNick());
+        if (friend.getLevel() > 0) {
+            values.put(KEY_LEVEL, friend.getLevel());
+        }
 
         long friend_id = db.insert(TABLE_FRIEND, null, values);
 

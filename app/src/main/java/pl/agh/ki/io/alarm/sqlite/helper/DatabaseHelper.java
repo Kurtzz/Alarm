@@ -47,6 +47,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //columns
     private static final String KEY_GROUP_ID = "group_id";
     private static final String KEY_GROUP_NAME = "group_name";
+    private static final String KEY_GROUP_LEVEL = "group_level";
     //create statement
     /*
     CREATE_TABLE groups (
@@ -57,7 +58,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_GROUP =
             "CREATE_TABLE " + TABLE_GROUP
                     + "(" + KEY_GROUP_ID + " INTEGER PRIMARY KEY NOT NULL, "
-                    + KEY_GROUP_NAME + " TEXT"
+                    + KEY_GROUP_NAME + " TEXT, "
+                    + KEY_GROUP_LEVEL + " INTEGER"
                     + ")";
 
     // ------------------------ TABLE GROUP FRIEND ------------------------ //
@@ -194,6 +196,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return group_id;
     }
 
+    /**
+     * Get single group
+     */
+    public Group getGroup(long group_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery =
+                "SELECT * FROM " + TABLE_GROUP
+                        + " WHERE " + KEY_GROUP_ID + " = " + group_id;
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c != null) {
+            c.moveToFirst();
+        }
+
+        Group group = new Group();
+        group.setId(c.getInt(c.getColumnIndex(KEY_FRIEND_ID)));
+        group.setGroupName(c.getString(c.getColumnIndex(KEY_GROUP_NAME)));
+
+        List<Friend> friends = getAllMembersOfTheGroup(group_id);
+        group.setFriends(friends);
+
+        return group;
+    }
+    
     // ------------------------ "group friend" table methods ----------------//
 
     /**
@@ -233,30 +260,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         return friends;
-    }
-
-    /**
-     * Get single group
-     */
-    public Group getGroup(long group_id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String selectQuery =
-                "SELECT * FROM " + TABLE_GROUP
-                        + " WHERE " + KEY_GROUP_ID + " = " + group_id;
-
-        Cursor c = db.rawQuery(selectQuery, null);
-        if (c != null) {
-            c.moveToFirst();
-        }
-
-        Group group = new Group();
-        group.setId(c.getInt(c.getColumnIndex(KEY_FRIEND_ID)));
-        group.setGroupName(c.getString(c.getColumnIndex(KEY_GROUP_NAME)));
-
-        List<Friend> friends = getAllMembersOfTheGroup(group_id);
-        group.setFriends(friends);
-
-        return group;
     }
 }

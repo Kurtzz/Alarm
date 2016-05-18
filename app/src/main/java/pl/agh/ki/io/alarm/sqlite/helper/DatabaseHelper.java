@@ -220,7 +220,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return group;
     }
-    
+
+    /**
+     * Get all groups
+     */
+    public List<Group> getGroups() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Group> groups = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_GROUP;
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c.moveToFirst()) {
+            do {
+                Group group = new Group();
+                group.setId(c.getInt(c.getColumnIndex(KEY_FRIEND_ID)));
+                group.setGroupName(c.getString(c.getColumnIndex(KEY_GROUP_NAME)));
+                group.setGroupLevel(c.getInt(c.getColumnIndex(KEY_GROUP_LEVEL)));
+
+                List<Friend> friends = getAllMembersOfTheGroup(group.getId());
+                group.setFriends(friends);
+
+                groups.add(group);
+            } while (c.moveToNext());
+        }
+
+        return groups;
+    }
+
     // ------------------------ "group friend" table methods ----------------//
 
     /**

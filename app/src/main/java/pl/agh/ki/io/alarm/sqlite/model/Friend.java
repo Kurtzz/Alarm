@@ -6,13 +6,16 @@ package pl.agh.ki.io.alarm.sqlite.model;
 public class Friend {
     private int id;
     private String nick;
+    private int level;
 
     public Friend() {
 
     }
-    public Friend(int id, String nick) {
+
+    public Friend(int id, String nick, int level) {
         this.id = id;
         this.nick = nick;
+        this.level = level;
     }
 
     public int getId() {
@@ -29,5 +32,13 @@ public class Friend {
 
     public void setNick(String nick) {
         this.nick = nick;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 }

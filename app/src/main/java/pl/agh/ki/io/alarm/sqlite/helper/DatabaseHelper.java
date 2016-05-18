@@ -12,6 +12,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "alarmDatabase";
     private static final int DATABASE_VERSION = 1;
 
+
+    // ------------------------ TABLES ------------------------ //
+    // ------------------------ TABLE FRIEND ------------------------ //
+    private static final String TABLE_FRIEND = "friends";
+    //columns
+    private static final String KEY_FRIEND_ID = "friend_id";
+    private static final String KEY_NICK = "nick";
+    //create statement
+    /*
+    CREATE_TABLE friends (
+        friend_id INTEGER PRIMARY KEY NOT NULL,
+        nick TEXT
+    );
+     */
+    private static final String CREATE_TABLE_FRIEND =
+            "CREATE_TABLE " + TABLE_FRIEND
+                    + "(" + KEY_FRIEND_ID + " INTEGER PRIMARY KEY NOT NULL, "
+                    + KEY_NICK + " TEXT"
+                    + ")";
+
+    // ------------------------ END TABLES ------------------------ //
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }

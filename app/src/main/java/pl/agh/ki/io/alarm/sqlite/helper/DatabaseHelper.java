@@ -32,6 +32,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     + KEY_NICK + " TEXT"
                     + ")";
 
+    // ------------------------ TABLE GROUP ------------------------ //
+    private static final String TABLE_GROUP = "groups";
+    //columns
+    private static final String KEY_GROUP_ID = "group_id";
+    private static final String KEY_GROUP_NAME = "group_name";
+    //create statement
+    /*
+    CREATE_TABLE groups (
+        group_id INTEGER PRIMARY KEY NOT NULL,
+        group_name TEXT
+    );
+     */
+    private static final String CREATE_TABLE_GROUP =
+            "CREATE_TABLE " + TABLE_GROUP
+                    + "(" + KEY_GROUP_ID + " INTEGER PRIMARY KEY NOT NULL, "
+                    + KEY_GROUP_NAME + " TEXT"
+                    + ")";
+    
     // ------------------------ END TABLES ------------------------ //
 
     public DatabaseHelper(Context context) {

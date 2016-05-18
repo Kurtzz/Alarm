@@ -12,7 +12,6 @@ import java.util.List;
 import pl.edu.agh.io.alarm.sqlite.model.Friend;
 import pl.edu.agh.io.alarm.sqlite.model.Group;
 
-
 /**
  * Created by P on 18.05.2016.
  */
@@ -37,7 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     );
      */
     private static final String CREATE_TABLE_FRIEND =
-            "CREATE_TABLE " + TABLE_FRIEND
+            "CREATE TABLE " + TABLE_FRIEND
                     + "(" + KEY_FRIEND_ID + " INTEGER PRIMARY KEY NOT NULL, "
                     + KEY_NICK + " TEXT, "
                     + KEY_LEVEL + " INTEGER"
@@ -57,7 +56,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     );
      */
     private static final String CREATE_TABLE_GROUP =
-            "CREATE_TABLE " + TABLE_GROUP
+            "CREATE TABLE " + TABLE_GROUP
                     + "(" + KEY_GROUP_ID + " INTEGER PRIMARY KEY NOT NULL, "
                     + KEY_GROUP_NAME + " TEXT, "
                     + KEY_GROUP_LEVEL + " INTEGER"
@@ -75,12 +74,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     );
      */
     private static final String CREATE_TABLE_FRIEND_GROUP =
-            "CREATE_TABLE " + TABLE_FRIEND_GROUP
-                    + "(" + "PRIMARY KEY (" + KEY_FRIEND_ID + ", " + KEY_GROUP_ID + "), "
+            "CREATE TABLE " + TABLE_FRIEND_GROUP
+                    + "("
+                    + KEY_FRIEND_ID + " INTEGER NOT NULL, "
+                    + KEY_GROUP_ID + " INTEGER NOT NULL, "
                     + "FOREIGN KEY (" + KEY_FRIEND_ID + ") REFERENCES " + TABLE_FRIEND + "(" + KEY_FRIEND_ID + "), "
                     + "FOREIGN KEY (" + KEY_GROUP_ID + ") REFERENCES " + TABLE_GROUP + "(" + KEY_GROUP_ID + "), "
-                    + KEY_FRIEND_ID + " INTEGER NOT NULL, "
-                    + KEY_GROUP_ID + " INTEGER NOT NULL )";
+                    + "PRIMARY KEY (" + KEY_FRIEND_ID + ", " + KEY_GROUP_ID + "))";
 
     // ------------------------ END TABLES ------------------------ //
 

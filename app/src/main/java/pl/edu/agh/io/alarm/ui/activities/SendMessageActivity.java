@@ -66,7 +66,8 @@ public class SendMessageActivity extends Activity implements View.OnClickListene
             case R.id.SENDMESSAGE_sendbtn:
                 EditText editText = (EditText) findViewById(R.id.SENDMESSAGE_msgtext);
                 if(!editText.getText().toString().isEmpty()){
-                    middlewareService.makeNotification(nickname,editText.getText().toString());
+//                    middlewareService.makeNotification(nickname,editText.getText().toString());
+                      middlewareService.sendMessageToAll(editText.getText().toString());
                     this.finish();
 
                 }

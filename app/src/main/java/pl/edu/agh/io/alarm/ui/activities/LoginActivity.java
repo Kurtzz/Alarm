@@ -1,13 +1,27 @@
 package pl.edu.agh.io.alarm.ui.activities;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 import pl.edu.agh.io.alarm.R;
+import pl.edu.agh.io.alarm.gcm.Constants;
+import pl.edu.agh.io.alarm.gcm.id.InstanceRegistrationIntent;
 
 /**
  * Created by Mateusz on 2016-04-22.
@@ -17,8 +31,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
 
     @Override
-    public void onCreate(Bundle b) {
-        super.onCreate(b);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Button send = (Button) findViewById(R.id.LOGINLoginbtn);
         send.setOnClickListener(this);
@@ -46,5 +60,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 break;
         }
     }
+
+
+
 
 }

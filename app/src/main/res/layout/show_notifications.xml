@@ -18,7 +18,7 @@
         android:id="@+id/NOTIFICATION_text" />
 
     <Button
-        android:id="@+id/buttonBack"
+        android:id="@+id/NOTIFICATION_buttonBack"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Back"/>

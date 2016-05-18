@@ -26,7 +26,7 @@ public class MyClass extends Activity {
         setContentView(R.layout.show_notifications);
 
         System.out.println("MYCLASS CONTEXT:   "+getApplicationContext().toString());
-        btnBack = (Button) findViewById(R.id.buttonBack);
+        btnBack = (Button) findViewById(R.id.NOTIFICATION_buttonBack);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

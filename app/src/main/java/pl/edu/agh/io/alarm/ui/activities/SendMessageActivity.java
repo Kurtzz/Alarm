@@ -68,7 +68,6 @@ public class SendMessageActivity extends Activity implements View.OnClickListene
                 if(!editText.getText().toString().isEmpty()){
                     middlewareService.makeNotification(nickname,editText.getText().toString());
                     this.finish();
-
                 }
                 break;
             case R.id.SENDMESSAGE_exitbtn:

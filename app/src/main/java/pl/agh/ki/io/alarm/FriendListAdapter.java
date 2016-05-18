@@ -15,14 +15,14 @@ import pl.agh.ki.io.alarm.sqlite.model.Friend;
 /**
  * Created by P on 17.05.2016.
  */
-public class FriendListAdapter extends ArrayAdapter<String> {
+public class FriendListAdapter extends ArrayAdapter<Friend> {
     private Context context;
     public List<Friend> friendList;
 
-    public FriendListAdapter(Context context, int textViewResourceId, List<Friend> objects) {
+    public FriendListAdapter(Context context, int textViewResourceId, List<Friend> friends) {
         super(context, textViewResourceId);
         this.context = context;
-        this.friendList = objects;
+        this.friendList = friends;
     }
 
     @Override
@@ -38,8 +38,8 @@ public class FriendListAdapter extends ArrayAdapter<String> {
         } else {
             holder = (Holder) convertView.getTag();
         }
-        String nick = getItem(position);
-        holder.nick.setText(nick);
+        Friend friend = getItem(position);
+        holder.nick.setText(friend.getNick());
 
         return convertView;
     }
@@ -50,8 +50,8 @@ public class FriendListAdapter extends ArrayAdapter<String> {
     }
 
     @Override
-    public String getItem(int position) {
-        return friendList.get(position).getNick();
+    public Friend getItem(int position) {
+        return friendList.get(position);
     }
 
     public void setArrayList(List<Friend> friends) {

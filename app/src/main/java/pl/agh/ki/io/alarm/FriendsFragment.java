@@ -90,7 +90,7 @@ public class FriendsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(rootView.getContext(), SendMessageActivity.class);
-                intent.putExtra(EXTRA_NICK, friendListAdapter.getItem(position));
+                intent.putExtra(EXTRA_NICK, friendListAdapter.getItem(position).getId());
                 startActivity(intent);
             }
         });

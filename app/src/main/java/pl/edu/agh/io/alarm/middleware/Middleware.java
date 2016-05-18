@@ -10,6 +10,7 @@ import android.os.IBinder;
 
 import java.util.List;
 
+import pl.edu.agh.io.alarm.gcm.GcmSendService;
 import pl.edu.agh.io.alarm.notifications.Notifications;
 import pl.edu.agh.io.alarm.sqlite.model.Friend;
 import pl.edu.agh.io.alarm.sqlite.model.Group;
@@ -25,7 +26,7 @@ public class Middleware extends Service {
     private boolean databaseIsBound;
     private boolean notificationIsBound;
     private Notifications notificationService;
-
+    private GcmSendService messagingService;
 
     public class LocalBinder extends Binder {
         public Middleware getService() {
@@ -53,6 +54,10 @@ public class Middleware extends Service {
 
     public void makeNotification(String nickname, String text){
         notificationService.makeNotification(nickname,text);
+    }
+
+    public void sendMessageToAll(String message) {
+        
     }
 
     public long createFriend(Friend friend) {

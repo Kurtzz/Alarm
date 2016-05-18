@@ -82,6 +82,7 @@
     <string name="create_group_button">Create</string>
     <string name="send_button">Send</string>
     <string name="enter_group_name">Enter group name</string>
+    <string name="enter_nickname">Enter nickname</string>
     <string-array name="levels_array">
         <item>Level 1</item>
         <item>Level 2</item>

@@ -12,40 +12,5 @@ public class Manager extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = new Intent(this, MainActivity.class);
-//        startActivity(intent);
-//        sdsabfhjkgdshjfbsdfsd
-//
-//        ds
-//                fddsds
-//                f
-//                        sd
-//                        fsad
-//                                fdsafmdsaljkhfdsa
-//                                fds
-//                                    jhjdfd
-// fds
-// f
-// d
-// fds
-// fsdf
-// ds
-// ds
-// f
-// sdf
-// ds
-// fd
-// sfdsffdf
-//                                        dispatchKeyShortcutEvent(fdsafmdsaljkhfdsaafsa
-//                                        fdsa
-//                                        das
-//                                        dsaf
-//                                        dfdsaf
-//                                        dsa
-//                                        fdfsadf
-//                                        ads
-//                                        fdafdafsadf
-//                                        dsa
-//                                        fdf
-//                                        sd)
     }
 }

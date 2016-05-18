@@ -36,9 +36,9 @@ public class FriendListAdapter extends ArrayAdapter<Friend> {
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = vi.inflate(textViewResourceId, null);
             if (textViewResourceId == R.layout.friend_list_item) {
-                holder.nick = (TextView) convertView.findViewById(R.id.nick);
+                holder.nick = (TextView) convertView.findViewById(R.id.friendListItem_nickTextView);
             } else {
-                holder.nick = (TextView) convertView.findViewById(R.id.nick_multi);
+                holder.nick = (TextView) convertView.findViewById(R.id.friendListItemMulti_nickTextView);
             }
             convertView.setTag(holder);
         } else {

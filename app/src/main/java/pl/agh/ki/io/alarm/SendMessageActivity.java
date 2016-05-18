@@ -18,13 +18,13 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_message);
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        Spinner spinner = (Spinner) findViewById(R.id.sendMessage_levelSpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.levels_array, android.R.layout.simple_spinner_dropdown_item);
+                R.array.sendMessage_levelsArray, android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        Button sendButton = (Button) findViewById(R.id.send_button);
+        Button sendButton = (Button) findViewById(R.id.sendMessage_sendButton);
         sendButton.setOnClickListener(this);
 
         ActionBar actionBar = getSupportActionBar();
@@ -36,8 +36,8 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        EditText editText = (EditText) findViewById(R.id.message_editText);
+        Spinner spinner = (Spinner) findViewById(R.id.sendMessage_levelSpinner);
+        EditText editText = (EditText) findViewById(R.id.sendMessage_messageEditText);
         System.out.println("Message: " + editText.getText() + " LEVEL: " + spinner.getSelectedItem().toString());
 
         spinner.setSelection(0);

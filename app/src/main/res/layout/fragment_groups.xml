@@ -9,7 +9,7 @@
     tools:context="pl.agh.ki.io.alarm.GroupsFragment">
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/create_group_fab"
+        android:id="@+id/groupFragment_createGroupFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
@@ -22,7 +22,7 @@
     <ExpandableListView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/groupList"
+        android:id="@+id/groupFragment_groupListView"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />

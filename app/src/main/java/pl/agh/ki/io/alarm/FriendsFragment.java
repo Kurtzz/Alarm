@@ -69,7 +69,7 @@ public class FriendsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_friends, container, false);
-        floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.add_friend_fab);
+        floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.friendFragment_addFriendFab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,7 +80,7 @@ public class FriendsFragment extends Fragment {
 
         List<Friend> friends = databaseHelper.getFriends();
 
-        friendList = (ListView) rootView.findViewById(R.id.friendList);
+        friendList = (ListView) rootView.findViewById(R.id.friendFragment_friendListView);
         friendListAdapter = new FriendListAdapter(rootView.getContext(), R.layout.friend_list_item, friends);
 
         friendListAdapter.setArrayList(friends);

@@ -12,17 +12,17 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/friendNick_editText"
+        android:id="@+id/addFriend_friendEditText"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:hint="@string/enter_nickname" />
+        android:hint="@string/addFriend_nickPlaceholder" />
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add_friend_button"
-        android:id="@+id/add_friend_button"
-        android:layout_below="@+id/friendNick_editText"
+        android:text="@string/addFriend_addFriendButton"
+        android:id="@+id/addFriend_addFriendButton"
+        android:layout_below="@+id/addFriend_friendEditText"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 

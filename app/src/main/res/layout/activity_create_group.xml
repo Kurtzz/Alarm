@@ -12,23 +12,23 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
+        android:id="@+id/createGroup_nameEditText"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:hint="@string/enter_group_name" />
+        android:hint="@string/createGroup_namePlaceholder" />
 
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/friendList_createGroup"
-        android:layout_below="@+id/editText"
+        android:id="@+id/createGroup_friendListView"
+        android:layout_below="@+id/createGroup_nameEditText"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/create_group_button" />
+        android:layout_above="@+id/createGroup_createGroupButton" />
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/create_group_button"
-        android:id="@+id/create_group_button"
+        android:text="@string/createGroup_createGroupButton"
+        android:id="@+id/createGroup_createGroupButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />

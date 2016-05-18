@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/nick"
+        android:id="@+id/friendListItem_nickTextView"
         android:singleLine="true"
         android:textStyle="bold"
         android:layout_alignParentTop="true"

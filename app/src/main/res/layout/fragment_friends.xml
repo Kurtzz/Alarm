@@ -8,13 +8,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="pl.agh.ki.io.alarm.FriendsFragment">
 
-    <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/add_friend_fab"
+        android:id="@+id/friendFragment_addFriendFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
@@ -27,7 +22,7 @@
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/friendList"
+        android:id="@+id/friendFragment_friendListView"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 

@@ -24,10 +24,10 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
 
         databaseHelper = new DatabaseHelper(getApplicationContext());
 
-        Button addFriendButton = (Button) findViewById(R.id.add_friend_button);
+        Button addFriendButton = (Button) findViewById(R.id.addFriend_addFriendButton);
         addFriendButton.setOnClickListener(this);
 
-        editText = (EditText) findViewById(R.id.friendNick_editText);
+        editText = (EditText) findViewById(R.id.addFriend_friendEditText);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);

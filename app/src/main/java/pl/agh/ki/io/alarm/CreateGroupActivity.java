@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.List;
@@ -27,15 +26,12 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
 
         databaseHelper = new DatabaseHelper(getApplicationContext());
 
-        Button createGroupButton = (Button) findViewById(R.id.create_group_button);
-        createGroupButton.setOnClickListener(this);
-
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         List<Friend> friends = databaseHelper.getFriends();
 
-        friendList = (ListView) findViewById(R.id.friendList_createGroup);
+        friendList = (ListView) findViewById(R.id.createGroup_friendListView);
         friendListAdapter = new FriendListAdapter(getApplicationContext(), R.layout.friend_list_item_multi, friends);
 
         friendListAdapter.setArrayList(friends);

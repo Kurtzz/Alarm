@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,13 +80,6 @@ public class SendMessageActivity extends Activity implements View.OnClickListene
             case R.id.SENDMESSAGE_sendbtn:
                 EditText editText = (EditText) findViewById(R.id.SENDMESSAGE_msgtext);
                 if(!editText.getText().toString().isEmpty()){
-                    //TODO: Send to Communicate Module Friend and Text, then change to MainPageActivity
-                    //TODO: wysylanie nicku i tekstu do modulu
-//                    Intent sendMsg = new Intent(this,CommunicationModule.class);
-//                    sendMsg.setAction("SENDMSG");
-//                    sendMsg.putExtra("NICKNAME",nickname);
-//                    sendMsg.putExtra("Text",editText.getText().toString());
-//                    startActivity(sendMsg);
                     notificationsService.makeNotification(nickname,editText.getText().toString());
                     this.finish();
 
@@ -101,34 +93,15 @@ public class SendMessageActivity extends Activity implements View.OnClickListene
 
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
-            // This is called when the connection with the service has been
-            // established, giving us the service object we can use to
-            // interact with the service.  Because we have bound to a explicit
-            // service that we know is running in our own process, we can
-            // cast its IBinder to a concrete class and directly access it.
             notificationsService = ((Notifications.LocalBinder)service).getService();
-
-            // Tell the user about this for our demo.
-            Toast.makeText(getApplicationContext(), "Connected",
-                    Toast.LENGTH_SHORT).show();
         }
 
         public void onServiceDisconnected(ComponentName className) {
-            // This is called when the connection with the service has been
-            // unexpectedly disconnected -- that is, its process crashed.
-            // Because it is running in our same process, we should never
-            // see this happen.
             notificationsService = null;
-            Toast.makeText(getApplicationContext(), "Disconnected",
-                    Toast.LENGTH_SHORT).show();
-        }
+           }
     };
 
     void doBindService() {
-        // Establish a connection with the service.  We use an explicit
-        // class name because we want a specific service implementation that
-        // we know will be running in our own process (and thus won't be
-        // supporting component replacement by other applications).
         bindService(new Intent(getApplicationContext(),
                 Notifications.class), mConnection, Context.BIND_AUTO_CREATE);
         mIsBound = true;
@@ -136,7 +109,6 @@ public class SendMessageActivity extends Activity implements View.OnClickListene
 
     void doUnbindService() {
         if (mIsBound) {
-            // Detach our existing connection.
             unbindService(mConnection);
             mIsBound = false;
         }

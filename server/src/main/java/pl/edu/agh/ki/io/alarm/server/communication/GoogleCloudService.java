@@ -35,7 +35,7 @@ public class GoogleCloudService implements MessageService{
                 .post("https://gcm-http.googleapis.com/gcm/send")
                 .header("Content-Type", "application/json")
                 .header("Authorization", "key=AIzaSyCTqMXVGZLHRrXW338ZyILk6zT9I1e7S5Q")
-                .body("{\"data\": {\"" + message + "\": \"hello, dude!\"}, \"to\": \"" + token + "\"}")
+                .body("{\"data\": {\"message\": \"" + message + "\"}, \"to\": \"" + token + "\"}")
                 .asString();
         LOGGER.info("SENT");
         LOGGER.info("Status: {}, Result: {}\n{}", result.getStatus(), result.getBody(), result.getHeaders());

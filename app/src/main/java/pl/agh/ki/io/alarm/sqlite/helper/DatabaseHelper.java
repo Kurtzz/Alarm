@@ -26,6 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //columns
     private static final String KEY_FRIEND_ID = "friend_id";
     private static final String KEY_NICK = "nick";
+    private static final String KEY_LEVEL = "level";
     //create statement
     /*
     CREATE_TABLE friends (
@@ -36,7 +37,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_FRIEND =
             "CREATE_TABLE " + TABLE_FRIEND
                     + "(" + KEY_FRIEND_ID + " INTEGER PRIMARY KEY NOT NULL, "
-                    + KEY_NICK + " TEXT"
+                    + KEY_NICK + " TEXT, "
+                    + KEY_LEVEL + " INTEGER"
                     + ")";
 
     // ------------------------ TABLE GROUP ------------------------ //

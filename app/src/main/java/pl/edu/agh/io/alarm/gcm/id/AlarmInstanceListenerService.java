@@ -1,4 +1,4 @@
-package pl.edu.agh.io.alarm.gcm;
+package pl.edu.agh.io.alarm.gcm.id;
 
 import android.content.Intent;
 

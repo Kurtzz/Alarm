@@ -21,6 +21,7 @@ import com.google.android.gms.common.GoogleApiAvailability;
 
 import pl.edu.agh.io.alarm.R;
 import pl.edu.agh.io.alarm.gcm.Constants;
+import pl.edu.agh.io.alarm.gcm.id.InstanceRegistrationIntent;
 
 /**
  * Created by Mateusz on 2016-04-22.
@@ -28,6 +29,7 @@ import pl.edu.agh.io.alarm.gcm.Constants;
 public class LoginActivity extends Activity implements View.OnClickListener {
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private static final String TAG = LoginActivity.class.getSimpleName();
 
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private ProgressBar mRegistrationProgressBar;
@@ -89,7 +91,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
         if (checkPlayServices()) {
             // Start IntentService to register this application with GCM.
-            Intent intent = new Intent(this, RegistrationIntentService.class);
+            Intent intent = new Intent(this, InstanceRegistrationIntent.class);
             startService(intent);
         }
     }
@@ -97,7 +99,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private void registerReceiver(){
         if(!isReceiverRegistered) {
             LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                    new IntentFilter(QuickstartPreferences.REGISTRATION_COMPLETE));
+                    new IntentFilter(Constants.REGISTRATION_COMPLETE));
             isReceiverRegistered = true;
         }
     }

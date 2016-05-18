@@ -4,6 +4,7 @@
 
     <!-- TODO: verify whether this should be exclusive to prevent other apps from accessing messages -->
     <uses-permission android:name="pl.edu.agh.io.alarm.permission.C2D_MESSAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -63,7 +64,7 @@
             </intent-filter>
         </service>
 
-        <service android:name=".gcm.AlarmInstanceListenerService" android:exported="false">
+        <service android:name=".gcm.id.AlarmInstanceListenerService" android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID"/>
             </intent-filter>

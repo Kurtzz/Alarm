@@ -1,31 +1,41 @@
-package pl.agh.ki.io.alarm.alarm;
+package pl.agh.ki.io.alarm;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import pl.agh.ki.io.alarm.alarm.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link GroupsFragment.OnFragmentInteractionListener} interface
+ * {@link FriendsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link GroupsFragment#newInstance} factory method to
+ * Use the {@link FriendsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GroupsFragment extends Fragment {
+public class FriendsFragment extends Fragment {
+    private ListView friendList;
+    private FriendListAdapter friendListAdapter;
+    private List<String> friends;
 
     private OnFragmentInteractionListener mListener;
     private FloatingActionButton floatingActionButton;
 
-    public GroupsFragment() {
+    public static final String EXTRA_NICK = "pl.agh.ki.io.alarm.NICK";
+
+    public FriendsFragment() {
         // Required empty public constructor
     }
 
@@ -33,10 +43,11 @@ public class GroupsFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment GroupsFragment.
+     * @return A new instance of fragment FriendsFragment.
      */
-    public static GroupsFragment newInstance() {
-        GroupsFragment fragment = new GroupsFragment();
+
+    public static FriendsFragment newInstance() {
+        FriendsFragment fragment = new FriendsFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -54,15 +65,37 @@ public class GroupsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_groups, container, false);
-        floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.create_group_fab);
+        final View rootView = inflater.inflate(R.layout.fragment_friends, container, false);
+        floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.add_friend_fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), CreateGroupActivity.class);
+                Intent intent = new Intent(view.getContext(), AddFriendActivity.class);
                 startActivity(intent);
             }
         });
+
+        friends = new ArrayList<>();
+        friends.add("Nick_1");
+        friends.add("Nick_2");
+        friends.add("Nick_3");
+        friends.add("Nick_4");
+        friends.add("Nick_5");
+        friendList = (ListView) rootView.findViewById(R.id.friendList);
+        friendListAdapter = new FriendListAdapter(rootView.getContext(), R.layout.friend_list_item, friends);
+
+        friendListAdapter.setArrayList(friends);
+        friendList.setAdapter(friendListAdapter);
+
+        friendList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(rootView.getContext(), SendMessageActivity.class);
+                intent.putExtra(EXTRA_NICK, friendListAdapter.getItem(position));
+                startActivity(intent);
+            }
+        });
+
         return rootView;
     }
 

@@ -1,4 +1,4 @@
-package pl.agh.ki.io.alarm.alarm;
+package pl.agh.ki.io.alarm;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.List;
+
+import pl.agh.ki.io.alarm.alarm.R;
 
 /**
  * Created by P on 17.05.2016.

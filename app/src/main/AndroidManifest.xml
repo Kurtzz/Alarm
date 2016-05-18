@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="pl.agh.ki.io.alarm.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -24,33 +24,25 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name="pl.agh.ki.io.alarm.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName="pl.agh.ki.io.alarm.MainActivity" />
         <activity
-            android:name=".SendMessageActivity">
+            android:name="pl.agh.ki.io.alarm.SendMessageActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="pl.agh.ki.io.alarm.alarm.MainActivity" />
+                android:value="pl.agh.ki.io.alarm.MainActivity" />
         </activity>
         <activity
-            android:name=".AddFriendActivity">
+            android:name="pl.agh.ki.io.alarm.AddFriendActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="pl.agh.ki.io.alarm.alarm.MainActivity" />
+                android:value="pl.agh.ki.io.alarm.MainActivity" />
         </activity>
-        <activity android:name=".CreateGroupActivity" >
+        <activity android:name="pl.agh.ki.io.alarm.CreateGroupActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="pl.agh.ki.io.alarm.alarm.MainActivity" />
-        </activity>
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="pl.agh.ki.io.alarm.alarm.MainActivity" />
+                android:value="pl.agh.ki.io.alarm.MainActivity" />
         </activity>
     </application>
 

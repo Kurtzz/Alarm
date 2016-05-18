@@ -1,4 +1,4 @@
-package pl.agh.ki.io.alarm.alarm;
+package pl.agh.ki.io.alarm;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

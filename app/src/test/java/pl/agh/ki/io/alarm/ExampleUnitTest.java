@@ -1,4 +1,4 @@
-package pl.agh.ki.io.alarm.alarm;
+package pl.agh.ki.io.alarm;
 
 import org.junit.Test;
 

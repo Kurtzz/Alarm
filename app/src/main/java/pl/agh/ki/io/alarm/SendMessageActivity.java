@@ -1,4 +1,4 @@
-package pl.agh.ki.io.alarm.alarm;
+package pl.agh.ki.io.alarm;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import pl.agh.ki.io.alarm.alarm.R;
 
 public class SendMessageActivity extends AppCompatActivity implements View.OnClickListener {
 

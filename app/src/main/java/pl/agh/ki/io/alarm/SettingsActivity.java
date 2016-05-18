@@ -1,4 +1,4 @@
-package pl.agh.ki.io.alarm.alarm;
+package pl.agh.ki.io.alarm;
 
 
 import android.annotation.TargetApi;
@@ -21,6 +21,8 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 
 import java.util.List;
+
+import pl.agh.ki.io.alarm.alarm.R;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On

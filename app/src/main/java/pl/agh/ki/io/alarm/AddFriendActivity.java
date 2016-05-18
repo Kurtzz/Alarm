@@ -1,10 +1,12 @@
-package pl.agh.ki.io.alarm.alarm;
+package pl.agh.ki.io.alarm;
 
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import pl.agh.ki.io.alarm.alarm.R;
 
 public class AddFriendActivity extends AppCompatActivity implements View.OnClickListener {
 

@@ -52,13 +52,9 @@ public class InstanceRegistrationIntent extends IntentService {
 
     private void sendRegistrationToServer(String token) throws IOException {
         Log.i(TAG, "Registering token");
-        URL serverUrl = new URL("http://www.jdabrowa.pl/alarm/register");
+        URL serverUrl = new URL("http://www.jdabrowa.pl:8090/alarm/tokens/" + token);
         HttpURLConnection connection = (HttpURLConnection) serverUrl.openConnection();
         connection.setRequestMethod("PUT");
-        connection.setDoInput(true);
-        OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
-        writer.write(token);
-        writer.close();
         int responseCode = connection.getResponseCode();
         connection.getInputStream();
         Log.i(TAG, "Response code: " + responseCode);

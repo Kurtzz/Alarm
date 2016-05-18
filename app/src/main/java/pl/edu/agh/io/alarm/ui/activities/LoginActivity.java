@@ -39,10 +39,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        registerIdentityWithGoogle();
         setContentView(R.layout.activity_login);
         Button send = (Button) findViewById(R.id.LOGINLoginbtn);
         send.setOnClickListener(this);
+        registerIdentityWithGoogle();
         System.out.println("LoginActivity : Create");
     }
 

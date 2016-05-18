@@ -20,13 +20,10 @@
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/listView"
+        android:id="@+id/friendList_createGroup"
         android:layout_below="@+id/editText"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/create_group_button"
-        tools:listitem="@android:layout/simple_list_item_multiple_choice"
-        android:choiceMode="multipleChoice" />
-
+        android:layout_above="@+id/create_group_button" />
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

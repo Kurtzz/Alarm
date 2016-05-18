@@ -8,11 +8,15 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import pl.edu.agh.io.alarm.R;
+import pl.edu.agh.io.alarm.sqlite.helper.DatabaseHelper;
+import pl.edu.agh.io.alarm.sqlite.model.Friend;
 
 /**
  * Created by Mateusz on 2016-04-21.
  */
 public class AddFriendActivity extends Activity implements View.OnClickListener {
+
+    private DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +44,7 @@ public class AddFriendActivity extends Activity implements View.OnClickListener 
     @Override
     protected void onResume() {
         super.onResume();
-
+        databaseHelper = new DatabaseHelper(getApplicationContext());
         System.out.println("AddFriendActivity : Resume");
     }
 
@@ -68,6 +72,9 @@ public class AddFriendActivity extends Activity implements View.OnClickListener 
 //                    sendMsg.setAction("ADDFRIEND");
 //                    sendMsg.putExtra("NICKNAME",nickname);
 //                    startActivity(sendMsg);
+                    Friend friend = new Friend();
+                    friend.setNick(editText.getText().toString());
+                    databaseHelper.createFriend(friend);
                     this.finish();
                 }
                 break;

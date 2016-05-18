@@ -17,9 +17,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import pl.edu.agh.io.alarm.R;
 import pl.edu.agh.io.alarm.notifications.Notifications;
+import pl.edu.agh.io.alarm.sqlite.helper.DatabaseHelper;
+import pl.edu.agh.io.alarm.sqlite.model.Friend;
 import pl.edu.agh.io.alarm.ui.UI;
 
 /**
@@ -31,6 +34,7 @@ public class SendMessageActivity extends Activity implements View.OnClickListene
     private ArrayList<String> friendList = new ArrayList<>();
     private boolean mIsBound;
     private Notifications notificationsService;
+    private DatabaseHelper databaseHelper;
 
 
     @Override
@@ -42,19 +46,17 @@ public class SendMessageActivity extends Activity implements View.OnClickListene
         ImageButton imageButton = (ImageButton) findViewById(R.id.SENDMESSAGE_exitbtn);
         imageButton.setOnClickListener(this);
         doBindService();
+        databaseHelper = new DatabaseHelper(getApplicationContext());
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        friendList.add("resume");
-        Bundle extras = getIntent().getExtras();
-        if (extras!= null){
-            String value = extras.getString("Friends_list");
-            friendList.clear();
-            friendList.add(value);
-
+        friendList.clear();
+        List<Friend> fList = databaseHelper.getFriends();
+        for(Friend friend : fList){
+            friendList.add(friend.getNick());
         }
         final ListView listView = (ListView) findViewById(R.id.SENDMESSAGE_FriendListView);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.simple_list_view_content, friendList);

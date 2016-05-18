@@ -1,8 +1,12 @@
 package pl.edu.agh.io.alarm.ui.activities;
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,8 +16,12 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
+
 import pl.edu.agh.io.alarm.R;
+import pl.edu.agh.io.alarm.notifications.Notifications;
+import pl.edu.agh.io.alarm.sqlite.helper.DatabaseHelper;
+import pl.edu.agh.io.alarm.sqlite.model.Friend;
 import pl.edu.agh.io.alarm.ui.UI;
 
 /**
@@ -21,6 +29,11 @@ import pl.edu.agh.io.alarm.ui.UI;
  */
 public class SendMessageActivity extends Activity implements View.OnClickListener {
     private UI ui;
+    private String nickname;
+    private ArrayList<String> friendList = new ArrayList<>();
+    private boolean mIsBound;
+    private Notifications notificationsService;
+    private DatabaseHelper databaseHelper;
 
 
     @Override
@@ -31,27 +44,29 @@ public class SendMessageActivity extends Activity implements View.OnClickListene
         send.setOnClickListener(this);
         ImageButton imageButton = (ImageButton) findViewById(R.id.SENDMESSAGE_exitbtn);
         imageButton.setOnClickListener(this);
+        doBindService();
+        databaseHelper = new DatabaseHelper(getApplicationContext());
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        friendList.clear();
+        List<Friend> fList = databaseHelper.getFriends();
+        for(Friend friend : fList){
+            friendList.add(friend.getNick());
+        }
         final ListView listView = (ListView) findViewById(R.id.SENDMESSAGE_FriendListView);
-        String string[] = { "1", "2" , "3", "4"};
-        ArrayList<String> list = new ArrayList();
-        list.addAll(Arrays.asList(string));
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.simple_list_view_content, list);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.simple_list_view_content, friendList);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("------------------------");
-                System.out.println(parent.toString());
-                System.out.println(view.toString());
-                System.out.println(position);
-                System.out.println(id);
-
-                System.out.println(listView.getItemAtPosition(position).toString());
-                System.out.println("-------------------------");
+                nickname = listView.getItemAtPosition(position).toString();
             }
         });
-        System.out.println("Created");
+
     }
 
     @Override
@@ -64,16 +79,44 @@ public class SendMessageActivity extends Activity implements View.OnClickListene
         switch (v.getId()){
             case R.id.SENDMESSAGE_sendbtn:
                 EditText editText = (EditText) findViewById(R.id.SENDMESSAGE_msgtext);
-                if(editText.getText() != null){
-                    //TODO: Send to Communicate Module Friend and Text, then change to MainPageActivity
-                    System.out.println(editText.getText().toString());
-                    Intent intent = new Intent(this, AddFriendActivity.class);
-                    startActivity(intent);
+                if(!editText.getText().toString().isEmpty()){
+                    notificationsService.makeNotification(nickname,editText.getText().toString());
+                    this.finish();
+
                 }
                 break;
             case R.id.SENDMESSAGE_exitbtn:
-                System.out.println("ExitBtn Clicked");
+                this.finish();
                 break;
         }
+    }
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            notificationsService = ((Notifications.LocalBinder)service).getService();
+        }
+
+        public void onServiceDisconnected(ComponentName className) {
+            notificationsService = null;
+           }
+    };
+
+    void doBindService() {
+        bindService(new Intent(getApplicationContext(),
+                Notifications.class), mConnection, Context.BIND_AUTO_CREATE);
+        mIsBound = true;
+    }
+
+    void doUnbindService() {
+        if (mIsBound) {
+            unbindService(mConnection);
+            mIsBound = false;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        doUnbindService();
     }
 }

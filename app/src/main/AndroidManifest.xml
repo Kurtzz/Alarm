@@ -52,6 +52,11 @@
         </activity>
 
         <service android:name=".notifications.Notifications">
+
+        </service>
+
+        <service android:name=".sqlite.service.DatabaseService">
+
         </service>
     </application>
 

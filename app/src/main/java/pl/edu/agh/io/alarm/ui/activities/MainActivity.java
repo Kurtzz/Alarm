@@ -13,6 +13,7 @@ import pl.edu.agh.io.alarm.R;
  */
 public class MainActivity extends Activity implements  View.OnClickListener {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         System.out.println("Main Activity Created");
@@ -25,6 +26,7 @@ public class MainActivity extends Activity implements  View.OnClickListener {
         sendMsg.setOnClickListener(this);
         addFriend.setOnClickListener(this);
         createGroup.setOnClickListener(this);
+
     }
 
 
@@ -47,4 +49,6 @@ public class MainActivity extends Activity implements  View.OnClickListener {
                 break;
         }
     }
+
+
 }

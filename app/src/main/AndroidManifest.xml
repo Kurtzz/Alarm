@@ -46,6 +46,13 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+
+        <activity android:name=".notifications.MyClass">
+        </activity>
+
+        <service android:name=".notifications.Notifications">
+        </service>
     </application>
 
 </manifest>

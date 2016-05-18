@@ -14,4 +14,6 @@
     <string name="message">Message</string>
     <string name="add_new_friend">Add new Friend</string>
     <string name="friend_apos_s_name">Friend\'s Name</string>
+    <string name="local_service_started">Local_service_started</string>
+    <string name="local_service_label">Local servie label</string>
 </resources>

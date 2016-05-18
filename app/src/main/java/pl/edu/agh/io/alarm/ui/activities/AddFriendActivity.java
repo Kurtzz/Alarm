@@ -1,22 +1,29 @@
 package pl.edu.agh.io.alarm.ui.activities;
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
 import pl.edu.agh.io.alarm.R;
-import pl.edu.agh.io.alarm.sqlite.helper.DatabaseHelper;
 import pl.edu.agh.io.alarm.sqlite.model.Friend;
+import pl.edu.agh.io.alarm.sqlite.service.DatabaseService;
 
 /**
  * Created by Mateusz on 2016-04-21.
  */
 public class AddFriendActivity extends Activity implements View.OnClickListener {
 
-    private DatabaseHelper databaseHelper;
+
+    private boolean mIsBound;
+    private DatabaseService databaseService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +34,8 @@ public class AddFriendActivity extends Activity implements View.OnClickListener 
         btn.setOnClickListener(this);
         ImageButton b = (ImageButton) findViewById(R.id.ADDFRIEND_exitbtn);
         b.setOnClickListener(this);
+
+        doBindService();
     }
 
     @Override
@@ -44,7 +53,6 @@ public class AddFriendActivity extends Activity implements View.OnClickListener 
     @Override
     protected void onResume() {
         super.onResume();
-        databaseHelper = new DatabaseHelper(getApplicationContext());
         System.out.println("AddFriendActivity : Resume");
     }
 
@@ -57,6 +65,7 @@ public class AddFriendActivity extends Activity implements View.OnClickListener 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        doUnbindService();
         System.out.println("AddFriendActivity : Destory");
     }
 
@@ -74,7 +83,7 @@ public class AddFriendActivity extends Activity implements View.OnClickListener 
 //                    startActivity(sendMsg);
                     Friend friend = new Friend();
                     friend.setNick(editText.getText().toString());
-                    databaseHelper.createFriend(friend);
+                    databaseService.createFriend(friend);
                     this.finish();
                 }
                 break;
@@ -84,4 +93,30 @@ public class AddFriendActivity extends Activity implements View.OnClickListener 
                 break;
         }
     }
+
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            databaseService = ((DatabaseService.LocalBinder)service).getService();
+        }
+
+        public void onServiceDisconnected(ComponentName className) {
+            databaseService = null;
+        }
+    };
+
+    void doBindService() {
+        bindService(new Intent(getApplicationContext(),
+                DatabaseService.class), mConnection, Context.BIND_AUTO_CREATE);
+
+        mIsBound = true;
+    }
+
+    void doUnbindService() {
+        if (mIsBound) {
+            unbindService(mConnection);
+            mIsBound = false;
+        }
+    }
+
 }

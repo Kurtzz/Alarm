@@ -2,6 +2,7 @@ package pl.agh.ki.io.alarm.sqlite.helper;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -110,5 +111,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long friend_id = db.insert(TABLE_FRIEND, null, values);
 
         return friend_id;
+    }
+
+    /**
+     * Get single friend
+     */
+    public Friend getFriend(long friend_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery =
+                "SELECT * FROM " + TABLE_FRIEND
+                        + " WHERE " + KEY_FRIEND_ID + " = " + friend_id;
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        if(c != null) {
+            c.moveToFirst();
+        }
+
+        Friend friend = new Friend();
+        friend.setId(c.getInt(c.getColumnIndex(KEY_FRIEND_ID)));
+        friend.setNick(c.getString(c.getColumnIndex(KEY_NICK)));
+
+        return friend;
     }
 }

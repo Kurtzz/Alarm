@@ -234,4 +234,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return friends;
     }
+
+    /**
+     * Get single group
+     */
+    public Group getGroup(long group_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery =
+                "SELECT * FROM " + TABLE_GROUP
+                        + " WHERE " + KEY_GROUP_ID + " = " + group_id;
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c != null) {
+            c.moveToFirst();
+        }
+
+        Group group = new Group();
+        group.setId(c.getInt(c.getColumnIndex(KEY_FRIEND_ID)));
+        group.setGroupName(c.getString(c.getColumnIndex(KEY_GROUP_NAME)));
+
+        List<Friend> friends = getAllMembersOfTheGroup(group_id);
+        group.setFriends(friends);
+
+        return group;
+    }
 }

@@ -23,7 +23,7 @@ public class MyClass extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.shownotifications);
+        setContentView(R.layout.show_notifications);
 
         System.out.println("MYCLASS CONTEXT:   "+getApplicationContext().toString());
         btnBack = (Button) findViewById(R.id.buttonBack);

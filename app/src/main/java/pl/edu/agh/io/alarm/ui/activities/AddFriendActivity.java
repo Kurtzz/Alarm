@@ -1,7 +1,6 @@
 package pl.edu.agh.io.alarm.ui.activities;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,11 +8,15 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import pl.edu.agh.io.alarm.R;
+import pl.edu.agh.io.alarm.sqlite.helper.DatabaseHelper;
+import pl.edu.agh.io.alarm.sqlite.model.Friend;
 
 /**
  * Created by Mateusz on 2016-04-21.
  */
 public class AddFriendActivity extends Activity implements View.OnClickListener {
+
+    private DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,7 @@ public class AddFriendActivity extends Activity implements View.OnClickListener 
     @Override
     protected void onResume() {
         super.onResume();
-
+        databaseHelper = new DatabaseHelper(getApplicationContext());
         System.out.println("AddFriendActivity : Resume");
     }
 
@@ -65,12 +68,19 @@ public class AddFriendActivity extends Activity implements View.OnClickListener 
                 if(editText.getText() != null){
                     //TODO: Send intent to Comunnicate Module, then wait for Respone;
                     System.out.println("AddFriendActivity : Friend's Name: "+editText.getText().toString());
-                    Intent intent = new Intent(this,SendMessageActivity.class);
-                    startActivity(intent);
+//                    Intent sendMsg = new Intent(this,CommunicationModule.class);
+//                    sendMsg.setAction("ADDFRIEND");
+//                    sendMsg.putExtra("NICKNAME",nickname);
+//                    startActivity(sendMsg);
+                    Friend friend = new Friend();
+                    friend.setNick(editText.getText().toString());
+                    databaseHelper.createFriend(friend);
+                    this.finish();
                 }
                 break;
             case R.id.ADDFRIEND_exitbtn:
                 System.out.println("AddFriendActivity : ExitBtn Clicked");
+                this.finish();
                 break;
         }
     }

@@ -76,6 +76,19 @@
             android:enabled="true">
         </service>
 
+        <activity android:name=".ui.activities.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+
+        <activity android:name=".notifications.MyClass">
+        </activity>
+
+        <service android:name=".notifications.Notifications">
+        </service>
     </application>
 
 </manifest>

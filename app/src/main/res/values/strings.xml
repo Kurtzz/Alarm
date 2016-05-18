@@ -20,4 +20,6 @@
         running the sample again.</string>
     <string name="gcm_send_message">Token retrieved and sent to server! You can now use gcmsender to
         send downstream messages to this app.</string>
+    <string name="local_service_started">Local_service_started</string>
+    <string name="local_service_label">Local servie label</string>
 </resources>

@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import pl.agh.ki.io.alarm.sqlite.model.Friend;
 
 /**
@@ -133,5 +136,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         friend.setNick(c.getString(c.getColumnIndex(KEY_NICK)));
 
         return friend;
+    }
+
+    /**
+     * Get all friends
+     */
+    public List<Friend> getFriends() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Friend> friends = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_FRIEND;
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c.moveToFirst()) {
+            do {
+                Friend friend = new Friend();
+                friend.setId(c.getInt(c.getColumnIndex(KEY_FRIEND_ID)));
+                friend.setNick(c.getString(c.getColumnIndex(KEY_NICK)));
+
+                friends.add(friend);
+            } while (c.moveToNext());
+        }
+
+        return friends;
     }
 }

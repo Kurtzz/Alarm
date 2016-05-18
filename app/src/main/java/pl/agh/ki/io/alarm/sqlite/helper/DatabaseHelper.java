@@ -1,8 +1,11 @@
 package pl.agh.ki.io.alarm.sqlite.helper;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import pl.agh.ki.io.alarm.sqlite.model.Friend;
 
 /**
  * Created by P on 18.05.2016.
@@ -91,5 +94,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // create new tables
         onCreate(db);
+    }
+
+    // ------------------------ "friends" table methods ----------------//
+
+    /**
+     * Create friend
+     */
+    public long createFriend(Friend friend) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_NICK, friend.getNick());
+
+        long friend_id = db.insert(TABLE_FRIEND, null, values);
+
+        return friend_id;
     }
 }

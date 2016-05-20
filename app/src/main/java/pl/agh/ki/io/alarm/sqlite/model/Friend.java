@@ -7,15 +7,17 @@ public class Friend {
     private int id;
     private String nick;
     private int level;
+    private boolean isBlocked;
 
     public Friend() {
 
     }
 
-    public Friend(int id, String nick, int level) {
+    public Friend(int id, String nick, int level, boolean isBlocked) {
         this.id = id;
         this.nick = nick;
         this.level = level;
+        this.isBlocked = isBlocked;
     }
 
     public int getId() {
@@ -40,5 +42,13 @@ public class Friend {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
     }
 }

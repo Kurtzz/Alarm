@@ -145,6 +145,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         friend.setId(c.getInt(c.getColumnIndex(KEY_FRIEND_ID)));
         friend.setNick(c.getString(c.getColumnIndex(KEY_NICK)));
         friend.setLevel(c.getInt(c.getColumnIndex(KEY_LEVEL)));
+        friend.setBlocked(c.getInt(c.getColumnIndex(KEY_IS_BLOCKED)));
 
         return friend;
     }

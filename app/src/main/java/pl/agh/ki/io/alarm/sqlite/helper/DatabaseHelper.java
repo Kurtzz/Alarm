@@ -200,7 +200,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_GROUP_LEVEL, group.getGroupLevel());
 
         long group_id = db.insert(TABLE_GROUP, null, values);
-
+        createGroupFriend(group_id, group.getFriends());
 
         return group_id;
     }
@@ -221,7 +221,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         Group group = new Group();
-        group.setId(c.getInt(c.getColumnIndex(KEY_FRIEND_ID)));
+        group.setId(c.getInt(c.getColumnIndex(KEY_GROUP_ID)));
         group.setGroupName(c.getString(c.getColumnIndex(KEY_GROUP_NAME)));
 
         List<Friend> friends = getAllMembersOfTheGroup(group_id);
@@ -242,7 +242,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (c.moveToFirst()) {
             do {
                 Group group = new Group();
-                group.setId(c.getInt(c.getColumnIndex(KEY_FRIEND_ID)));
+                group.setId(c.getInt(c.getColumnIndex(KEY_GROUP_ID)));
                 group.setGroupName(c.getString(c.getColumnIndex(KEY_GROUP_NAME)));
                 group.setGroupLevel(c.getInt(c.getColumnIndex(KEY_GROUP_LEVEL)));
 

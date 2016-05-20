@@ -197,7 +197,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(KEY_GROUP_NAME, group.getGroupName());
-        values.put(KEY_LEVEL, group.getGroupLevel());
+        values.put(KEY_GROUP_LEVEL, group.getGroupLevel());
 
         long group_id = db.insert(TABLE_GROUP, null, values);
 

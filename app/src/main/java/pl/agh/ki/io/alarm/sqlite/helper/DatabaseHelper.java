@@ -41,7 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     + "(" + KEY_FRIEND_ID + " INTEGER PRIMARY KEY NOT NULL, "
                     + KEY_NICK + " TEXT, "
                     + KEY_LEVEL + " INTEGER, "
-                    + KEY_IS_BLOCKED + "INTEGER"
+                    + KEY_IS_BLOCKED + " INTEGER"
                     + ")";
 
     // ------------------------ TABLE GROUP ------------------------ //

@@ -119,8 +119,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_NICK, friend.getNick());
         values.put(KEY_LEVEL, friend.getLevel());
-        values.put(KEY_IS_BLOCKED, friend.isBlocked());
-        
+        values.put(KEY_IS_BLOCKED, (friend.isBlocked()) ? 1 : 0);
+
         long friend_id = db.insert(TABLE_FRIEND, null, values);
 
         return friend_id;

@@ -296,16 +296,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + " WHERE " + KEY_GROUP_ID + " = " + group_id;
 
         Cursor c = db.rawQuery(selectQuery, null);
+        List<Integer> friend_ids = new ArrayList<>();
         if (c.moveToFirst()) {
             do {
-                Friend friend = new Friend();
-                friend.setId(c.getInt(c.getColumnIndex(KEY_FRIEND_ID)));
-                friend.setNick(c.getString(c.getColumnIndex(KEY_NICK)));
-                friend.setLevel(c.getInt(c.getColumnIndex(KEY_LEVEL)));
-                friend.setBlocked(c.getInt(c.getColumnIndex(KEY_IS_BLOCKED)) != 0);
-
-                friends.add(friend);
+                friend_ids.add(c.getInt(c.getColumnIndex(KEY_FRIEND_ID)));
             } while (c.moveToNext());
+        }
+
+        for (Integer integer : friend_ids) {
+            Friend friend = getFriend(integer);
+            friends.add(friend);
         }
 
         return friends;

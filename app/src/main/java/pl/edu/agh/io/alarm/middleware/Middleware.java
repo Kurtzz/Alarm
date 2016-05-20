@@ -17,10 +17,7 @@ import pl.edu.agh.io.alarm.sqlite.model.Friend;
 import pl.edu.agh.io.alarm.sqlite.model.Group;
 import pl.edu.agh.io.alarm.sqlite.service.DatabaseService;
 
-/**
- * Created by Mateusz on 2016-05-18.
- */
-public class Middleware extends Service {
+public class    Middleware extends Service {
 
     private static final String TAG = Middleware.class.getSimpleName();
 

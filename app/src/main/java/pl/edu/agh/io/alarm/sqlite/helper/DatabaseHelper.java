@@ -12,9 +12,6 @@ import java.util.List;
 import pl.edu.agh.io.alarm.sqlite.model.Friend;
 import pl.edu.agh.io.alarm.sqlite.model.Group;
 
-/**
- * Created by P on 18.05.2016.
- */
 public class DatabaseHelper extends SQLiteOpenHelper {
     //Database name and version
     private static final String DATABASE_NAME = "alarmDatabase";

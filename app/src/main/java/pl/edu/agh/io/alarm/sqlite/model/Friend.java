@@ -1,7 +1,5 @@
 package pl.edu.agh.io.alarm.sqlite.model;
-/**
- * Created by P on 18.05.2016.
- */
+
 public class Friend {
     private int id;
     private String nick;

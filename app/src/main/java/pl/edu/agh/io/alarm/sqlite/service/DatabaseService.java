@@ -11,9 +11,6 @@ import pl.edu.agh.io.alarm.sqlite.helper.DatabaseHelper;
 import pl.edu.agh.io.alarm.sqlite.model.Friend;
 import pl.edu.agh.io.alarm.sqlite.model.Group;
 
-/**
- * Created by Mateusz on 2016-05-18.
- */
 public class DatabaseService extends Service {
 
 

@@ -3,9 +3,6 @@ package pl.edu.agh.io.alarm.sqlite.model;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by P on 18.05.2016.
- */
 public class Group {
     private int id;
     private String groupName;

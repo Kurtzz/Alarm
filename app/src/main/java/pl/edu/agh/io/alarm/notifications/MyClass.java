@@ -9,9 +9,6 @@ import android.widget.TextView;
 
 import pl.edu.agh.io.alarm.R;
 
-/**
- * Created by Mateusz on 2016-05-18.
- */
 public class MyClass extends Activity {
     private Button btnBack;
     private String text;

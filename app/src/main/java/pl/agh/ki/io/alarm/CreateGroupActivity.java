@@ -3,18 +3,25 @@ package pl.agh.ki.io.alarm;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.SparseBooleanArray;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import pl.agh.ki.io.alarm.alarm.R;
 import pl.agh.ki.io.alarm.sqlite.helper.DatabaseHelper;
 import pl.agh.ki.io.alarm.sqlite.model.Friend;
+import pl.agh.ki.io.alarm.sqlite.model.Group;
 
 public class CreateGroupActivity extends AppCompatActivity implements View.OnClickListener {
     private ListView friendList;
     private FriendListAdapter friendListAdapter;
+    private Button createGroupButton;
+    private EditText nameEditText;
 
     private DatabaseHelper databaseHelper;
 
@@ -25,6 +32,31 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_create_group);
 
         databaseHelper = new DatabaseHelper(getApplicationContext());
+
+        nameEditText = (EditText) findViewById(R.id.createGroup_nameEditText);
+
+        createGroupButton = (Button) findViewById(R.id.createGroup_createGroupButton);
+        createGroupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SparseBooleanArray checkedItems = friendListAdapter.getCheckedItems();
+                List<Friend> checkedFriends = new ArrayList<>();
+                for (int i = 0; i < checkedItems.size(); i++) {
+                    if (checkedItems.get(i)) {
+                        checkedFriends.add(friendListAdapter.getItem(i));
+                        System.out.println("added " + friendListAdapter.getItem(i)); ///////////////
+                    }
+                }
+
+                Group group = new Group();
+                group.setGroupName(nameEditText.getText().toString());
+                group.setGroupLevel(5);
+                group.setFriends(checkedFriends);
+                databaseHelper.createGroup(group);
+
+                nameEditText.setText("");
+            }
+        });
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);

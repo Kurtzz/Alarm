@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceListItem"
         android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
-        android:id="@+id/friendListItem_nickTextView"
+        android:id="@+id/friendListItemMulti_nickTextView"
         android:singleLine="true"
         android:textStyle="bold" />
 

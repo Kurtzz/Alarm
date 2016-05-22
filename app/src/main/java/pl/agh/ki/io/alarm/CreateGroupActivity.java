@@ -25,6 +25,7 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
 
     private DatabaseHelper databaseHelper;
 
+    private static final int MAX_LEVEL = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,27 +37,7 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         nameEditText = (EditText) findViewById(R.id.createGroup_nameEditText);
 
         createGroupButton = (Button) findViewById(R.id.createGroup_createGroupButton);
-        createGroupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SparseBooleanArray checkedItems = friendListAdapter.getCheckedItems();
-                List<Friend> checkedFriends = new ArrayList<>();
-                for (int i = 0; i < checkedItems.size(); i++) {
-                    int key = checkedItems.keyAt(i);
-                    if (checkedItems.valueAt(i)) {
-                        checkedFriends.add(friendListAdapter.getItem(key));
-                    }
-                }
-
-                Group group = new Group();
-                group.setGroupName(nameEditText.getText().toString());
-                group.setGroupLevel(5);
-                group.setFriends(checkedFriends);
-                databaseHelper.createGroup(group);
-
-                nameEditText.setText("");
-            }
-        });
+        createGroupButton.setOnClickListener(this);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -70,10 +51,24 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         friendList.setAdapter(friendListAdapter);
     }
 
-
-
     @Override
     public void onClick(View v) {
+        SparseBooleanArray checkedItems = friendListAdapter.getCheckedItems();
+        List<Friend> checkedFriends = new ArrayList<>();
 
+        for (int i = 0; i < checkedItems.size(); i++) {
+            int key = checkedItems.keyAt(i);
+            if (checkedItems.valueAt(i)) {
+                checkedFriends.add(friendListAdapter.getItem(key));
+            }
+        }
+
+        Group group = new Group();
+        group.setGroupName(nameEditText.getText().toString());
+        group.setGroupLevel(MAX_LEVEL);
+        group.setFriends(checkedFriends);
+        databaseHelper.createGroup(group);
+
+        nameEditText.setText("");
     }
 }

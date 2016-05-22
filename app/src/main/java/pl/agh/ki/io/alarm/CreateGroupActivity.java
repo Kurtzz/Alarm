@@ -42,8 +42,9 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
                 SparseBooleanArray checkedItems = friendListAdapter.getCheckedItems();
                 List<Friend> checkedFriends = new ArrayList<>();
                 for (int i = 0; i < checkedItems.size(); i++) {
-                    if (checkedItems.get(i)) {
-                        checkedFriends.add(friendListAdapter.getItem(i));
+                    int key = checkedItems.keyAt(i);
+                    if (checkedItems.valueAt(i)) {
+                        checkedFriends.add(friendListAdapter.getItem(key));
                     }
                 }
 

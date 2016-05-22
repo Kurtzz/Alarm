@@ -28,7 +28,7 @@ import pl.agh.ki.io.alarm.sqlite.model.Friend;
  */
 public class FriendsFragment extends Fragment {
     private ListView friendList;
-    private FriendListAdapter friendListAdapter;
+    private DefaultFriendListAdapter friendListAdapter;
 
     private OnFragmentInteractionListener mListener;
     private FloatingActionButton floatingActionButton;
@@ -81,7 +81,7 @@ public class FriendsFragment extends Fragment {
         List<Friend> friends = databaseHelper.getFriends();
 
         friendList = (ListView) rootView.findViewById(R.id.friendFragment_friendListView);
-        friendListAdapter = new FriendListAdapter(rootView.getContext(), R.layout.friend_list_item, friends);
+        friendListAdapter = new DefaultFriendListAdapter(rootView.getContext(), R.layout.friend_list_item, friends);
 
         friendListAdapter.setArrayList(friends);
         friendList.setAdapter(friendListAdapter);

@@ -19,7 +19,7 @@ import pl.agh.ki.io.alarm.sqlite.model.Group;
 
 public class CreateGroupActivity extends AppCompatActivity implements View.OnClickListener {
     private ListView friendList;
-    private FriendListAdapter friendListAdapter;
+    private MultiChoiceFriendListAdapter friendListAdapter;
     private Button createGroupButton;
     private EditText nameEditText;
 
@@ -63,7 +63,7 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         List<Friend> friends = databaseHelper.getFriends();
 
         friendList = (ListView) findViewById(R.id.createGroup_friendListView);
-        friendListAdapter = new FriendListAdapter(getApplicationContext(), R.layout.friend_list_item_multi, friends);
+        friendListAdapter = new MultiChoiceFriendListAdapter(getApplicationContext(), R.layout.friend_list_item_multi, friends);
 
         friendListAdapter.setArrayList(friends);
         friendList.setAdapter(friendListAdapter);

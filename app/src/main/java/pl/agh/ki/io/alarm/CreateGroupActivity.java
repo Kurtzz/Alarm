@@ -44,7 +44,6 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
                 for (int i = 0; i < checkedItems.size(); i++) {
                     if (checkedItems.get(i)) {
                         checkedFriends.add(friendListAdapter.getItem(i));
-                        System.out.println("added " + friendListAdapter.getItem(i)); ///////////////
                     }
                 }
 

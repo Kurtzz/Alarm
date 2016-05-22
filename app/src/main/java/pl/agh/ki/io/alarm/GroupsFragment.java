@@ -8,8 +8,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ExpandableListView;
+
+import java.util.List;
 
 import pl.agh.ki.io.alarm.alarm.R;
+import pl.agh.ki.io.alarm.sqlite.helper.DatabaseHelper;
+import pl.agh.ki.io.alarm.sqlite.model.Group;
 
 
 /**
@@ -21,9 +27,14 @@ import pl.agh.ki.io.alarm.alarm.R;
  * create an instance of this fragment.
  */
 public class GroupsFragment extends Fragment {
+    private ExpandableListView groupList;
+    private GroupListAdapter groupListAdapter;
 
     private OnFragmentInteractionListener mListener;
     private FloatingActionButton floatingActionButton;
+
+    private DatabaseHelper databaseHelper;
+
 
     public GroupsFragment() {
         // Required empty public constructor
@@ -45,6 +56,7 @@ public class GroupsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        databaseHelper = new DatabaseHelper(getContext());
         if (getArguments() != null) {
 
         }
@@ -63,6 +75,22 @@ public class GroupsFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        List<Group> groups = databaseHelper.getGroups();
+
+        groupList = (ExpandableListView) rootView.findViewById(R.id.groupFragment_groupListView);
+        groupListAdapter = new GroupListAdapter(getContext(), groups);
+
+        groupListAdapter.setArrayList(groups);
+        groupList.setAdapter(groupListAdapter);
+
+        groupList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
         return rootView;
     }
 

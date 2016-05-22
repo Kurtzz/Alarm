@@ -26,7 +26,7 @@ import pl.agh.ki.io.alarm.sqlite.model.Friend;
  * Use the {@link FriendsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FriendsFragment extends Fragment {
+public class FriendsFragment extends Fragment implements AdapterView.OnItemClickListener{
     private ListView friendList;
     private DefaultFriendListAdapter friendListAdapter;
 
@@ -86,16 +86,20 @@ public class FriendsFragment extends Fragment {
         friendListAdapter.setArrayList(friends);
         friendList.setAdapter(friendListAdapter);
 
-        friendList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(rootView.getContext(), SendMessageActivity.class);
-                intent.putExtra(EXTRA_NICK, friendListAdapter.getItem(position).getId());
-                startActivity(intent);
-            }
-        });
+        friendList.setOnItemClickListener(this);
 
         return rootView;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        sendAlarm(position);
+    }
+
+    private void sendAlarm(int position) {
+        Intent intent = new Intent(getContext(), SendMessageActivity.class);
+        intent.putExtra(EXTRA_NICK, friendListAdapter.getItem(position).getId());
+        startActivity(intent);
     }
 
     /**

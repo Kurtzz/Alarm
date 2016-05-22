@@ -108,4 +108,13 @@ public class GroupsFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        List<Group> groups = databaseHelper.getGroups();
+        groupListAdapter.setArrayList(groups);
+
+        System.out.println(groups);
+    }
 }

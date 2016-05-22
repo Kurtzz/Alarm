@@ -70,6 +70,10 @@
     <string name="createGroup_createGroupButton">Create Group</string>
     <string name="createGroup_namePlaceholder">Enter group name</string>
     <string name="sendMessage_sendButton">Send Alarm</string>
+    <string name="send_alarm">Send alarm</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="block">Block</string>
     <string-array name="sendMessage_levelsArray">
         <item>Level 1</item>
         <item>Level 2</item>

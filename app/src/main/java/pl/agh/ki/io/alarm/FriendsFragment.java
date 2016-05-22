@@ -5,7 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -87,8 +89,16 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemClick
         friendList.setAdapter(friendListAdapter);
 
         friendList.setOnItemClickListener(this);
+        registerForContextMenu(friendList);
 
         return rootView;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater menuInflater = new MenuInflater(getContext());
+        menuInflater.inflate(R.menu.friend_menu, menu);
     }
 
     @Override

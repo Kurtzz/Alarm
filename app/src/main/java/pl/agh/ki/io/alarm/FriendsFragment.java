@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -102,6 +103,27 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemClick
     }
 
     @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.friendMenu_alarm:
+                sendAlarm(info.position);
+                return true;
+            case R.id.friendMenu_edit:
+                editFriend(info.position);
+                return true;
+            case R.id.friendMenu_block:
+                blockFriend(info.position);
+                return true;
+            case R.id.friendMenu_delete:
+                deleteFriend(info.position);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         sendAlarm(position);
     }
@@ -110,6 +132,18 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemClick
         Intent intent = new Intent(getContext(), SendMessageActivity.class);
         intent.putExtra(EXTRA_NICK, friendListAdapter.getItem(position).getId());
         startActivity(intent);
+    }
+
+    private void editFriend(int position) {
+
+    }
+
+    private void blockFriend(int position) {
+
+    }
+
+    private void deleteFriend(int position) {
+
     }
 
     /**

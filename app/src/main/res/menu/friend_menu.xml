@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/friendMenu_alarm"
+        android:title="@string/send_alarm" />
+    <item android:id="@+id/friendMenu_edit"
+        android:title="@string/edit" />
+    <item android:id="@+id/friendMenu_block"
+        android:title="@string/block" />
+    <item android:id="@+id/friendMenu_delete"
+        android:title="@string/delete" />
+</menu>

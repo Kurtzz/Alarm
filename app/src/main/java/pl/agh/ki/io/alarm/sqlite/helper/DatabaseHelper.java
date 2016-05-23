@@ -291,15 +291,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * Create group_friend
      */
-    public void createGroupFriend(long group_id, List<Friend> friends) {
+    public void createGroupFriend(long group_id, long friend_id) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        for (Friend friend : friends) {
-            ContentValues values = new ContentValues();
-            values.put(KEY_GROUP_ID, group_id);
-            values.put(KEY_FRIEND_ID, friend.getId());
+        ContentValues values = new ContentValues();
+        values.put(KEY_GROUP_ID, group_id);
+        values.put(KEY_FRIEND_ID, friend_id);
 
-            db.insert(TABLE_FRIEND_GROUP, null, values);
+        db.insert(TABLE_FRIEND_GROUP, null, values);
+    }
+
+    public void createGroupFriend(long group_id, List<Friend> friends) {
+        for (Friend friend : friends) {
+            createGroupFriend(group_id, friend.getId());
         }
     }
 

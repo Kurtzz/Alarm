@@ -127,6 +127,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * Update friend
+     */
+    public int updateFriend(Friend friend) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_NICK, friend.getNick());
+        values.put(KEY_LEVEL, friend.getLevel());
+        values.put(KEY_IS_BLOCKED, (friend.isBlocked()) ? 1 : 0);
+
+        int result = db.update(TABLE_FRIEND, values, KEY_FRIEND_ID + " = ?",
+                new String[]{String.valueOf(friend.getId())});
+
+        return result;
+    }
+
+    /**
      * Get single friend
      */
     public Friend getFriend(long friend_id) {

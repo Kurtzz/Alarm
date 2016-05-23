@@ -127,6 +127,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * Update friend
+     */
+    public int updateFriend(Friend friend) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_NICK, friend.getNick());
+        values.put(KEY_LEVEL, friend.getLevel());
+        values.put(KEY_IS_BLOCKED, (friend.isBlocked()) ? 1 : 0);
+
+        int result = db.update(TABLE_FRIEND, values, KEY_FRIEND_ID + " = ?",
+                new String[]{String.valueOf(friend.getId())});
+
+        return result;
+    }
+
+    /**
      * Get single friend
      */
     public Friend getFriend(long friend_id) {
@@ -206,6 +223,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * Update group
+     */
+    public void updateGroup(Group group) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_GROUP_NAME, group.getGroupName());
+        values.put(KEY_LEVEL, group.getGroupLevel());
+
+        db.update(TABLE_GROUP, values, KEY_GROUP_ID + " = ?",
+                new String[]{String.valueOf(group.getId())});
+
+        //Update linking tables
+        List<Friend> dbFriends = getAllMembersOfTheGroup(group.getId());
+        if (dbFriends.equals(group.getFriends())) {
+            return;
+        }
+        for (Friend friend : dbFriends) {
+            if (!group.getFriends().contains(friend)) {
+                deleteGroupFriend(friend);
+            }
+        }
+        for (Friend friend : group.getFriends()) {
+            if (!dbFriends.contains(friend)) {
+                createGroupFriend(group.getId(), friend.getId());
+            }
+        }
+    }
+
+    /**
      * Get single group
      */
     public Group getGroup(long group_id) {
@@ -274,15 +321,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * Create group_friend
      */
-    public void createGroupFriend(long group_id, List<Friend> friends) {
+    public void createGroupFriend(long group_id, long friend_id) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        for (Friend friend : friends) {
-            ContentValues values = new ContentValues();
-            values.put(KEY_GROUP_ID, group_id);
-            values.put(KEY_FRIEND_ID, friend.getId());
+        ContentValues values = new ContentValues();
+        values.put(KEY_GROUP_ID, group_id);
+        values.put(KEY_FRIEND_ID, friend_id);
 
-            db.insert(TABLE_FRIEND_GROUP, null, values);
+        db.insert(TABLE_FRIEND_GROUP, null, values);
+    }
+
+    public void createGroupFriend(long group_id, List<Friend> friends) {
+        for (Friend friend : friends) {
+            createGroupFriend(group_id, friend.getId());
         }
     }
 

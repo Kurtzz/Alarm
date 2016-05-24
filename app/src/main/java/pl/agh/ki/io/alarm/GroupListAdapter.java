@@ -36,12 +36,12 @@ public class GroupListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public Object getGroup(int groupPosition) {
+    public Group getGroup(int groupPosition) {
         return groupList.get(groupPosition);
     }
 
     @Override
-    public Object getChild(int groupPosition, int childPosition) {
+    public Friend getChild(int groupPosition, int childPosition) {
         return groupList.get(groupPosition).getFriends().get(childPosition);
     }
 

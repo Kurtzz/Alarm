@@ -18,7 +18,7 @@
         android:inputType="textMultiLine"
         android:ems="10"
         android:id="@+id/sendMessage_messageEditText"
-        android:hint="Type Message" />
+        android:hint="@string/type_message_hint" />
 
     <Spinner
         android:layout_width="fill_parent"

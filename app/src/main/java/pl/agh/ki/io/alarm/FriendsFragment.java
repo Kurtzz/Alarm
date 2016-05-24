@@ -38,7 +38,7 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemClick
 
     private DatabaseHelper databaseHelper;
 
-    public static final String EXTRA_NICK = "pl.agh.ki.io.alarm.NICK";
+    public static final String EXTRA_FRIEND_ID = "pl.agh.ki.io.alarm.FRIEND_ID";
 
     public FriendsFragment() {
         // Required empty public constructor
@@ -130,7 +130,7 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemClick
 
     private void sendAlarm(int position) {
         Intent intent = new Intent(getContext(), SendMessageActivity.class);
-        intent.putExtra(EXTRA_NICK, friendListAdapter.getItem(position).getId());
+        intent.putExtra(EXTRA_FRIEND_ID, friendListAdapter.getItem(position).getId());
         startActivity(intent);
     }
 

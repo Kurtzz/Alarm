@@ -20,7 +20,7 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
 
         Spinner spinner = (Spinner) findViewById(R.id.sendMessage_levelSpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.sendMessage_levelsArray, android.R.layout.simple_spinner_dropdown_item);
+                R.array.alarmLevelsArray, android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
@@ -30,7 +30,7 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        String nick = getIntent().getStringExtra(FriendsFragment.EXTRA_NICK);
+        String nick = getIntent().getStringExtra(FriendsFragment.EXTRA_FRIEND_ID);
         System.out.println("MESSAGE TO: " + nick);
     }
 

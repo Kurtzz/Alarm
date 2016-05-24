@@ -74,7 +74,7 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="block">Block</string>
-    <string-array name="sendMessage_levelsArray">
+    <string-array name="alarmLevelsArray">
         <item>Level 1</item>
         <item>Level 2</item>
         <item>Level 3</item>

@@ -38,6 +38,8 @@ public class GroupsFragment extends Fragment {
 
     private DatabaseHelper databaseHelper;
 
+    public static final String EXTRA_GROUP_ID = "pl.agh.ki.io.alarm.GROUP_ID";
+
     public GroupsFragment() {
         // Required empty public constructor
     }
@@ -124,7 +126,9 @@ public class GroupsFragment extends Fragment {
     }
 
     private void sendAlarm(int position) {
-
+        Intent intent = new Intent(getContext(), SendMessageActivity.class);
+        intent.putExtra(EXTRA_GROUP_ID, groupListAdapter.getGroup(position).getId());
+        startActivity(intent);
     }
 
     private void editGroup(int position) {

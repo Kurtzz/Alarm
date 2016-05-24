@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -36,7 +37,6 @@ public class GroupsFragment extends Fragment {
     private FloatingActionButton floatingActionButton;
 
     private DatabaseHelper databaseHelper;
-
 
     public GroupsFragment() {
         // Required empty public constructor
@@ -103,6 +103,36 @@ public class GroupsFragment extends Fragment {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater menuInflater = new MenuInflater(getContext());
         menuInflater.inflate(R.menu.group_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.groupMenu_alarm:
+                sendAlarm(info.position);
+                return true;
+            case R.id.groupdMenu_edit:
+                editGroup(info.position);
+                return true;
+            case R.id.groupMenu_delete:
+                deleteGroup(info.position);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void sendAlarm(int position) {
+
+    }
+
+    private void editGroup(int position) {
+
+    }
+
+    private void deleteGroup(int position) {
+
     }
 
     /**

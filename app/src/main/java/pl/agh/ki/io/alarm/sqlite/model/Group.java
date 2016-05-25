@@ -54,4 +54,20 @@ public class Group {
     public void setFriends(List<Friend> friends) {
         this.friends = friends;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Group group = (Group) o;
+
+        return getId() == group.getId();
+
+    }
+
+    @Override
+    public int hashCode() {
+        return getId();
+    }
 }

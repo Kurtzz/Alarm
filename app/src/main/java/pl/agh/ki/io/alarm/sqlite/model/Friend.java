@@ -3,7 +3,7 @@ package pl.agh.ki.io.alarm.sqlite.model;
 /**
  * Created by P on 18.05.2016.
  */
-public class Friend implements Comparable {
+public class Friend implements Comparable<Friend> {
     private int id;
     private String nick;
     private int level;
@@ -69,7 +69,7 @@ public class Friend implements Comparable {
     }
 
     @Override
-    public int compareTo(Object another) {
-        return this.getNick().compareTo(((Friend) another).getNick());
+    public int compareTo(Friend another) {
+        return this.getNick().compareTo(another.getNick());
     }
 }

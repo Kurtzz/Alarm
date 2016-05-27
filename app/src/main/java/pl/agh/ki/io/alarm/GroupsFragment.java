@@ -11,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 
 import java.util.List;
@@ -87,13 +86,6 @@ public class GroupsFragment extends Fragment {
 
         groupListAdapter.setArrayList(groups);
         groupList.setAdapter(groupListAdapter);
-
-        groupList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
 
         registerForContextMenu(groupList);
 

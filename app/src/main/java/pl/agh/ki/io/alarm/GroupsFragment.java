@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 
 import java.util.List;
@@ -36,8 +37,6 @@ public class GroupsFragment extends Fragment {
     private FloatingActionButton floatingActionButton;
 
     private DatabaseHelper databaseHelper;
-
-    public static final String EXTRA_GROUP_ID = "pl.agh.ki.io.alarm.GROUP_ID";
 
     public GroupsFragment() {
         // Required empty public constructor
@@ -119,7 +118,8 @@ public class GroupsFragment extends Fragment {
 
     private void sendAlarm(int position) {
         Intent intent = new Intent(getContext(), SendMessageActivity.class);
-        intent.putExtra(EXTRA_GROUP_ID, groupListAdapter.getGroup(position).getId());
+        intent.putExtra(SendMessageActivity.EXTRA_ID, groupListAdapter.getGroup(position).getId());
+        intent.putExtra(SendMessageActivity.EXTRA_ID_TYPE, SendMessageActivity.TYPE_GROUP);
         startActivity(intent);
     }
 

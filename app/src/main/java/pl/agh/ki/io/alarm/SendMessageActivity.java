@@ -1,5 +1,6 @@
 package pl.agh.ki.io.alarm;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,12 @@ import pl.agh.ki.io.alarm.alarm.R;
 
 public class SendMessageActivity extends AppCompatActivity implements View.OnClickListener {
     private int receiversId;
+    private String idType;
+
+    public static final String EXTRA_ID = "pl.agh.ki.io.alarm.SendMessage.Activity.ID";
+    public static final String EXTRA_ID_TYPE = "pl.agh.ki.io.alarm.SendMessage.Activity.ID_TYPE";
+    public static final String TYPE_FRIEND = "TYPE_FRIEND";
+    public static final String TYPE_GROUP = "TYPE_GROUP";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +38,9 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        receiversId = getIntent().getIntExtra(FriendsFragment.EXTRA_FRIEND_ID, 0);
+        Intent intent = getIntent();
+        receiversId = intent.getIntExtra(EXTRA_ID, 0);
+        idType = intent.getStringExtra(EXTRA_ID_TYPE);
     }
 
     @Override
@@ -43,7 +52,7 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
         int level = Integer.valueOf(spinner.getSelectedItem().toString().substring(6));
 
         // TODO: Send message
-        
+
         spinner.setSelection(0);
         editText.setText("");
     }

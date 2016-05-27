@@ -41,7 +41,8 @@ public class DefaultFriendListAdapter extends AbstractFriendListAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), SendMessageActivity.class);
-                intent.putExtra(FriendsFragment.EXTRA_FRIEND_ID, friend.getId());
+                intent.putExtra(SendMessageActivity.EXTRA_ID, friend.getId());
+                intent.putExtra(SendMessageActivity.EXTRA_ID_TYPE, SendMessageActivity.TYPE_FRIEND);
                 getContext().startActivity(intent);
             }
         });

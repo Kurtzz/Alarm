@@ -29,7 +29,7 @@ import pl.agh.ki.io.alarm.sqlite.model.Friend;
  * Use the {@link FriendsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FriendsFragment extends Fragment implements AdapterView.OnItemClickListener{
+public class FriendsFragment extends Fragment {
     private ListView friendList;
     private DefaultFriendListAdapter friendListAdapter;
 
@@ -89,7 +89,6 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemClick
         friendListAdapter.setArrayList(friends);
         friendList.setAdapter(friendListAdapter);
 
-        friendList.setOnItemClickListener(this);
         registerForContextMenu(friendList);
 
         return rootView;
@@ -121,11 +120,6 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemClick
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        sendAlarm(position);
     }
 
     private void sendAlarm(int position) {

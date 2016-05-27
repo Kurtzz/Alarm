@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by P on 18.05.2016.
  */
-public class Group {
+public class Group implements Comparable<Group> {
     private int id;
     private String groupName;
     private int groupLevel;
@@ -53,5 +53,26 @@ public class Group {
 
     public void setFriends(List<Friend> friends) {
         this.friends = friends;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Group group = (Group) o;
+
+        return getId() == group.getId();
+
+    }
+
+    @Override
+    public int hashCode() {
+        return getId();
+    }
+
+    @Override
+    public int compareTo(Group another) {
+        return this.getGroupName().compareTo(another.getGroupName());
     }
 }

@@ -84,7 +84,7 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemClick
         List<Friend> friends = databaseHelper.getFriends();
 
         friendList = (ListView) rootView.findViewById(R.id.friendFragment_friendListView);
-        friendListAdapter = new DefaultFriendListAdapter(rootView.getContext(), R.layout.friend_list_item, friends);
+        friendListAdapter = new DefaultFriendListAdapter(rootView.getContext(), R.layout.friend_list_item);
 
         friendListAdapter.setArrayList(friends);
         friendList.setAdapter(friendListAdapter);

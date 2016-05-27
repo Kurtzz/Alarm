@@ -46,7 +46,7 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         List<Friend> friends = databaseHelper.getFriends();
 
         friendList = (ListView) findViewById(R.id.createGroup_friendListView);
-        friendListAdapter = new MultiChoiceFriendListAdapter(getApplicationContext(), R.layout.friend_list_item_multi, friends);
+        friendListAdapter = new MultiChoiceFriendListAdapter(getApplicationContext(), R.layout.friend_list_item_multi);
 
         friendListAdapter.setArrayList(friends);
         friendList.setAdapter(friendListAdapter);

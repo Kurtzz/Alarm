@@ -9,8 +9,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import java.util.List;
-
 import pl.agh.ki.io.alarm.alarm.R;
 import pl.agh.ki.io.alarm.sqlite.model.Friend;
 
@@ -20,8 +18,8 @@ import pl.agh.ki.io.alarm.sqlite.model.Friend;
 public class MultiChoiceFriendListAdapter extends AbstractFriendListAdapter {
     private SparseBooleanArray checkedItems;
 
-    public MultiChoiceFriendListAdapter(Context context, int textViewResourceId, List<Friend> friends) {
-        super(context, textViewResourceId, friends);
+    public MultiChoiceFriendListAdapter(Context context, int textViewResourceId) {
+        super(context, textViewResourceId);
         checkedItems = new SparseBooleanArray();
     }
 

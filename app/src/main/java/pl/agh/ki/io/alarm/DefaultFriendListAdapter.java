@@ -6,8 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
-
 import pl.agh.ki.io.alarm.alarm.R;
 import pl.agh.ki.io.alarm.sqlite.model.Friend;
 
@@ -16,8 +14,8 @@ import pl.agh.ki.io.alarm.sqlite.model.Friend;
  */
 public class DefaultFriendListAdapter extends AbstractFriendListAdapter {
 
-    public DefaultFriendListAdapter(Context context, int textViewResourceId, List<Friend> friends) {
-        super(context, textViewResourceId, friends);
+    public DefaultFriendListAdapter(Context context, int textViewResourceId) {
+        super(context, textViewResourceId);
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
+import java.util.Collections;
 import java.util.List;
 
 import pl.agh.ki.io.alarm.sqlite.model.Friend;
@@ -17,10 +18,9 @@ public abstract class AbstractFriendListAdapter extends ArrayAdapter<Friend> {
     private List<Friend> friendList;
     private int textViewResourceId;
 
-    public AbstractFriendListAdapter(Context context, int textViewResourceId, List<Friend> friends) {
+    public AbstractFriendListAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
         this.context = context;
-        this.friendList = friends;
         this.textViewResourceId = textViewResourceId;
     }
 

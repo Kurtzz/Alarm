@@ -27,23 +27,23 @@
             android:name="pl.agh.ki.io.alarm.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName="pl.agh.ki.io.alarm.MainActivity" />
-        <activity
-            android:name="pl.agh.ki.io.alarm.SendMessageActivity">
+        <activity android:name="pl.agh.ki.io.alarm.SendMessageActivity"
+            android:label="@string/title_activity_sendAlarm">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pl.agh.ki.io.alarm.MainActivity" />
         </activity>
-        <activity
-            android:name="pl.agh.ki.io.alarm.AddFriendActivity">
+        <activity android:name="pl.agh.ki.io.alarm.AddFriendActivity"
+            android:label="@string/title_activity_addFriend">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pl.agh.ki.io.alarm.MainActivity" />
         </activity>
-        <activity android:name="pl.agh.ki.io.alarm.CreateGroupActivity" >
+        <activity android:name="pl.agh.ki.io.alarm.CreateGroupActivity"
+            android:label="@string/title_activity_createGroup">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pl.agh.ki.io.alarm.MainActivity" />
         </activity>
     </application>
-
 </manifest>

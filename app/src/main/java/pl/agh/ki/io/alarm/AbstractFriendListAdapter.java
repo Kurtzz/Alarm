@@ -39,6 +39,7 @@ public abstract class AbstractFriendListAdapter extends ArrayAdapter<Friend> {
 
     public void setArrayList(List<Friend> friends) {
         this.friendList = friends;
+        Collections.sort(this.friendList);
         notifyDataSetChanged();
     }
 

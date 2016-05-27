@@ -101,23 +101,26 @@ public class FriendsFragment extends Fragment {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        switch (item.getItemId()) {
-            case R.id.friendMenu_alarm:
-                sendAlarm(info.position);
-                return true;
-            case R.id.friendMenu_edit:
-                editFriend(info.position);
-                return true;
-            case R.id.friendMenu_block:
-                blockFriend(info.position);
-                return true;
-            case R.id.friendMenu_delete:
-                deleteFriend(info.position);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (getUserVisibleHint()) {
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            switch (item.getItemId()) {
+                case R.id.friendMenu_alarm:
+                    sendAlarm(info.position);
+                    return true;
+                case R.id.friendMenu_edit:
+                    editFriend(info.position);
+                    return true;
+                case R.id.friendMenu_block:
+                    blockFriend(info.position);
+                    return true;
+                case R.id.friendMenu_delete:
+                    deleteFriend(info.position);
+                    return true;
+                default:
+                    return super.onOptionsItemSelected(item);
+            }
         }
+        return false;
     }
 
     private void sendAlarm(int position) {

@@ -1,5 +1,6 @@
 package pl.agh.ki.io.alarm;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,7 +12,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 
 import java.util.List;
@@ -100,20 +100,23 @@ public class GroupsFragment extends Fragment {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        switch (item.getItemId()) {
-            case R.id.groupMenu_alarm:
-                sendAlarm(info.position);
-                return true;
-            case R.id.groupdMenu_edit:
-                editGroup(info.position);
-                return true;
-            case R.id.groupMenu_delete:
-                deleteGroup(info.position);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (getUserVisibleHint()) {
+            ExpandableListView.ExpandableListContextMenuInfo info = (ExpandableListView.ExpandableListContextMenuInfo) item.getMenuInfo();
+            switch (item.getItemId()) {
+                case R.id.groupMenu_alarm:
+                    sendAlarm((int) info.packedPosition);
+                    return true;
+                case R.id.groupdMenu_edit:
+                    editGroup((int) info.packedPosition);
+                    return true;
+                case R.id.groupMenu_delete:
+                    deleteGroup((int) info.packedPosition);
+                    return true;
+                default:
+                    return super.onOptionsItemSelected(item);
+            }
         }
+        return false;
     }
 
     private void sendAlarm(int position) {

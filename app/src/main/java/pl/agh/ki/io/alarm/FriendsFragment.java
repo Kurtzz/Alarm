@@ -139,7 +139,9 @@ public class FriendsFragment extends Fragment {
     }
 
     private void deleteFriend(int position) {
-
+        databaseHelper.deleteFriend(friendListAdapter.getItem(position).getId());
+        List<Friend> list = databaseHelper.getFriends();
+        friendListAdapter.setArrayList(list);
     }
 
     /**

@@ -73,6 +73,6 @@ public class Group implements Comparable<Group> {
 
     @Override
     public int compareTo(Group another) {
-        return this.getGroupName().compareTo(another.getGroupName());
+        return this.getGroupName().compareToIgnoreCase(another.getGroupName());
     }
 }

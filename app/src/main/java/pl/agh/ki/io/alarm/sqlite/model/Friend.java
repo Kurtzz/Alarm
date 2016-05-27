@@ -70,6 +70,6 @@ public class Friend implements Comparable<Friend> {
 
     @Override
     public int compareTo(Friend another) {
-        return this.getNick().compareTo(another.getNick());
+        return this.getNick().compareToIgnoreCase(another.getNick());
     }
 }

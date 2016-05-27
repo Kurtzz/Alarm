@@ -1,6 +1,5 @@
 package pl.agh.ki.io.alarm;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -81,7 +80,7 @@ public class GroupsFragment extends Fragment {
         List<Group> groups = databaseHelper.getGroups();
 
         groupList = (ExpandableListView) rootView.findViewById(R.id.groupFragment_groupListView);
-        groupListAdapter = new GroupListAdapter(getContext(), groups);
+        groupListAdapter = new GroupListAdapter(getContext());
 
         groupListAdapter.setArrayList(groups);
         groupList.setAdapter(groupListAdapter);

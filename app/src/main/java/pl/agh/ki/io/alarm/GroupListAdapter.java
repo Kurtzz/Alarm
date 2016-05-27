@@ -9,6 +9,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.Collections;
 import java.util.List;
 
 import pl.agh.ki.io.alarm.alarm.R;
@@ -22,9 +23,8 @@ public class GroupListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<Group> groupList;
 
-    public GroupListAdapter(Context context, List<Group> groups) {
+    public GroupListAdapter(Context context) {
         this.context = context;
-        this.groupList = groups;
     }
 
     @Override
@@ -119,6 +119,7 @@ public class GroupListAdapter extends BaseExpandableListAdapter {
 
     public void setArrayList(List<Group> groups) {
         this.groupList = groups;
+        Collections.sort(groupList);
         notifyDataSetChanged();
     }
 

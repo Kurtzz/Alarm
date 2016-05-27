@@ -1,10 +1,12 @@
 package pl.agh.ki.io.alarm;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
@@ -61,19 +63,20 @@ public class GroupListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+    public View getGroupView(final int groupPosition, final boolean isExpanded, View convertView, final ViewGroup parent) {
         HeaderHolder holder;
 
         if (convertView == null) {
             holder = new HeaderHolder();
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.group_list_item_header, null);
-            holder.groupName = (TextView) convertView.findViewById(R.id.groupName);
+            holder.groupName = (TextView) convertView.findViewById(R.id.groupListItemHeader_groupName);
+
             convertView.setTag(holder);
         } else {
             holder = (HeaderHolder) convertView.getTag();
         }
-        Group group = (Group) getGroup(groupPosition);
+        Group group = getGroup(groupPosition);
         holder.groupName.setText(group.getGroupName());
 
         return convertView;
@@ -92,7 +95,7 @@ public class GroupListAdapter extends BaseExpandableListAdapter {
         } else {
             holder = (FriendHolder) convertView.getTag();
         }
-        Friend friend = (Friend) getChild(groupPosition, childPosition);
+        Friend friend = getChild(groupPosition, childPosition);
         holder.nick.setText(friend.getNick());
 
         return convertView;

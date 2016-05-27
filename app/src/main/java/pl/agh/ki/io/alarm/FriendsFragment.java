@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -139,9 +140,11 @@ public class FriendsFragment extends Fragment {
     }
 
     private void deleteFriend(int position) {
-        databaseHelper.deleteFriend(friendListAdapter.getItem(position).getId());
+        Friend friend = friendListAdapter.getItem(position);
+        databaseHelper.deleteFriend(friend.getId());
         List<Friend> list = databaseHelper.getFriends();
         friendListAdapter.setArrayList(list);
+        Toast.makeText(getContext(), "Friend \"" + friend.getNick() + "\" deleted succesfully", Toast.LENGTH_SHORT).show();
     }
 
     /**

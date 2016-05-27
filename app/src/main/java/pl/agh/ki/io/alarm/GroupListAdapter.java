@@ -79,6 +79,17 @@ public class GroupListAdapter extends BaseExpandableListAdapter {
         Group group = getGroup(groupPosition);
         holder.groupName.setText(group.getGroupName());
 
+        ImageButton imageButton = (ImageButton) convertView.findViewById(R.id.groupListItemHeader_imageButton);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, SendMessageActivity.class);
+                intent.putExtra(SendMessageActivity.EXTRA_ID, getGroupId(groupPosition));
+                intent.putExtra(SendMessageActivity.EXTRA_ID_TYPE, SendMessageActivity.TYPE_GROUP);
+                context.startActivity(intent);
+            }
+        });
+
         return convertView;
     }
 

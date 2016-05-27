@@ -12,6 +12,7 @@ import android.widget.Spinner;
 import pl.agh.ki.io.alarm.alarm.R;
 
 public class SendMessageActivity extends AppCompatActivity implements View.OnClickListener {
+    private int receiversId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,16 +31,19 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        String nick = getIntent().getStringExtra(FriendsFragment.EXTRA_FRIEND_ID);
-        System.out.println("MESSAGE TO: " + nick);
+        receiversId = getIntent().getIntExtra(FriendsFragment.EXTRA_FRIEND_ID, 0);
     }
 
     @Override
     public void onClick(View v) {
         Spinner spinner = (Spinner) findViewById(R.id.sendMessage_levelSpinner);
         EditText editText = (EditText) findViewById(R.id.sendMessage_messageEditText);
-        System.out.println("Message: " + editText.getText() + " LEVEL: " + spinner.getSelectedItem().toString());
 
+        String msgContent = editText.getText().toString();
+        int level = Integer.valueOf(spinner.getSelectedItem().toString().substring(6));
+
+        // TODO: Send message
+        
         spinner.setSelection(0);
         editText.setText("");
     }

@@ -37,7 +37,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:text="@string/edit_chooseLevel"
+            android:text="@string/chooseLevel"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <Spinner
@@ -61,13 +61,13 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:checked="false"
-            android:text="@string/edit_block" />
+            android:text="@string/block" />
     </RelativeLayout>
 
     <Button
         android:id="@+id/editFriend_saveButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/editFriend_saveButton" />
+        android:text="@string/save" />
 
 </LinearLayout>

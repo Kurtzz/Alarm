@@ -74,13 +74,12 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="block">Block</string>
+    <string name="save">Save</string>
+    <string name="chooseLevel">Choose level:</string>
     <string name="type_message_hint">Type Message</string>
     <string name="title_activity_addFriend">Add Friend</string>
     <string name="title_activity_createGroup">Create Group</string>
     <string name="title_activity_sendAlarm">Send Alarm</string>
-    <string name="editFriend_saveButton">Save</string>
-    <string name="edit_chooseLevel">Choose level:</string>
-    <string name="edit_block">Block</string>
     <string-array name="alarmLevelsArray">
         <item>Level 1</item>
         <item>Level 2</item>

@@ -47,12 +47,19 @@ public class MultiChoiceFriendListAdapter extends AbstractFriendListAdapter {
         }
         Friend friend = getItem(position);
         holder.nick.setText(friend.getNick());
+        holder.checkBox.setChecked(checkedItems.get(position));
 
         return convertView;
     }
 
     public SparseBooleanArray getCheckedItems() {
         return checkedItems;
+    }
+
+    public void setItemChecked(Friend friend) {
+        int position = getPosition(friend);
+        checkedItems.append(position, true);
+        notifyDataSetChanged();
     }
 
     private class Holder {

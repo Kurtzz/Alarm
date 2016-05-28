@@ -103,13 +103,13 @@ public class GroupsFragment extends Fragment {
             ExpandableListView.ExpandableListContextMenuInfo info = (ExpandableListView.ExpandableListContextMenuInfo) item.getMenuInfo();
             switch (item.getItemId()) {
                 case R.id.groupMenu_alarm:
-                    sendAlarm((int) info.packedPosition);
+                    sendAlarm(info.packedPosition);
                     return true;
                 case R.id.groupdMenu_edit:
-                    editGroup((int) info.packedPosition);
+                    editGroup(info.packedPosition);
                     return true;
                 case R.id.groupMenu_delete:
-                    deleteGroup((int) info.packedPosition);
+                    deleteGroup(info.packedPosition);
                     return true;
                 default:
                     return super.onOptionsItemSelected(item);
@@ -118,18 +118,20 @@ public class GroupsFragment extends Fragment {
         return false;
     }
 
-    private void sendAlarm(int position) {
+    private void sendAlarm(long packagePosition) {
         Intent intent = new Intent(getContext(), SendMessageActivity.class);
-        intent.putExtra(SendMessageActivity.EXTRA_ID, groupListAdapter.getGroup(position).getId());
+        intent.putExtra(SendMessageActivity.EXTRA_ID, groupListAdapter.getGroup(groupList.getFlatListPosition(packagePosition)).getId());
         intent.putExtra(SendMessageActivity.EXTRA_ID_TYPE, SendMessageActivity.TYPE_GROUP);
         startActivity(intent);
     }
 
-    private void editGroup(int position) {
-
+    private void editGroup(long packagePosition) {
+        Intent intent = new Intent(getContext(), EditGroupActivity.class);
+        intent.putExtra(SendMessageActivity.EXTRA_ID, groupListAdapter.getGroup(groupList.getFlatListPosition(packagePosition)).getId());
+        startActivity(intent);
     }
 
-    private void deleteGroup(int position) {
+    private void deleteGroup(long packagePosition) {
 
     }
 

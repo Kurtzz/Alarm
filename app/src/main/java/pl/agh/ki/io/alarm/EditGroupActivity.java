@@ -51,6 +51,6 @@ public class EditGroupActivity extends AppCompatActivity {
         friendListAdapter.setArrayList(friends);
         friendList.setAdapter(friendListAdapter);
 
-        button = (Button) findViewById(R.id.editFriend_saveButton);
+        button = (Button) findViewById(R.id.editGroup_saveButton);
     }
 }

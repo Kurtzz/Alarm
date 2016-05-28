@@ -45,5 +45,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pl.agh.ki.io.alarm.MainActivity" />
         </activity>
+        <activity android:name="pl.agh.ki.io.alarm.EditFriendActivity"
+            android:label="@string/title_activity_editFriend">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pl.agh.ki.io.alarm.MainActivity" />
+        </activity>
+        <activity android:name="pl.agh.ki.io.alarm.EditGroupActivity"
+            android:label="@string/title_activity_editGroup">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pl.agh.ki.io.alarm.MainActivity" />
+        </activity>
     </application>
 </manifest>

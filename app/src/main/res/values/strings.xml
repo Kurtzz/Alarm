@@ -80,6 +80,8 @@
     <string name="title_activity_addFriend">Add Friend</string>
     <string name="title_activity_createGroup">Create Group</string>
     <string name="title_activity_sendAlarm">Send Alarm</string>
+    <string name="title_activity_editFriend">Edit Friend</string>
+    <string name="title_activity_editGroup">Edit Group</string>
     <string-array name="alarmLevelsArray">
         <item>Level 1</item>
         <item>Level 2</item>

@@ -48,6 +48,16 @@ public abstract class AbstractFriendListAdapter extends ArrayAdapter<Friend> {
         return context;
     }
 
+    @Override
+    public int getPosition(Friend item) {
+        for (int i = 0; i < friendList.size(); i++) {
+            if (friendList.get(i).equals(item)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public int getTextViewResourceId() {
         return textViewResourceId;
     }

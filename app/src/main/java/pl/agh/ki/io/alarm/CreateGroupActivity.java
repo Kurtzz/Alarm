@@ -1,6 +1,5 @@
 package pl.agh.ki.io.alarm;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -71,8 +70,6 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         databaseHelper.createGroup(group);
 
         nameEditText.setText("");
-
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
+        onBackPressed();
     }
 }

@@ -1,6 +1,5 @@
 package pl.agh.ki.io.alarm;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -40,8 +39,6 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
         friend.setLevel(MAX_LEVEL);
         editText.setText("");
         databaseHelper.createFriend(friend);
-
-        Intent intent = new Intent(v.getContext(), MainActivity.class);
-        startActivity(intent);
+        onBackPressed();
     }
 }

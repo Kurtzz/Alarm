@@ -132,7 +132,9 @@ public class FriendsFragment extends Fragment {
     }
 
     private void editFriend(int position) {
-
+        Intent intent = new Intent(getContext(), EditFriendActivity.class);
+        intent.putExtra(SendMessageActivity.EXTRA_ID, friendListAdapter.getItem(position).getId());
+        startActivity(intent);
     }
 
     private void blockFriend(int position) {

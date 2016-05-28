@@ -49,6 +49,10 @@ public class EditFriendActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-
+        int position = spinner.getSelectedItemPosition();
+        friend.setLevel(position + 1);
+        friend.setBlocked(checkBox.isChecked());
+        databaseHelper.updateFriend(friend);
+        onBackPressed();
     }
 }

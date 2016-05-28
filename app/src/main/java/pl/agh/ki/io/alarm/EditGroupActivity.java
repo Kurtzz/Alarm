@@ -21,6 +21,7 @@ public class EditGroupActivity extends AppCompatActivity {
     private Button button;
     private ListView friendList;
     private MultiChoiceFriendListAdapter friendListAdapter;
+    private List<Friend> oldFriendList;
 
     private DatabaseHelper databaseHelper;
 
@@ -50,6 +51,11 @@ public class EditGroupActivity extends AppCompatActivity {
 
         friendListAdapter.setArrayList(friends);
         friendList.setAdapter(friendListAdapter);
+
+        oldFriendList = databaseHelper.getAllMembersOfTheGroup(group.getId());
+        for (Friend friend: oldFriendList) {
+            friendListAdapter.setItemChecked(friend);
+        }
 
         button = (Button) findViewById(R.id.editGroup_saveButton);
     }

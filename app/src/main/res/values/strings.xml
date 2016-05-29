@@ -73,7 +73,7 @@
     <string name="send_alarm">Send alarm</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
-    <string name="block">Block</string>
+    <string name="block">Block/Unblock</string>
     <string name="save">Save</string>
     <string name="chooseLevel">Choose level:</string>
     <string name="type_message_hint">Type Message</string>

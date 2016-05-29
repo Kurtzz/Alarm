@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +75,11 @@ public class EditGroupActivity extends AppCompatActivity implements View.OnClick
             if (checkedItems.valueAt(i)) {
                 checkedFriends.add(friendListAdapter.getItem(key));
             }
+        }
+
+        if (checkedFriends.size() < 2) {
+            Toast.makeText(this, "Group should consist of at least 2 members!", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         group.setGroupLevel(spinner.getSelectedItemPosition() + 1);

@@ -138,7 +138,18 @@ public class FriendsFragment extends Fragment {
     }
 
     private void blockFriend(int position) {
-
+        Friend friend = friendListAdapter.getItem(position);
+        String action;
+        if (friend.isBlocked()) {
+            friend.setBlocked(false);
+            action = "unblocked";
+        } else {
+            friend.setBlocked(true);
+            action = "blocked";
+        }
+        databaseHelper.updateFriend(friend);
+        friendListAdapter.notifyDataSetChanged();
+        Toast.makeText(getContext(), "Friend \"" + friend.getNick() + "\" is " + action, Toast.LENGTH_SHORT).show();
     }
 
     private void deleteFriend(int position) {

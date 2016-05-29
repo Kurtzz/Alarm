@@ -230,7 +230,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(KEY_GROUP_NAME, group.getGroupName());
-        values.put(KEY_LEVEL, group.getGroupLevel());
+        values.put(KEY_GROUP_LEVEL, group.getGroupLevel());
 
         db.update(TABLE_GROUP, values, KEY_GROUP_ID + " = ?",
                 new String[]{String.valueOf(group.getId())});
@@ -242,7 +242,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         for (Friend friend : dbFriends) {
             if (!group.getFriends().contains(friend)) {
-                deleteGroupFriend(friend);
+                deleteGroupFriend(group, friend);
             }
         }
         for (Friend friend : group.getFriends()) {
@@ -270,6 +270,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Group group = new Group();
         group.setId(c.getInt(c.getColumnIndex(KEY_GROUP_ID)));
         group.setGroupName(c.getString(c.getColumnIndex(KEY_GROUP_NAME)));
+        group.setGroupLevel(c.getInt(c.getColumnIndex(KEY_GROUP_LEVEL)));
 
         List<Friend> friends = getAllMembersOfTheGroup(group_id);
         group.setFriends(friends);
@@ -376,5 +377,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void deleteGroupFriend(Group group) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_FRIEND_GROUP, KEY_GROUP_ID + " = ?", new String[]{String.valueOf(group.getId())});
+    }
+
+    /**
+     * Delete Group_Friend by group_id and friend_id
+     */
+    public void deleteGroupFriend(Group group, Friend friend) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_FRIEND_GROUP, KEY_GROUP_ID + " = ? and " + KEY_FRIEND_ID + " = ?",
+                new String[]{String.valueOf(group.getId()), String.valueOf(friend.getId())});
     }
 }

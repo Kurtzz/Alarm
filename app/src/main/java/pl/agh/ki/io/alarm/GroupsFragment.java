@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -136,6 +137,7 @@ public class GroupsFragment extends Fragment {
         databaseHelper.deleteGroup(group.getId());
         List<Group> list = databaseHelper.getGroups();
         groupListAdapter.setArrayList(list);
+        Toast.makeText(getContext(), "Group \"" + group.getGroupName() + "\" deleted succesfully", Toast.LENGTH_SHORT).show();
     }
 
     /**

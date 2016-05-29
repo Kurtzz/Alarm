@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +54,14 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
+        String groupName = nameEditText.getText().toString();
+        if (groupName.isEmpty()) {
+            Toast.makeText(this, "Group's name can't be blank!", Toast.LENGTH_SHORT).show();
+            return;
+        } else if (groupName.contains(" ") || groupName.contains("\t") || groupName.contains("\n")) {
+            Toast.makeText(this, "Group's name can't contains white spaces!", Toast.LENGTH_SHORT).show();
+            return;
+        }
         SparseBooleanArray checkedItems = friendListAdapter.getCheckedItems();
         List<Friend> checkedFriends = new ArrayList<>();
 

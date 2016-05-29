@@ -58,6 +58,12 @@ public abstract class AbstractFriendListAdapter extends ArrayAdapter<Friend> {
         return -1;
     }
 
+    @Override
+    public void notifyDataSetChanged() {
+        Collections.sort(friendList);
+        super.notifyDataSetChanged();
+    }
+
     public int getTextViewResourceId() {
         return textViewResourceId;
     }

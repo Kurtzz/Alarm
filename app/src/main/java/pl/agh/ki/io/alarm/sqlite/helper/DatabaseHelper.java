@@ -230,7 +230,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(KEY_GROUP_NAME, group.getGroupName());
-        values.put(KEY_LEVEL, group.getGroupLevel());
+        values.put(KEY_GROUP_LEVEL, group.getGroupLevel());
 
         db.update(TABLE_GROUP, values, KEY_GROUP_ID + " = ?",
                 new String[]{String.valueOf(group.getId())});
@@ -242,12 +242,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         for (Friend friend : dbFriends) {
             if (!group.getFriends().contains(friend)) {
-                deleteGroupFriend(friend);
+                deleteGroupFriend(group, friend);
             }
         }
         for (Friend friend : group.getFriends()) {
             if (!dbFriends.contains(friend)) {
-                createGroupFriend(group.getId(), friend.getId());
+                createGroupFriend(group, friend);
             }
         }
     }

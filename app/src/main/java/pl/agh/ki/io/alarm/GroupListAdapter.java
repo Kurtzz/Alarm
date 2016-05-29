@@ -16,6 +16,9 @@ import pl.agh.ki.io.alarm.alarm.R;
 import pl.agh.ki.io.alarm.sqlite.model.Friend;
 import pl.agh.ki.io.alarm.sqlite.model.Group;
 
+import static pl.agh.ki.io.alarm.sqlite.model.Friend.FriendComparator.*;
+import static pl.agh.ki.io.alarm.sqlite.model.Group.GroupComparator.*;
+
 /**
  * Created by P on 18.05.2016.
  */
@@ -119,8 +122,16 @@ public class GroupListAdapter extends BaseExpandableListAdapter {
 
     public void setArrayList(List<Group> groups) {
         this.groupList = groups;
-        Collections.sort(groupList);
         notifyDataSetChanged();
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        Collections.sort(groupList, getGroupComparator(GROUP_NAME_SORT));
+        for (Group group : groupList) {
+            Collections.sort(group.getFriends(), getFriendComparator(NICK_SORT));
+        }
+        super.notifyDataSetChanged();
     }
 
     private class HeaderHolder {

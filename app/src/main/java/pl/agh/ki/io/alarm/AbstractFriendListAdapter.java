@@ -10,6 +10,8 @@ import java.util.List;
 
 import pl.agh.ki.io.alarm.sqlite.model.Friend;
 
+import static pl.agh.ki.io.alarm.sqlite.model.Friend.FriendComparator.*;
+
 /**
  * Created by P on 21.05.2016.
  */
@@ -39,7 +41,6 @@ public abstract class AbstractFriendListAdapter extends ArrayAdapter<Friend> {
 
     public void setArrayList(List<Friend> friends) {
         this.friendList = friends;
-        Collections.sort(this.friendList);
         notifyDataSetChanged();
     }
 
@@ -60,7 +61,7 @@ public abstract class AbstractFriendListAdapter extends ArrayAdapter<Friend> {
 
     @Override
     public void notifyDataSetChanged() {
-        Collections.sort(friendList);
+        Collections.sort(friendList, getFriendComparator(BLOCK_SORT, NICK_SORT));
         super.notifyDataSetChanged();
     }
 

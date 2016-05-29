@@ -132,7 +132,10 @@ public class GroupsFragment extends Fragment {
     }
 
     private void deleteGroup(long packagePosition) {
-
+        Group group = groupListAdapter.getGroup(groupList.getFlatListPosition(packagePosition));
+        databaseHelper.deleteGroup(group.getId());
+        List<Group> list = databaseHelper.getGroups();
+        groupListAdapter.setArrayList(list);
     }
 
     /**

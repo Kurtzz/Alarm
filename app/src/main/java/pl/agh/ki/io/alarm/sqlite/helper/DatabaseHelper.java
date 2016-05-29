@@ -247,7 +247,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         for (Friend friend : group.getFriends()) {
             if (!dbFriends.contains(friend)) {
-                createGroupFriend(group, friend);
+                createGroupFriend(group.getId(), friend.getId());
             }
         }
     }

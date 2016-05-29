@@ -71,7 +71,7 @@ public class Friend {
     }
 
     public enum  FriendComparator implements Comparator<Friend> {
-        ID_SORT {
+        FRIEND_ID_SORT {
             public int compare(Friend lhs, Friend rhs) {
                 return ((Integer)lhs.getId()).compareTo(rhs.getId());
             }
@@ -95,7 +95,7 @@ public class Friend {
             }
         };
 
-        public static Comparator<Friend> getComparator(final FriendComparator... multipleOptions) {
+        public static Comparator<Friend> getFriendComparator(final FriendComparator... multipleOptions) {
             return new Comparator<Friend>() {
                 public int compare(Friend o1, Friend o2) {
                     for (FriendComparator option : multipleOptions) {

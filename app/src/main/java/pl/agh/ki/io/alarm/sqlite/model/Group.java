@@ -73,7 +73,7 @@ public class Group {
     }
 
     public enum  GroupComparator implements Comparator<Group> {
-        ID_SORT {
+        GROUP_ID_SORT {
             public int compare(Group lhs, Group rhs) {
                 return ((Integer)lhs.getId()).compareTo(rhs.getId());
             }
@@ -83,7 +83,7 @@ public class Group {
                 return lhs.getGroupName().compareToIgnoreCase(rhs.getGroupName());
             }
         },
-        LEVEL_SORT {
+        GROUP_LEVEL_SORT {
             public int compare(Group lhs, Group rhs) {
                 return ((Integer)lhs.getGroupLevel()).compareTo(rhs.getGroupLevel());
             }
@@ -94,7 +94,7 @@ public class Group {
             }
         };
 
-        public static Comparator<Group> getComparator(final GroupComparator... multipleOptions) {
+        public static Comparator<Group> getGroupComparator(final GroupComparator... multipleOptions) {
             return new Comparator<Group>() {
                 public int compare(Group o1, Group o2) {
                     for (GroupComparator option : multipleOptions) {

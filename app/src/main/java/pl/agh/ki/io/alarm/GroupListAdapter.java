@@ -119,8 +119,16 @@ public class GroupListAdapter extends BaseExpandableListAdapter {
 
     public void setArrayList(List<Group> groups) {
         this.groupList = groups;
-        Collections.sort(groupList);
         notifyDataSetChanged();
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        Collections.sort(groupList);
+        for (Group group : groupList) {
+            Collections.sort(group.getFriends());
+        }
+        super.notifyDataSetChanged();
     }
 
     private class HeaderHolder {

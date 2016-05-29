@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import pl.agh.ki.io.alarm.alarm.R;
@@ -34,10 +33,14 @@ public class MultiChoiceFriendListAdapter extends AbstractFriendListAdapter {
 
             holder.nick = (TextView) convertView.findViewById(R.id.friendListItemMulti_nickTextView);
             holder.checkBox = (CheckBox) convertView.findViewById(R.id.friendListItemMulti_checkBox);
-            holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            holder.checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    checkedItems.append(position, isChecked);
+                public void onClick(View v) {
+                    if (checkedItems.get(position)) {
+                        checkedItems.append(position, false);
+                    } else {
+                        checkedItems.append(position, true);
+                    }
                 }
             });
 

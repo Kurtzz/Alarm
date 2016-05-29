@@ -270,6 +270,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Group group = new Group();
         group.setId(c.getInt(c.getColumnIndex(KEY_GROUP_ID)));
         group.setGroupName(c.getString(c.getColumnIndex(KEY_GROUP_NAME)));
+        group.setGroupLevel(c.getInt(c.getColumnIndex(KEY_GROUP_LEVEL)));
 
         List<Friend> friends = getAllMembersOfTheGroup(group_id);
         group.setFriends(friends);

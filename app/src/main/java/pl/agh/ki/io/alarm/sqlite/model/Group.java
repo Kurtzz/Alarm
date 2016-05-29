@@ -1,12 +1,13 @@
 package pl.agh.ki.io.alarm.sqlite.model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
  * Created by P on 18.05.2016.
  */
-public class Group implements Comparable<Group> {
+public class Group {
     private int id;
     private String groupName;
     private int groupLevel;
@@ -71,8 +72,40 @@ public class Group implements Comparable<Group> {
         return getId();
     }
 
-    @Override
-    public int compareTo(Group another) {
-        return this.getGroupName().compareTo(another.getGroupName());
+    public enum  GroupComparator implements Comparator<Group> {
+        GROUP_ID_SORT {
+            public int compare(Group lhs, Group rhs) {
+                return ((Integer)lhs.getId()).compareTo(rhs.getId());
+            }
+        },
+        GROUP_NAME_SORT {
+            public int compare(Group lhs, Group rhs) {
+                return lhs.getGroupName().compareToIgnoreCase(rhs.getGroupName());
+            }
+        },
+        GROUP_LEVEL_SORT {
+            public int compare(Group lhs, Group rhs) {
+                return ((Integer)lhs.getGroupLevel()).compareTo(rhs.getGroupLevel());
+            }
+        },
+        FRIEND_SIZE_SORT {
+            public int compare(Group lhs, Group rhs) {
+                return ((Integer)lhs.getFriends().size()).compareTo(rhs.getFriends().size());
+            }
+        };
+
+        public static Comparator<Group> getGroupComparator(final GroupComparator... multipleOptions) {
+            return new Comparator<Group>() {
+                public int compare(Group o1, Group o2) {
+                    for (GroupComparator option : multipleOptions) {
+                        int result = option.compare(o1, o2);
+                        if (result != 0) {
+                            return result;
+                        }
+                    }
+                    return 0;
+                }
+            };
+        }
     }
 }

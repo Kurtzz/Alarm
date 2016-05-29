@@ -72,6 +72,11 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
             }
         }
 
+        if (checkedFriends.size() < 2) {
+            Toast.makeText(this, "Group should consist of at least 2 members!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Group group = new Group();
         group.setGroupName(nameEditText.getText().toString());
         group.setGroupLevel(MAX_LEVEL);

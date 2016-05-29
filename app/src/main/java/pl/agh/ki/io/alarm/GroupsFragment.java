@@ -155,7 +155,5 @@ public class GroupsFragment extends Fragment {
         super.onResume();
         List<Group> groups = databaseHelper.getGroups();
         groupListAdapter.setArrayList(groups);
-
-        System.out.println(groups);
     }
 }

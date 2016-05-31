@@ -3,6 +3,8 @@ package alarm.io.ki.agh.pl.push_poc;
 import android.util.Log;
 
 import com.google.android.gms.iid.InstanceID;
+import android.content.Intent;
+
 import com.google.android.gms.iid.InstanceIDListenerService;
 
 public class MyInstanceIDListenerService extends InstanceIDListenerService {
@@ -16,14 +18,8 @@ public class MyInstanceIDListenerService extends InstanceIDListenerService {
 
     @Override
     public void onTokenRefresh() {
-        refreshAllTokens();
+        // Fetch updated Instance ID token and notify our app's server of any changes (if applicable).
+        Intent intent = new Intent(this, RegistrationIntentService.class);
+        startService(intent);
     }
-
-    private void refreshAllTokens() {
-        // assuming you have defined TokenList as
-        // some generalized store for your tokens
-        InstanceID iid = InstanceID.getInstance(this);
-        // TODO: refresh
-    }
-
 }

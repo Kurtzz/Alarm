@@ -35,6 +35,7 @@ public class DatabaseService extends Service {
     }
 
 
+    // ------------------------ "friends" table methods ----------------//
 
     public long createFriend(Friend friend) {
         return helper.createFriend(friend);
@@ -52,19 +53,54 @@ public class DatabaseService extends Service {
     }
 
     /**
-     * Delete friend
+     * Update friend
      */
-    public void deleteFriend(long friend_id) {
-        helper.deleteFriend(friend_id);
+    public int updateFriend(Friend friend) {
+        return helper.updateFriend(friend);
     }
 
-    // ------------------------ "friends" table methods ----------------//
+    /**
+     * Delete friend
+     */
+    public void deleteFriend(Friend friend) {
+        helper.deleteFriend(friend.getId());
+
+        //Delete all dependencies
+        helper.deleteGroupFriend(friend);
+    }
+
+    // ------------------------ "group" table methods ----------------//
 
     /**
      * Create group
      */
     public long createGroup(Group group) {
-       return helper.createGroup(group);
+        long result = helper.createGroup(group);
+        createGroupFriend(group.getId(), group.getFriends());
+        return result;
+    }
+
+    /**
+     * Update group
+     */
+    public void updateGroup(Group group) {
+        helper.updateGroup(group);
+
+        //Update linking tables
+        List<Friend> dbFriends = helper.getAllMembersOfTheGroup(group.getId());
+        if (dbFriends.equals(group.getFriends())) {
+            return;
+        }
+        for (Friend friend : dbFriends) {
+            if (!group.getFriends().contains(friend)) {
+                helper.deleteGroupFriend(group, friend);
+            }
+        }
+        for (Friend friend : group.getFriends()) {
+            if (!dbFriends.contains(friend)) {
+                helper.createGroupFriend(group.getId(), friend.getId());
+            }
+        }
     }
 
     /**
@@ -84,21 +120,21 @@ public class DatabaseService extends Service {
     /**
      * Delete Group
      */
-    public void deleteGroup(long group_id) {
-        helper.deleteGroup(group_id);
+    public void deleteGroup(Group group) {
+        helper.deleteGroup(group.getId());
+
+        //delete dependency
+        helper.deleteGroupFriend(group);
     }
 
+    // ------------------------ "group friend" table methods ----------------//
 
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * Create multiple group_friend
+     */
+    public void createGroupFriend(long group_id, List<Friend> friends) {
+        for (Friend friend : friends) {
+            helper.createGroupFriend(group_id, friend.getId());
+        }
+    }
 }

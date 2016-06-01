@@ -1,101 +1,53 @@
 package pl.edu.agh.io.alarm.ui.activities;
 
-import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.Toast;
 
 import pl.edu.agh.io.alarm.R;
-import pl.edu.agh.io.alarm.middleware.Middleware;
+import pl.edu.agh.io.alarm.sqlite.helper.DatabaseHelper;
 import pl.edu.agh.io.alarm.sqlite.model.Friend;
 
-/**
- * Created by Mateusz on 2016-04-21.
- */
-public class AddFriendActivity extends Activity implements View.OnClickListener {
-
-
-    private boolean middlewareIsBound;
-    private Middleware middlewareService;
+public class AddFriendActivity extends AppCompatActivity implements View.OnClickListener {
+    private DatabaseHelper databaseHelper;
+    private EditText editText;
+    private static final int MAX_LEVEL = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        doBindService();
-        System.out.println("AddFriendActivity : Create");
-        setContentView(R.layout.activity_addfriend);
-        Button btn = (Button) findViewById(R.id.ADDFIREND_addbtn);
-        btn.setOnClickListener(this);
-        ImageButton b = (ImageButton) findViewById(R.id.ADDFRIEND_exitbtn);
-        b.setOnClickListener(this);
+        setContentView(R.layout.activity_add_friend);
 
-    }
+        databaseHelper = new DatabaseHelper(getApplicationContext());
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        doUnbindService();
+        Button addFriendButton = (Button) findViewById(R.id.addFriend_addFriendButton);
+        addFriendButton.setOnClickListener(this);
+
+        editText = (EditText) findViewById(R.id.addFriend_friendEditText);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.ADDFIREND_addbtn:
-                EditText editText = (EditText) findViewById(R.id.ADDFRIEND_friend_name);
-                if(editText.getText() != null){
-                    //TODO: Send intent to Comunnicate Module, then wait for Respone;
-                    System.out.println("AddFriendActivity : Friend's Name: "+editText.getText().toString());
-//                    Intent sendMsg = new Intent(this,CommunicationModule.class);
-//                    sendMsg.setAction("ADDFRIEND");
-//                    sendMsg.putExtra("NICKNAME",nickname);
-//                    startActivity(sendMsg);
-                    Friend friend = new Friend();
-                    friend.setNick(editText.getText().toString());
-                    middlewareService.createFriend(friend);
-                    this.finish();
-                }
-                break;
-            case R.id.ADDFRIEND_exitbtn:
-                System.out.println("AddFriendActivity : ExitBtn Clicked");
-                this.finish();
-                break;
+        Friend friend = new Friend();
+        String nick = editText.getText().toString();
+        if (nick.isEmpty()) {
+            Toast.makeText(this, "Nick can't be blank!", Toast.LENGTH_SHORT).show();
+            return;
+        } else if (nick.contains(" ") || nick.contains("\t") || nick.contains("\n")) {
+            Toast.makeText(this, "Nick can't contain white spaces!", Toast.LENGTH_SHORT).show();
+            return;
         }
+        friend.setNick(editText.getText().toString());
+        friend.setLevel(MAX_LEVEL);
+        editText.setText("");
+        databaseHelper.createFriend(friend);
+        onBackPressed();
     }
-
-
-    private ServiceConnection middlewareConnection = new ServiceConnection() {
-        public void onServiceConnected(ComponentName className, IBinder service) {
-            middlewareService = ((Middleware.LocalBinder)service).getService();
-        }
-
-        public void onServiceDisconnected(ComponentName className) {
-            middlewareService = null;
-        }
-    };
-
-
-
-    void doBindService() {
-        System.out.println("BOUNDING");
-        bindService(new Intent(getApplicationContext(),
-                Middleware.class), middlewareConnection, Context.BIND_AUTO_CREATE);
-        middlewareIsBound = true;
-
-
-    }
-
-    void doUnbindService() {
-        if (middlewareIsBound) {
-            unbindService(middlewareConnection);
-            middlewareIsBound = false;
-        }
-    }
-
 }

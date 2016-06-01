@@ -1,102 +1,71 @@
 package pl.edu.agh.io.alarm.ui.activities;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ListView;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.widget.Spinner;
 
 import pl.edu.agh.io.alarm.R;
 import pl.edu.agh.io.alarm.middleware.Middleware;
-import pl.edu.agh.io.alarm.sqlite.model.Friend;
 
-/**
- * Created by Mateusz on 2016-04-21.
- */
-public class SendMessageActivity extends Activity implements View.OnClickListener {
-    private String nickname;
-    private ArrayList<String> friendList = new ArrayList<>();
+public class SendMessageActivity extends AppCompatActivity implements View.OnClickListener {
+    private int receiversId;
+    private String idType;
+
     private boolean middlewareIsBound;
     private Middleware middlewareService;
 
+    public static final String EXTRA_ID = "pl.agh.ki.io.alarm.SendMessage.Activity.ID";
+    public static final String EXTRA_ID_TYPE = "pl.agh.ki.io.alarm.SendMessage.Activity.ID_TYPE";
+    public static final String TYPE_FRIEND = "TYPE_FRIEND";
+    public static final String TYPE_GROUP = "TYPE_GROUP";
 
     @Override
-    public void onCreate(Bundle b) {
-        super.onCreate(b);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         doBindService();
+        setContentView(R.layout.activity_send_message);
 
-        setContentView(R.layout.activity_sendmessage);
-        Button send = (Button) findViewById(R.id.SENDMESSAGE_sendbtn);
-        send.setOnClickListener(this);
-        ImageButton imageButton = (ImageButton) findViewById(R.id.SENDMESSAGE_exitbtn);
-        imageButton.setOnClickListener(this);
-        Button refresh  = (Button) findViewById(R.id.SENDMESSAGE_refresh);
-        refresh.setOnClickListener(this);
+        Spinner spinner = (Spinner) findViewById(R.id.sendMessage_levelSpinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.alarmLevelsArray, android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
 
+        Button sendButton = (Button) findViewById(R.id.sendMessage_sendButton);
+        sendButton.setOnClickListener(this);
 
-    }
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
+        Intent intent = getIntent();
+        receiversId = intent.getIntExtra(EXTRA_ID, 0);
+        idType = intent.getStringExtra(EXTRA_ID_TYPE);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.SENDMESSAGE_sendbtn:
-                EditText editText = (EditText) findViewById(R.id.SENDMESSAGE_msgtext);
-                if(!editText.getText().toString().isEmpty()){
-//                    middlewareService.makeNotification(nickname,editText.getText().toString());
-                      middlewareService.sendMessageToAll(editText.getText().toString());
-                    this.finish();
-                }
-                break;
-            case R.id.SENDMESSAGE_exitbtn:
-                this.finish();
-                break;
-            case R.id.SENDMESSAGE_refresh:
-                friendList.clear();
-                if(middlewareService != null) {
-                    List<Friend> fList = middlewareService.getFriends();
+        Spinner spinner = (Spinner) findViewById(R.id.sendMessage_levelSpinner);
+        EditText editText = (EditText) findViewById(R.id.sendMessage_messageEditText);
 
-                    for (Friend friend : fList) {
-                        friendList.add(friend.getNick());
-                    }
-                    final ListView listView = (ListView) findViewById(R.id.SENDMESSAGE_FriendListView);
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.simple_list_view_content, friendList);
-                    listView.setAdapter(adapter);
-                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            nickname = listView.getItemAtPosition(position).toString();
-                        }
-                    });
-                }
+        String msgContent = editText.getText().toString();
+        int level = Integer.valueOf(spinner.getSelectedItem().toString().substring(6));
 
+        // TODO: Send message
 
-                break;
-        }
+        spinner.setSelection(0);
+        editText.setText("");
     }
+
     private ServiceConnection middlewareConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             middlewareService = ((Middleware.LocalBinder)service).getService();
@@ -106,8 +75,6 @@ public class SendMessageActivity extends Activity implements View.OnClickListene
             middlewareService = null;
         }
     };
-
-
 
     void doBindService() {
         System.out.println("BOUNDING");
@@ -122,7 +89,6 @@ public class SendMessageActivity extends Activity implements View.OnClickListene
             middlewareIsBound = false;
         }
     }
-
 
     @Override
     protected void onDestroy() {

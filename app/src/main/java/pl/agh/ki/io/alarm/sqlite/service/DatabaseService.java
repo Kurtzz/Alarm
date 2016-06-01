@@ -75,7 +75,9 @@ public class DatabaseService extends Service {
      * Create group
      */
     public long createGroup(Group group) {
-       return helper.createGroup(group);
+        long result = helper.createGroup(group);
+        createGroupFriend(group.getId(), group.getFriends());
+        return result;
     }
 
     /**

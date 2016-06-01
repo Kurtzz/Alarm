@@ -213,10 +213,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_GROUP_NAME, group.getGroupName());
         values.put(KEY_GROUP_LEVEL, group.getGroupLevel());
 
-        long group_id = db.insert(TABLE_GROUP, null, values);
-        createGroupFriend(group_id, group.getFriends());
-
-        return group_id;
+        return db.insert(TABLE_GROUP, null, values);
     }
 
     /**

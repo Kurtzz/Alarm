@@ -6,4 +6,5 @@ import lombok.Setter;
 public class GcmMessage {
 
     @Getter @Setter private GcmMessageData data;
+    @Getter @Setter private String to;
 }

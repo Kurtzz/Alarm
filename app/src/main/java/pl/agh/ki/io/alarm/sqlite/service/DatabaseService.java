@@ -35,6 +35,7 @@ public class DatabaseService extends Service {
     }
 
 
+    // ------------------------ "friends" table methods ----------------//
 
     public long createFriend(Friend friend) {
         return helper.createFriend(friend);
@@ -52,6 +53,13 @@ public class DatabaseService extends Service {
     }
 
     /**
+     * Update friend
+     */
+    public int updateFriend(Friend friend) {
+        return helper.updateFriend(friend);
+    }
+
+    /**
      * Delete friend
      */
     public void deleteFriend(Friend friend) {
@@ -61,7 +69,7 @@ public class DatabaseService extends Service {
         helper.deleteGroupFriend(friend);
     }
 
-    // ------------------------ "friends" table methods ----------------//
+    // ------------------------ "group" table methods ----------------//
 
     /**
      * Create group

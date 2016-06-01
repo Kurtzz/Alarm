@@ -81,6 +81,7 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         Group group = new Group();
         group.setGroupName(nameEditText.getText().toString());
         group.setGroupLevel(MAX_LEVEL);
+        group.setFriends(new ArrayList<Friend>());
         helper.createGroup(group);
 
         //TODO: Send invitation to checkedFriends

@@ -1,5 +1,6 @@
 package pl.edu.agh.io.alarm.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
@@ -23,7 +24,8 @@ import pl.edu.agh.io.alarm.ui.adapters.DefaultFriendListAdapter;
 public class EditGroupActivity extends AppCompatActivity implements View.OnClickListener {
     private Spinner spinner;
     private Group group;
-    private Button button;
+    private Button saveButton;
+    private Button inviteFriendsButton;
     private ListView friendList;
     private DefaultFriendListAdapter friendListAdapter;
 
@@ -54,18 +56,30 @@ public class EditGroupActivity extends AppCompatActivity implements View.OnClick
         friendListAdapter.setArrayList(group.getFriends());
         friendList.setAdapter(friendListAdapter);
 
-        button = (Button) findViewById(R.id.editGroup_saveButton);
-        button.setOnClickListener(this);
+        saveButton = (Button) findViewById(R.id.editGroup_saveButton);
+        saveButton.setOnClickListener(this);
+
+        inviteFriendsButton = (Button) findViewById(R.id.editGroup_inviteFriends);
+        inviteFriendsButton.setOnClickListener(this);
 
         registerForContextMenu(friendList);
     }
 
     @Override
     public void onClick(View v) {
-        group.setGroupLevel(spinner.getSelectedItemPosition() + 1);
-        helper.updateGroup(group);
+        switch (v.getId()) {
+            case R.id.editGroup_saveButton:
+                group.setGroupLevel(spinner.getSelectedItemPosition() + 1);
+                helper.updateGroup(group);
+                onBackPressed();
+                break;
+            case R.id.editGroup_inviteFriends:
+                Intent intent = new Intent(getApplicationContext(), InviteFriendsActivity.class);
+                intent.putExtra(SendMessageActivity.EXTRA_ID, group.getId());
+                startActivity(intent);
+                break;
+        }
 
-        onBackPressed();
     }
 
     @Override

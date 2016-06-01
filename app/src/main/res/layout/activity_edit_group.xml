@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:showDividers="middle"
-    tools:context="pl.edu.agh.io.alarm.ui.activities.EditFriendActivity">
+    tools:context="pl.edu.agh.io.alarm.ui.activities.EditGroupActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -66,10 +66,25 @@
             android:layout_alignParentStart="true" />
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/editGroup_saveButton"
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/save" />
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editGroup_inviteFriends"
+            android:text="@string/invite_friends"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/editGroup_saveButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
 
 </LinearLayout>

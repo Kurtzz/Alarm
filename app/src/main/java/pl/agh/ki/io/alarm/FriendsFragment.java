@@ -61,9 +61,6 @@ public class FriendsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         databaseHelper = new DatabaseHelper(getContext());
-        if (getArguments() != null) {
-
-        }
     }
 
     @Override

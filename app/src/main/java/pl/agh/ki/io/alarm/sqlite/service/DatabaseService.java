@@ -118,8 +118,11 @@ public class DatabaseService extends Service {
     /**
      * Delete Group
      */
-    public void deleteGroup(long group_id) {
-        helper.deleteGroup(group_id);
+    public void deleteGroup(Group group) {
+        helper.deleteGroup(group.getId());
+
+        //delete dependency
+        helper.deleteGroupFriend(group);
     }
 
 

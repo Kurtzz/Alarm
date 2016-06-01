@@ -295,9 +295,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Group group = getGroup(group_id);
 
         db.delete(TABLE_GROUP, KEY_GROUP_ID + " = ?", new String[]{String.valueOf(group_id)});
-
-        //delete dependency
-        deleteGroupFriend(group);
     }
 
     // ------------------------ "group friend" table methods ----------------//

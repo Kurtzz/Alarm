@@ -15,9 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.agh.ki.io.alarm.alarm.R;
-import pl.agh.ki.io.alarm.sqlite.helper.DatabaseHelper;
 import pl.agh.ki.io.alarm.sqlite.model.Friend;
 import pl.agh.ki.io.alarm.sqlite.model.Group;
+import pl.agh.ki.io.alarm.sqlite.service.DatabaseService;
 import pl.agh.ki.io.alarm.ui.adapters.MultiChoiceFriendListAdapter;
 
 public class EditGroupActivity extends AppCompatActivity implements View.OnClickListener {
@@ -28,16 +28,16 @@ public class EditGroupActivity extends AppCompatActivity implements View.OnClick
     private MultiChoiceFriendListAdapter friendListAdapter;
     private List<Friend> oldFriendList;
 
-    private DatabaseHelper databaseHelper;
+    private DatabaseService helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_group);
 
-        databaseHelper = new DatabaseHelper(getApplicationContext());
+        helper = new DatabaseService();
 
-        group = databaseHelper.getGroup(getIntent().getIntExtra(SendMessageActivity.EXTRA_ID, 0));
+        group = helper.getGroup(getIntent().getIntExtra(SendMessageActivity.EXTRA_ID, 0));
 
         TextView textView = (TextView) findViewById(R.id.editGroup_nickTextView);
         textView.setText(group.getGroupName());
@@ -49,7 +49,7 @@ public class EditGroupActivity extends AppCompatActivity implements View.OnClick
         spinner.setAdapter(adapter);
         spinner.setSelection(group.getGroupLevel() - 1);
 
-        List<Friend> friends = databaseHelper.getFriends();
+        List<Friend> friends = helper.getFriends();
 
         friendList = (ListView) findViewById(R.id.editGroup_friendListView);
         friendListAdapter = new MultiChoiceFriendListAdapter(getApplicationContext());
@@ -57,8 +57,7 @@ public class EditGroupActivity extends AppCompatActivity implements View.OnClick
         friendListAdapter.setArrayList(friends);
         friendList.setAdapter(friendListAdapter);
 
-        oldFriendList = databaseHelper.getAllMembersOfTheGroup(group.getId());
-        for (Friend friend: oldFriendList) {
+        for (Friend friend: group.getFriends()) {
             friendListAdapter.setItemChecked(friend);
         }
 
@@ -85,7 +84,7 @@ public class EditGroupActivity extends AppCompatActivity implements View.OnClick
 
         group.setGroupLevel(spinner.getSelectedItemPosition() + 1);
         group.setFriends(checkedFriends);
-        databaseHelper.updateGroup(group);
+        helper.updateGroup(group);
 
         onBackPressed();
     }

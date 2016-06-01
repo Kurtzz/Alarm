@@ -18,8 +18,8 @@ import android.widget.Toast;
 import java.util.List;
 
 import pl.agh.ki.io.alarm.alarm.R;
-import pl.agh.ki.io.alarm.sqlite.helper.DatabaseHelper;
 import pl.agh.ki.io.alarm.sqlite.model.Friend;
+import pl.agh.ki.io.alarm.sqlite.service.DatabaseService;
 import pl.agh.ki.io.alarm.ui.activities.AddFriendActivity;
 import pl.agh.ki.io.alarm.ui.activities.EditFriendActivity;
 import pl.agh.ki.io.alarm.ui.activities.SendMessageActivity;
@@ -41,7 +41,7 @@ public class FriendsFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private FloatingActionButton floatingActionButton;
 
-    private DatabaseHelper databaseHelper;
+    private DatabaseService helper;
 
     public FriendsFragment() {
         // Required empty public constructor
@@ -64,7 +64,7 @@ public class FriendsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        databaseHelper = new DatabaseHelper(getContext());
+        helper = new DatabaseService();
     }
 
     @Override
@@ -81,7 +81,7 @@ public class FriendsFragment extends Fragment {
             }
         });
 
-        List<Friend> friends = databaseHelper.getFriends();
+        List<Friend> friends = helper.getFriends();
 
         friendList = (ListView) rootView.findViewById(R.id.friendFragment_friendListView);
         friendListAdapter = new DefaultFriendListAdapter(rootView.getContext());
@@ -148,15 +148,15 @@ public class FriendsFragment extends Fragment {
             friend.setBlocked(true);
             action = "blocked";
         }
-        databaseHelper.updateFriend(friend);
+        helper.updateFriend(friend);
         friendListAdapter.notifyDataSetChanged();
         Toast.makeText(getContext(), "Friend \"" + friend.getNick() + "\" is " + action, Toast.LENGTH_SHORT).show();
     }
 
     private void deleteFriend(int position) {
         Friend friend = friendListAdapter.getItem(position);
-        databaseHelper.deleteFriend(friend.getId());
-        List<Friend> list = databaseHelper.getFriends();
+        helper.deleteFriend(friend);
+        List<Friend> list = helper.getFriends();
         friendListAdapter.setArrayList(list);
         Toast.makeText(getContext(), "Friend \"" + friend.getNick() + "\" deleted successfully", Toast.LENGTH_SHORT).show();
     }
@@ -179,6 +179,6 @@ public class FriendsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        friendListAdapter.setArrayList(databaseHelper.getFriends());
+        friendListAdapter.setArrayList(helper.getFriends());
     }
 }

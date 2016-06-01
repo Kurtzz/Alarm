@@ -9,11 +9,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import pl.agh.ki.io.alarm.alarm.R;
-import pl.agh.ki.io.alarm.sqlite.helper.DatabaseHelper;
 import pl.agh.ki.io.alarm.sqlite.model.Friend;
+import pl.agh.ki.io.alarm.sqlite.service.DatabaseService;
 
 public class AddFriendActivity extends AppCompatActivity implements View.OnClickListener {
-    private DatabaseHelper databaseHelper;
+    private DatabaseService databaseHelper;
     private EditText editText;
     private static final int MAX_LEVEL = 5;
 
@@ -22,7 +22,7 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_friend);
 
-        databaseHelper = new DatabaseHelper(getApplicationContext());
+        databaseHelper = new DatabaseService();
 
         Button addFriendButton = (Button) findViewById(R.id.addFriend_addFriendButton);
         addFriendButton.setOnClickListener(this);

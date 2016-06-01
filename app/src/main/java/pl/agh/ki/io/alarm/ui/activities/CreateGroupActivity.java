@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.agh.ki.io.alarm.alarm.R;
-import pl.agh.ki.io.alarm.sqlite.helper.DatabaseHelper;
 import pl.agh.ki.io.alarm.sqlite.model.Friend;
 import pl.agh.ki.io.alarm.sqlite.model.Group;
+import pl.agh.ki.io.alarm.sqlite.service.DatabaseService;
 import pl.agh.ki.io.alarm.ui.adapters.MultiChoiceFriendListAdapter;
 
 public class CreateGroupActivity extends AppCompatActivity implements View.OnClickListener {
@@ -25,7 +25,7 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
     private Button createGroupButton;
     private EditText nameEditText;
 
-    private DatabaseHelper databaseHelper;
+    private DatabaseService helper;
 
     private static final int MAX_LEVEL = 5;
 
@@ -34,7 +34,7 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
 
-        databaseHelper = new DatabaseHelper(getApplicationContext());
+        helper = new DatabaseService();
 
         nameEditText = (EditText) findViewById(R.id.createGroup_nameEditText);
 
@@ -44,7 +44,7 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        List<Friend> friends = databaseHelper.getFriends();
+        List<Friend> friends = helper.getFriends();
 
         friendList = (ListView) findViewById(R.id.createGroup_friendListView);
         friendListAdapter = new MultiChoiceFriendListAdapter(getApplicationContext());
@@ -82,7 +82,7 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         group.setGroupName(nameEditText.getText().toString());
         group.setGroupLevel(MAX_LEVEL);
         group.setFriends(checkedFriends);
-        databaseHelper.createGroup(group);
+        helper.createGroup(group);
 
         nameEditText.setText("");
         onBackPressed();

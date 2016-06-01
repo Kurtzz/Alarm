@@ -10,8 +10,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import pl.agh.ki.io.alarm.alarm.R;
-import pl.agh.ki.io.alarm.sqlite.helper.DatabaseHelper;
 import pl.agh.ki.io.alarm.sqlite.model.Friend;
+import pl.agh.ki.io.alarm.sqlite.service.DatabaseService;
 
 public class EditFriendActivity extends AppCompatActivity implements View.OnClickListener {
     private Spinner spinner;
@@ -19,16 +19,16 @@ public class EditFriendActivity extends AppCompatActivity implements View.OnClic
     private Button button;
     private CheckBox checkBox;
 
-    private DatabaseHelper databaseHelper;
+    private DatabaseService helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_friend);
 
-        databaseHelper = new DatabaseHelper(getApplicationContext());
+        helper = new DatabaseService();
 
-        friend = databaseHelper.getFriend(getIntent().getIntExtra(SendMessageActivity.EXTRA_ID, 0));
+        friend = helper.getFriend(getIntent().getIntExtra(SendMessageActivity.EXTRA_ID, 0));
 
         TextView textView = (TextView) findViewById(R.id.editFriend_nickTextView);
         textView.setText(friend.getNick());
@@ -52,7 +52,7 @@ public class EditFriendActivity extends AppCompatActivity implements View.OnClic
         int position = spinner.getSelectedItemPosition();
         friend.setLevel(position + 1);
         friend.setBlocked(checkBox.isChecked());
-        databaseHelper.updateFriend(friend);
+        helper.updateFriend(friend);
         onBackPressed();
     }
 }

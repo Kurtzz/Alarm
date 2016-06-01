@@ -17,8 +17,8 @@ import android.widget.Toast;
 import java.util.List;
 
 import pl.agh.ki.io.alarm.alarm.R;
-import pl.agh.ki.io.alarm.sqlite.helper.DatabaseHelper;
 import pl.agh.ki.io.alarm.sqlite.model.Group;
+import pl.agh.ki.io.alarm.sqlite.service.DatabaseService;
 import pl.agh.ki.io.alarm.ui.activities.CreateGroupActivity;
 import pl.agh.ki.io.alarm.ui.activities.EditGroupActivity;
 import pl.agh.ki.io.alarm.ui.activities.SendMessageActivity;
@@ -40,7 +40,7 @@ public class GroupsFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private FloatingActionButton floatingActionButton;
 
-    private DatabaseHelper databaseHelper;
+    private DatabaseService helper;
 
     public GroupsFragment() {
         // Required empty public constructor
@@ -62,7 +62,7 @@ public class GroupsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        databaseHelper = new DatabaseHelper(getContext());
+        helper = new DatabaseService();
     }
 
     @Override
@@ -79,7 +79,7 @@ public class GroupsFragment extends Fragment {
             }
         });
 
-        List<Group> groups = databaseHelper.getGroups();
+        List<Group> groups = helper.getGroups();
 
         groupList = (ExpandableListView) rootView.findViewById(R.id.groupFragment_groupListView);
         groupListAdapter = new GroupListAdapter(getContext());
@@ -135,8 +135,8 @@ public class GroupsFragment extends Fragment {
 
     private void deleteGroup(long packagePosition) {
         Group group = groupListAdapter.getGroup(groupList.getFlatListPosition(packagePosition));
-        databaseHelper.deleteGroup(group.getId());
-        List<Group> list = databaseHelper.getGroups();
+        helper.deleteGroup(group);
+        List<Group> list = helper.getGroups();
         groupListAdapter.setArrayList(list);
         Toast.makeText(getContext(), "Group \"" + group.getGroupName() + "\" deleted successfully", Toast.LENGTH_SHORT).show();
     }
@@ -159,7 +159,7 @@ public class GroupsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        List<Group> groups = databaseHelper.getGroups();
+        List<Group> groups = helper.getGroups();
         groupListAdapter.setArrayList(groups);
     }
 }

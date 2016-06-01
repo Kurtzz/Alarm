@@ -1,5 +1,6 @@
 package pl.edu.agh.io.alarm.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
@@ -73,11 +74,11 @@ public class EditGroupActivity extends AppCompatActivity implements View.OnClick
                 onBackPressed();
                 break;
             case R.id.editGroup_inviteFriends:
-//                Intent intent = new Intent(getApplicationContext(), );
-//                startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), InviteFriendsActivity.class);
+                intent.putExtra(SendMessageActivity.EXTRA_ID, group.getId());
+                startActivity(intent);
                 break;
         }
-
 
     }
 

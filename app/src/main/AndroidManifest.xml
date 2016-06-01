@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="pl.edu.agh.io.alarm.ui.activities.MainActivity"
+            android:name=".ui.activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -28,34 +28,39 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="pl.edu.agh.io.alarm.ui.activities.SettingsActivity"
+            android:name=".ui.activities.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="pl.edu.agh.io.alarm.ui.activities.MainActivity" />
-        <activity android:name="pl.edu.agh.io.alarm.ui.activities.SendMessageActivity"
+            android:parentActivityName=".ui.activities.MainActivity" />
+        <activity
+            android:name=".ui.activities.SendMessageActivity"
             android:label="@string/title_activity_sendAlarm">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pl.edu.agh.io.alarm.ui.activities.MainActivity" />
         </activity>
-        <activity android:name="pl.edu.agh.io.alarm.ui.activities.AddFriendActivity"
+        <activity
+            android:name=".ui.activities.AddFriendActivity"
             android:label="@string/title_activity_addFriend">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pl.edu.agh.io.alarm.ui.activities.MainActivity" />
         </activity>
-        <activity android:name="pl.edu.agh.io.alarm.ui.activities.CreateGroupActivity"
+        <activity
+            android:name=".ui.activities.CreateGroupActivity"
             android:label="@string/title_activity_createGroup">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pl.edu.agh.io.alarm.ui.activities.MainActivity" />
         </activity>
-        <activity android:name="pl.edu.agh.io.alarm.ui.activities.EditFriendActivity"
+        <activity
+            android:name=".ui.activities.EditFriendActivity"
             android:label="@string/title_activity_editFriend">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pl.edu.agh.io.alarm.ui.activities.MainActivity" />
         </activity>
-        <activity android:name="pl.edu.agh.io.alarm.ui.activities.EditGroupActivity"
+        <activity
+            android:name=".ui.activities.EditGroupActivity"
             android:label="@string/title_activity_editGroup">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -65,45 +70,48 @@
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
                 <category android:name="pl.edu.agh.io.alarm" />
             </intent-filter>
         </receiver>
 
         <service
             android:name=".gcm.AlarmGcmListenerService"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
-
-        <service android:name=".gcm.id.AlarmInstanceListenerService" android:exported="false">
+        <service
+            android:name=".gcm.id.AlarmInstanceListenerService"
+            android:exported="false">
             <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID"/>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
-
         <service
             android:name=".gcm.id.InstanceRegistrationIntent"
-            android:exported="false"
-            android:enabled="true">
-        </service>
+            android:enabled="true"
+            android:exported="false"></service>
 
-        <activity android:name=".notifications.MyClass">
-        </activity>
+        <activity android:name=".notifications.MyClass"></activity>
 
-        <service android:name=".notifications.Notifications">
-
-        </service>
-
-        <service android:name=".sqlite.service.DatabaseService">
-        </service>
-        <service android:name=".middleware.Middleware">
-        </service>
+        <service android:name=".notifications.Notifications"></service>
+        <service android:name=".sqlite.service.DatabaseService"></service>
+        <service android:name=".middleware.Middleware"></service>
         <service android:name=".gcm.GcmSendService" />
+
+        <activity
+            android:name=".ui.activities.InviteFriendsActivity"
+            android:label="@string/invite_friends">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pl.edu.agh.io.alarm.ui.activities.EditGroupActivity" />
+        </activity>
     </application>
+
 </manifest>

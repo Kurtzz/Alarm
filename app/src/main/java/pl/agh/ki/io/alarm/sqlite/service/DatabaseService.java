@@ -83,6 +83,22 @@ public class DatabaseService extends Service {
      */
     public void updateGroup(Group group) {
         helper.updateGroup(group);
+
+        //Update linking tables
+        List<Friend> dbFriends = helper.getAllMembersOfTheGroup(group.getId());
+        if (dbFriends.equals(group.getFriends())) {
+            return;
+        }
+        for (Friend friend : dbFriends) {
+            if (!group.getFriends().contains(friend)) {
+                helper.deleteGroupFriend(group, friend);
+            }
+        }
+        for (Friend friend : group.getFriends()) {
+            if (!dbFriends.contains(friend)) {
+                helper.createGroupFriend(group.getId(), friend.getId());
+            }
+        }
     }
 
     /**

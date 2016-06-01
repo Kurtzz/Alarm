@@ -222,31 +222,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * Update group
      */
-    public void updateGroup(Group group) {
+    public int updateGroup(Group group) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(KEY_GROUP_NAME, group.getGroupName());
         values.put(KEY_GROUP_LEVEL, group.getGroupLevel());
 
-        db.update(TABLE_GROUP, values, KEY_GROUP_ID + " = ?",
+        return db.update(TABLE_GROUP, values, KEY_GROUP_ID + " = ?",
                 new String[]{String.valueOf(group.getId())});
-
-        //Update linking tables
-        List<Friend> dbFriends = getAllMembersOfTheGroup(group.getId());
-        if (dbFriends.equals(group.getFriends())) {
-            return;
-        }
-        for (Friend friend : dbFriends) {
-            if (!group.getFriends().contains(friend)) {
-                deleteGroupFriend(group, friend);
-            }
-        }
-        for (Friend friend : group.getFriends()) {
-            if (!dbFriends.contains(friend)) {
-                createGroupFriend(group.getId(), friend.getId());
-            }
-        }
     }
 
     /**

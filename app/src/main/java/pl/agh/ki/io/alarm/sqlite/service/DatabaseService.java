@@ -54,8 +54,11 @@ public class DatabaseService extends Service {
     /**
      * Delete friend
      */
-    public void deleteFriend(long friend_id) {
-        helper.deleteFriend(friend_id);
+    public void deleteFriend(Friend friend) {
+        helper.deleteFriend(friend.getId());
+
+        //Delete all dependencies
+        helper.deleteGroupFriend(friend);
     }
 
     // ------------------------ "friends" table methods ----------------//

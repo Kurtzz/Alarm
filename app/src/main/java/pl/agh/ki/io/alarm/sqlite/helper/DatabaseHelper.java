@@ -198,9 +198,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Friend friend = getFriend(friend_id);
 
         db.delete(TABLE_FRIEND, KEY_FRIEND_ID + " = ?", new String[]{String.valueOf(friend_id)});
-
-        //delete dependency
-        deleteGroupFriend(friend);
     }
 
     // ------------------------ "friends" table methods ----------------//

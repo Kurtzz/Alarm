@@ -4,7 +4,8 @@ import java.util.List;
 
 public interface Repository<K, V> {
 
-    boolean add(K key, V value);
-    boolean remove(K key);
+    void add(K key, V value);
+    void remove(K key);
     List<V> getAll();
+    boolean contains()
 }

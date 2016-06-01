@@ -154,7 +154,7 @@ public class FriendsFragment extends Fragment {
         databaseHelper.deleteFriend(friend.getId());
         List<Friend> list = databaseHelper.getFriends();
         friendListAdapter.setArrayList(list);
-        Toast.makeText(getContext(), "Friend \"" + friend.getNick() + "\" deleted succesfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Friend \"" + friend.getNick() + "\" deleted successfully", Toast.LENGTH_SHORT).show();
     }
 
     /**

@@ -312,12 +312,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_FRIEND_GROUP, null, values);
     }
 
-    public void createGroupFriend(long group_id, List<Friend> friends) {
-        for (Friend friend : friends) {
-            createGroupFriend(group_id, friend.getId());
-        }
-    }
-
     /**
      * Get all members of the group
      */

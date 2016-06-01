@@ -125,8 +125,16 @@ public class DatabaseService extends Service {
         helper.deleteGroupFriend(group);
     }
 
+    // ------------------------ "group friend" table methods ----------------//
 
-
+    /**
+     * Create multiple group_friend
+     */
+    public void createGroupFriend(long group_id, List<Friend> friends) {
+        for (Friend friend : friends) {
+            helper.createGroupFriend(group_id, friend.getId());
+        }
+    }
 
 
 

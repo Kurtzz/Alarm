@@ -89,9 +89,14 @@ public class EditGroupActivity extends AppCompatActivity implements View.OnClick
 
     private void deleteFriend(int position) {
         Friend friend = friendListAdapter.getItem(position);
+
+        //TODO: send request to server
+
         helper.deleteGroupFriend(group, friend);
+
         group = helper.getGroup(group.getId());
         friendListAdapter.setArrayList(group.getFriends());
+
         Toast.makeText(getApplicationContext(), "Member \"" + friend.getNick() + "\" deleted successfully", Toast.LENGTH_SHORT).show();
     }
 }

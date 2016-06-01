@@ -72,7 +72,7 @@ public class GroupListAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             holder = new HeaderHolder();
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.group_list_item_header, null);
+            convertView = layoutInflater.inflate(R.layout.group_list_item_header, parent);
             holder.groupName = (TextView) convertView.findViewById(R.id.groupListItemHeader_groupName);
 
             convertView.setTag(holder);
@@ -103,7 +103,7 @@ public class GroupListAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             holder = new FriendHolder();
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.group_list_item_child, null);
+            convertView = layoutInflater.inflate(R.layout.group_list_item_child, parent);
             holder.nick = (TextView) convertView.findViewById(R.id.memberOfGroup);
             convertView.setTag(holder);
         } else {

@@ -19,7 +19,7 @@ import pl.edu.agh.io.alarm.ui.activities.SendMessageActivity;
 
 import static pl.edu.agh.io.alarm.sqlite.model.Friend.FriendComparator.NICK_SORT;
 import static pl.edu.agh.io.alarm.sqlite.model.Friend.FriendComparator.getFriendComparator;
-import static pl.edu.agh.io.alarm.sqlite.model.Group.GroupComparator.GROUP_NAME_SORT;
+import static pl.edu.agh.io.alarm.sqlite.model.Group.GroupComparator.GROUP_NAME_ID_SORT;
 import static pl.edu.agh.io.alarm.sqlite.model.Group.GroupComparator.getGroupComparator;
 
 /**
@@ -83,7 +83,7 @@ public class GroupListAdapter extends BaseExpandableListAdapter {
             holder = (HeaderHolder) convertView.getTag();
         }
         Group group = getGroup(groupPosition);
-        holder.groupName.setText(group.getGroupName());
+        holder.groupName.setText(group.getNameId());
 
         ImageButton imageButton = (ImageButton) convertView.findViewById(R.id.groupListItemHeader_imageButton);
         imageButton.setOnClickListener(new View.OnClickListener() {
@@ -130,7 +130,7 @@ public class GroupListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public void notifyDataSetChanged() {
-        Collections.sort(groupList, getGroupComparator(GROUP_NAME_SORT));
+        Collections.sort(groupList, getGroupComparator(GROUP_NAME_ID_SORT));
         for (Group group : groupList) {
             Collections.sort(group.getFriends(), getFriendComparator(NICK_SORT));
         }

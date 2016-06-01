@@ -31,10 +31,10 @@ public class InviteFriendsActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_invite_friends);
 
         helper = new DatabaseHelper(getApplicationContext());
-        group = helper.getGroup(getIntent().getIntExtra(SendMessageActivity.EXTRA_ID, 0));
+        group = helper.getGroup(getIntent().getStringExtra(SendMessageActivity.EXTRA_ID));
 
         TextView textView = (TextView) findViewById(R.id.inviteFriends_nickTextView);
-        textView.setText(group.getGroupName());
+        textView.setText(group.getNameId());
 
         List<Friend> friends = helper.getFriends();
         friends.removeAll(group.getFriends());

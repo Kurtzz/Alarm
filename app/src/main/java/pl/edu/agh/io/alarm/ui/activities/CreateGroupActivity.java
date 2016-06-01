@@ -78,8 +78,10 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
             return;
         }
 
+        //TODO
+
         Group group = new Group();
-        group.setGroupName(nameEditText.getText().toString());
+        group.setNameId(nameEditText.getText().toString());
         group.setGroupLevel(MAX_LEVEL);
         group.setFriends(new ArrayList<Friend>());
         helper.createGroup(group);

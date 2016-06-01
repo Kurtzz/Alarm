@@ -1,4 +1,4 @@
-package pl.agh.ki.io.alarm.ui.fragments;
+package pl.edu.agh.io.alarm.ui.fragments;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -16,13 +16,13 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import pl.agh.ki.io.alarm.alarm.R;
-import pl.agh.ki.io.alarm.sqlite.model.Group;
-import pl.agh.ki.io.alarm.sqlite.service.DatabaseService;
-import pl.agh.ki.io.alarm.ui.activities.CreateGroupActivity;
-import pl.agh.ki.io.alarm.ui.activities.EditGroupActivity;
-import pl.agh.ki.io.alarm.ui.activities.SendMessageActivity;
-import pl.agh.ki.io.alarm.ui.adapters.GroupListAdapter;
+import pl.edu.agh.io.alarm.R;
+import pl.edu.agh.io.alarm.sqlite.helper.DatabaseHelper;
+import pl.edu.agh.io.alarm.sqlite.model.Group;
+import pl.edu.agh.io.alarm.ui.activities.CreateGroupActivity;
+import pl.edu.agh.io.alarm.ui.activities.EditGroupActivity;
+import pl.edu.agh.io.alarm.ui.activities.SendMessageActivity;
+import pl.edu.agh.io.alarm.ui.adapters.GroupListAdapter;
 
 
 /**
@@ -40,7 +40,7 @@ public class GroupsFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private FloatingActionButton floatingActionButton;
 
-    private DatabaseService helper;
+    private DatabaseHelper helper;
 
     public GroupsFragment() {
         // Required empty public constructor
@@ -61,8 +61,8 @@ public class GroupsFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        helper = new DatabaseHelper(getContext());
         super.onCreate(savedInstanceState);
-        helper = new DatabaseService();
     }
 
     @Override
@@ -135,7 +135,7 @@ public class GroupsFragment extends Fragment {
 
     private void deleteGroup(long packagePosition) {
         Group group = groupListAdapter.getGroup(groupList.getFlatListPosition(packagePosition));
-        helper.deleteGroup(group);
+        helper.deleteGroup(group.getId());
         List<Group> list = helper.getGroups();
         groupListAdapter.setArrayList(list);
         Toast.makeText(getContext(), "Group \"" + group.getGroupName() + "\" deleted successfully", Toast.LENGTH_SHORT).show();

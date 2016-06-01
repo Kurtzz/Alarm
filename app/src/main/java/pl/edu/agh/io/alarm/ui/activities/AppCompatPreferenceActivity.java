@@ -1,4 +1,4 @@
-package pl.agh.ki.io.alarm.ui.activities;
+package pl.edu.agh.io.alarm.ui.activities;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:divider="@drawable/separator_drawable"
     android:showDividers="middle"
-    tools:context="pl.agh.ki.io.alarm.ui.activities.SendMessageActivity"
+    tools:context="pl.edu.agh.io.alarm.ui.activities.SendMessageActivity"
     android:orientation="vertical">
 
     <EditText

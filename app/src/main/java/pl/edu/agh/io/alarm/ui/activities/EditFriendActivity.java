@@ -1,4 +1,4 @@
-package pl.agh.ki.io.alarm.ui.activities;
+package pl.edu.agh.io.alarm.ui.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,9 +9,9 @@ import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import pl.agh.ki.io.alarm.alarm.R;
-import pl.agh.ki.io.alarm.sqlite.model.Friend;
-import pl.agh.ki.io.alarm.sqlite.service.DatabaseService;
+import pl.edu.agh.io.alarm.R;
+import pl.edu.agh.io.alarm.sqlite.helper.DatabaseHelper;
+import pl.edu.agh.io.alarm.sqlite.model.Friend;
 
 public class EditFriendActivity extends AppCompatActivity implements View.OnClickListener {
     private Spinner spinner;
@@ -19,14 +19,14 @@ public class EditFriendActivity extends AppCompatActivity implements View.OnClic
     private Button button;
     private CheckBox checkBox;
 
-    private DatabaseService helper;
+    private DatabaseHelper helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_friend);
 
-        helper = new DatabaseService();
+        helper = new DatabaseHelper(getApplicationContext());
 
         friend = helper.getFriend(getIntent().getIntExtra(SendMessageActivity.EXTRA_ID, 0));
 

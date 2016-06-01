@@ -1,4 +1,4 @@
-package pl.agh.ki.io.alarm.ui.adapters;
+package pl.edu.agh.io.alarm.ui.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,13 +12,15 @@ import android.widget.TextView;
 import java.util.Collections;
 import java.util.List;
 
-import pl.agh.ki.io.alarm.ui.activities.SendMessageActivity;
-import pl.agh.ki.io.alarm.alarm.R;
-import pl.agh.ki.io.alarm.sqlite.model.Friend;
-import pl.agh.ki.io.alarm.sqlite.model.Group;
+import pl.edu.agh.io.alarm.R;
+import pl.edu.agh.io.alarm.sqlite.model.Friend;
+import pl.edu.agh.io.alarm.sqlite.model.Group;
+import pl.edu.agh.io.alarm.ui.activities.SendMessageActivity;
 
-import static pl.agh.ki.io.alarm.sqlite.model.Friend.FriendComparator.*;
-import static pl.agh.ki.io.alarm.sqlite.model.Group.GroupComparator.*;
+import static pl.edu.agh.io.alarm.sqlite.model.Friend.FriendComparator.NICK_SORT;
+import static pl.edu.agh.io.alarm.sqlite.model.Friend.FriendComparator.getFriendComparator;
+import static pl.edu.agh.io.alarm.sqlite.model.Group.GroupComparator.GROUP_NAME_SORT;
+import static pl.edu.agh.io.alarm.sqlite.model.Group.GroupComparator.getGroupComparator;
 
 /**
  * Created by P on 18.05.2016.
@@ -73,7 +75,7 @@ public class GroupListAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             holder = new HeaderHolder();
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.group_list_item_header, parent);
+            convertView = layoutInflater.inflate(R.layout.group_list_item_header, null);
             holder.groupName = (TextView) convertView.findViewById(R.id.groupListItemHeader_groupName);
 
             convertView.setTag(holder);
@@ -104,7 +106,7 @@ public class GroupListAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             holder = new FriendHolder();
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.group_list_item_child, parent);
+            convertView = layoutInflater.inflate(R.layout.group_list_item_child, null);
             holder.nick = (TextView) convertView.findViewById(R.id.memberOfGroup);
             convertView.setTag(holder);
         } else {

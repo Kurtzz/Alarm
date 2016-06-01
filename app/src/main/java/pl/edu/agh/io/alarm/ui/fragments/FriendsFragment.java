@@ -1,4 +1,4 @@
-package pl.agh.ki.io.alarm.ui.fragments;
+package pl.edu.agh.io.alarm.ui.fragments;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -17,13 +17,13 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import pl.agh.ki.io.alarm.alarm.R;
-import pl.agh.ki.io.alarm.sqlite.model.Friend;
-import pl.agh.ki.io.alarm.sqlite.service.DatabaseService;
-import pl.agh.ki.io.alarm.ui.activities.AddFriendActivity;
-import pl.agh.ki.io.alarm.ui.activities.EditFriendActivity;
-import pl.agh.ki.io.alarm.ui.activities.SendMessageActivity;
-import pl.agh.ki.io.alarm.ui.adapters.DefaultFriendListAdapter;
+import pl.edu.agh.io.alarm.R;
+import pl.edu.agh.io.alarm.sqlite.helper.DatabaseHelper;
+import pl.edu.agh.io.alarm.sqlite.model.Friend;
+import pl.edu.agh.io.alarm.ui.activities.AddFriendActivity;
+import pl.edu.agh.io.alarm.ui.activities.EditFriendActivity;
+import pl.edu.agh.io.alarm.ui.activities.SendMessageActivity;
+import pl.edu.agh.io.alarm.ui.adapters.DefaultFriendListAdapter;
 
 
 /**
@@ -41,7 +41,7 @@ public class FriendsFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private FloatingActionButton floatingActionButton;
 
-    private DatabaseService helper;
+    private DatabaseHelper helper;
 
     public FriendsFragment() {
         // Required empty public constructor
@@ -63,8 +63,8 @@ public class FriendsFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        helper = new DatabaseHelper(getContext());
         super.onCreate(savedInstanceState);
-        helper = new DatabaseService();
     }
 
     @Override
@@ -155,7 +155,7 @@ public class FriendsFragment extends Fragment {
 
     private void deleteFriend(int position) {
         Friend friend = friendListAdapter.getItem(position);
-        helper.deleteFriend(friend);
+        helper.deleteFriend(friend.getId());
         List<Friend> list = helper.getFriends();
         friendListAdapter.setArrayList(list);
         Toast.makeText(getContext(), "Friend \"" + friend.getNick() + "\" deleted successfully", Toast.LENGTH_SHORT).show();

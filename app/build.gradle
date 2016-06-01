@@ -6,7 +6,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "pl.agh.ki.io.alarm.alarm"
+        applicationId "pl.edu.agh.io.alarm"
         minSdkVersion 17
         targetSdkVersion 23
         versionCode 1

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="pl.agh.ki.io.alarm.alarm">
+    package="pl.edu.agh.io.alarm">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="pl.agh.ki.io.alarm.ui.activities.MainActivity"
+            android:name="pl.edu.agh.io.alarm.ui.activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -28,38 +28,38 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="pl.agh.ki.io.alarm.ui.activities.SettingsActivity"
+            android:name="pl.edu.agh.io.alarm.ui.activities.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="pl.agh.ki.io.alarm.ui.activities.MainActivity" />
-        <activity android:name="pl.agh.ki.io.alarm.ui.activities.SendMessageActivity"
+            android:parentActivityName="pl.edu.agh.io.alarm.ui.activities.MainActivity" />
+        <activity android:name="pl.edu.agh.io.alarm.ui.activities.SendMessageActivity"
             android:label="@string/title_activity_sendAlarm">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="pl.agh.ki.io.alarm.ui.activities.MainActivity" />
+                android:value="pl.edu.agh.io.alarm.ui.activities.MainActivity" />
         </activity>
-        <activity android:name="pl.agh.ki.io.alarm.ui.activities.AddFriendActivity"
+        <activity android:name="pl.edu.agh.io.alarm.ui.activities.AddFriendActivity"
             android:label="@string/title_activity_addFriend">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="pl.agh.ki.io.alarm.ui.activities.MainActivity" />
+                android:value="pl.edu.agh.io.alarm.ui.activities.MainActivity" />
         </activity>
-        <activity android:name="pl.agh.ki.io.alarm.ui.activities.CreateGroupActivity"
+        <activity android:name="pl.edu.agh.io.alarm.ui.activities.CreateGroupActivity"
             android:label="@string/title_activity_createGroup">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="pl.agh.ki.io.alarm.ui.activities.MainActivity" />
+                android:value="pl.edu.agh.io.alarm.ui.activities.MainActivity" />
         </activity>
-        <activity android:name="pl.agh.ki.io.alarm.ui.activities.EditFriendActivity"
+        <activity android:name="pl.edu.agh.io.alarm.ui.activities.EditFriendActivity"
             android:label="@string/title_activity_editFriend">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="pl.agh.ki.io.alarm.ui.activities.MainActivity" />
+                android:value="pl.edu.agh.io.alarm.ui.activities.MainActivity" />
         </activity>
-        <activity android:name="pl.agh.ki.io.alarm.ui.activities.EditGroupActivity"
+        <activity android:name="pl.edu.agh.io.alarm.ui.activities.EditGroupActivity"
             android:label="@string/title_activity_editGroup">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="pl.agh.ki.io.alarm.ui.activities.MainActivity" />
+                android:value="pl.edu.agh.io.alarm.ui.activities.MainActivity" />
         </activity>
 
         <receiver
@@ -92,14 +92,6 @@
             android:exported="false"
             android:enabled="true">
         </service>
-
-        <activity android:name=".ui.activities.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-
 
         <activity android:name=".notifications.MyClass">
         </activity>

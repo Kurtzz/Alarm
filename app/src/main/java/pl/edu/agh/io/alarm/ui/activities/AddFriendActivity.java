@@ -1,4 +1,4 @@
-package pl.agh.ki.io.alarm.ui.activities;
+package pl.edu.agh.io.alarm.ui.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -8,12 +8,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import pl.agh.ki.io.alarm.alarm.R;
-import pl.agh.ki.io.alarm.sqlite.model.Friend;
-import pl.agh.ki.io.alarm.sqlite.service.DatabaseService;
+import pl.edu.agh.io.alarm.R;
+import pl.edu.agh.io.alarm.sqlite.helper.DatabaseHelper;
+import pl.edu.agh.io.alarm.sqlite.model.Friend;
 
 public class AddFriendActivity extends AppCompatActivity implements View.OnClickListener {
-    private DatabaseService databaseHelper;
+    private DatabaseHelper databaseHelper;
     private EditText editText;
     private static final int MAX_LEVEL = 5;
 
@@ -22,7 +22,7 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_friend);
 
-        databaseHelper = new DatabaseService();
+        databaseHelper = new DatabaseHelper(getApplicationContext());
 
         Button addFriendButton = (Button) findViewById(R.id.addFriend_addFriendButton);
         addFriendButton.setOnClickListener(this);

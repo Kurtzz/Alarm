@@ -1,4 +1,4 @@
-package pl.agh.ki.io.alarm.ui.activities;
+package pl.edu.agh.io.alarm.ui.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,11 +14,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import pl.agh.ki.io.alarm.alarm.R;
-import pl.agh.ki.io.alarm.sqlite.model.Friend;
-import pl.agh.ki.io.alarm.sqlite.model.Group;
-import pl.agh.ki.io.alarm.sqlite.service.DatabaseService;
-import pl.agh.ki.io.alarm.ui.adapters.MultiChoiceFriendListAdapter;
+import pl.edu.agh.io.alarm.R;
+import pl.edu.agh.io.alarm.sqlite.helper.DatabaseHelper;
+import pl.edu.agh.io.alarm.sqlite.model.Friend;
+import pl.edu.agh.io.alarm.sqlite.model.Group;
+import pl.edu.agh.io.alarm.ui.adapters.MultiChoiceFriendListAdapter;
 
 public class EditGroupActivity extends AppCompatActivity implements View.OnClickListener {
     private Spinner spinner;
@@ -26,16 +26,16 @@ public class EditGroupActivity extends AppCompatActivity implements View.OnClick
     private Button button;
     private ListView friendList;
     private MultiChoiceFriendListAdapter friendListAdapter;
-    private List<Friend> oldFriendList;
+//    private List<Friend> oldFriendList;
 
-    private DatabaseService helper;
+    private DatabaseHelper helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_group);
 
-        helper = new DatabaseService();
+        helper = new DatabaseHelper(getApplicationContext());
 
         group = helper.getGroup(getIntent().getIntExtra(SendMessageActivity.EXTRA_ID, 0));
 

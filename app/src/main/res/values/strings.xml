@@ -80,6 +80,7 @@
     <string name="title_activity_sendAlarm">Send Alarm</string>
     <string name="title_activity_editFriend">Edit Friend</string>
     <string name="title_activity_editGroup">Edit Group</string>
+    <string name="local_service_started">Local_service_started</string>
     <string-array name="alarmLevelsArray">
         <item>Level 1</item>
         <item>Level 2</item>

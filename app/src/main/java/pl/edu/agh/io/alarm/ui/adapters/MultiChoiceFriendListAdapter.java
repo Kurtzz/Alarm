@@ -1,4 +1,4 @@
-package pl.agh.ki.io.alarm.ui.adapters;
+package pl.edu.agh.io.alarm.ui.adapters;
 
 import android.content.Context;
 import android.util.SparseBooleanArray;
@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import pl.agh.ki.io.alarm.alarm.R;
-import pl.agh.ki.io.alarm.sqlite.model.Friend;
+import pl.edu.agh.io.alarm.R;
+import pl.edu.agh.io.alarm.sqlite.model.Friend;
 
 /**
  * Created by P on 21.05.2016.

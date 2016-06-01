@@ -1,4 +1,4 @@
-package pl.agh.ki.io.alarm.ui.adapters;
+package pl.edu.agh.io.alarm.ui.adapters;
 
 import android.content.Context;
 import android.view.View;
@@ -8,9 +8,9 @@ import android.widget.ArrayAdapter;
 import java.util.Collections;
 import java.util.List;
 
-import pl.agh.ki.io.alarm.sqlite.model.Friend;
+import pl.edu.agh.io.alarm.sqlite.model.Friend;
 
-import static pl.agh.ki.io.alarm.sqlite.model.Friend.FriendComparator.*;
+import static pl.edu.agh.io.alarm.sqlite.model.Friend.FriendComparator.*;
 
 /**
  * Created by P on 21.05.2016.

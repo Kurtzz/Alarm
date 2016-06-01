@@ -83,8 +83,8 @@ public class    Middleware extends Service {
     /**
      * Delete friend
      */
-    public void deleteFriend(long friend_id) {
-        databaseService.deleteFriend(friend_id);
+    public void deleteFriend(Friend friend) {
+        databaseService.deleteFriend(friend);
     }
 
     // ------------------------ "friends" table methods ----------------//
@@ -113,8 +113,8 @@ public class    Middleware extends Service {
     /**
      * Delete Group
      */
-    public void deleteGroup(long group_id) {
-        databaseService.deleteGroup(group_id);
+    public void deleteGroup(Group group) {
+        databaseService.deleteGroup(group);
     }
 
 

@@ -1,4 +1,4 @@
-package pl.agh.ki.io.alarm.ui.activities;
+package pl.edu.agh.io.alarm.ui.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -13,11 +13,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import pl.agh.ki.io.alarm.alarm.R;
-import pl.agh.ki.io.alarm.sqlite.model.Friend;
-import pl.agh.ki.io.alarm.sqlite.model.Group;
-import pl.agh.ki.io.alarm.sqlite.service.DatabaseService;
-import pl.agh.ki.io.alarm.ui.adapters.MultiChoiceFriendListAdapter;
+import pl.edu.agh.io.alarm.R;
+import pl.edu.agh.io.alarm.sqlite.helper.DatabaseHelper;
+import pl.edu.agh.io.alarm.sqlite.model.Friend;
+import pl.edu.agh.io.alarm.sqlite.model.Group;
+import pl.edu.agh.io.alarm.ui.adapters.MultiChoiceFriendListAdapter;
 
 public class CreateGroupActivity extends AppCompatActivity implements View.OnClickListener {
     private ListView friendList;
@@ -25,7 +25,7 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
     private Button createGroupButton;
     private EditText nameEditText;
 
-    private DatabaseService helper;
+    private DatabaseHelper helper;
 
     private static final int MAX_LEVEL = 5;
 
@@ -34,7 +34,7 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
 
-        helper = new DatabaseService();
+        helper = new DatabaseHelper(getApplicationContext());
 
         nameEditText = (EditText) findViewById(R.id.createGroup_nameEditText);
 

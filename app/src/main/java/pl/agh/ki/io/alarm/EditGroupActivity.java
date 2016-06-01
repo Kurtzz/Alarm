@@ -51,7 +51,7 @@ public class EditGroupActivity extends AppCompatActivity implements View.OnClick
         List<Friend> friends = databaseHelper.getFriends();
 
         friendList = (ListView) findViewById(R.id.editGroup_friendListView);
-        friendListAdapter = new MultiChoiceFriendListAdapter(getApplicationContext(), R.layout.friend_list_item_multi);
+        friendListAdapter = new MultiChoiceFriendListAdapter(getApplicationContext());
 
         friendListAdapter.setArrayList(friends);
         friendList.setAdapter(friendListAdapter);

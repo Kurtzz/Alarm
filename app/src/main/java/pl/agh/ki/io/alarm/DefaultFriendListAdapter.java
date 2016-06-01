@@ -17,8 +17,8 @@ import pl.agh.ki.io.alarm.sqlite.model.Friend;
  */
 public class DefaultFriendListAdapter extends AbstractFriendListAdapter {
 
-    public DefaultFriendListAdapter(Context context, int textViewResourceId) {
-        super(context, textViewResourceId);
+    public DefaultFriendListAdapter(Context context) {
+        super(context, R.layout.friend_list_item);
     }
 
     @Override

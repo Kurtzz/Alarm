@@ -17,8 +17,8 @@ import pl.agh.ki.io.alarm.sqlite.model.Friend;
 public class MultiChoiceFriendListAdapter extends AbstractFriendListAdapter {
     private SparseBooleanArray checkedItems;
 
-    public MultiChoiceFriendListAdapter(Context context, int textViewResourceId) {
-        super(context, textViewResourceId);
+    public MultiChoiceFriendListAdapter(Context context) {
+        super(context, R.layout.friend_list_item_multi);
         checkedItems = new SparseBooleanArray();
     }
 

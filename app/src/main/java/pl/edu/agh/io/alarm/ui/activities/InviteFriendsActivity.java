@@ -61,8 +61,7 @@ public class InviteFriendsActivity extends AppCompatActivity implements View.OnC
             }
         }
 
-        group.setFriends(checkedFriends);
-        helper.updateGroup(group);
+        //TODO: invite checkedFriends
 
         onBackPressed();
     }

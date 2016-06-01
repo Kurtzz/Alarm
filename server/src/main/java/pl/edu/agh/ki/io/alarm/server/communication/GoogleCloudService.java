@@ -9,11 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pl.edu.agh.ki.io.alarm.server.MessageService;
-import pl.edu.agh.ki.io.alarm.server.registry.TokenRegistry;
+import pl.edu.agh.ki.io.alarm.server.registry.UserRepository;
 
 @Component
-public class GoogleCloudService implements MessageService{
+public class GoogleCloudService {
 
     public static final String GOOGLE_PROJECT_ID = "AIzaSyCTqMXVGZLHRrXW338ZyILk6zT9I1e7S5Q";
 
@@ -23,29 +22,20 @@ public class GoogleCloudService implements MessageService{
     public static final String GCM_SEND_URL = "https://gcm-http.googleapis.com/gcm/send";
     public static final String AUTHORIZATION = "Authorization";
 
-    private final TokenRegistry tokenRegistry;
+    private final UserRepository userRepository;
     private final MessageSerializer serializer;
 
     @Autowired
-    public GoogleCloudService(MessageSerializer serializer, TokenRegistry registry) {
-        this.tokenRegistry = registry;
+    public GoogleCloudService(MessageSerializer serializer, UserRepository registry) {
+        this.userRepository = registry;
         this.serializer = serializer;
     }
 
-    @Override
-    public void sendToAll(String message) throws Exception {
-        for(String token : tokenRegistry.getAll()) {
-            sendTo(token, message);
-        }
-    }
+    public void send(GcmMessage message) throws UnirestException, JsonProcessingException {
 
-    @Override
-    public void sendTo(String token, String message) throws UnirestException, JsonProcessingException {
-
-        String messageBody = createMessageBody(token, message);
-
+        String messageBody = serializer.serialize(message);
         HttpResponse<String> result = createRequest(messageBody).asString();
-        LOGGER.info("Sent message '{}' to {}", message, token);
+        LOGGER.info("Sent message '{}' to {}", message, message.getTo());
     }
 
     private RequestBodyEntity createRequest(String messageBody) {
@@ -54,14 +44,5 @@ public class GoogleCloudService implements MessageService{
                 .header(CONTENT_TYPE, APPLICATION_JSON)
                 .header(AUTHORIZATION, "key=" + GOOGLE_PROJECT_ID)
                 .body(messageBody);
-    }
-
-    private String createMessageBody(String token, String message) throws JsonProcessingException {
-        GcmMessage gcmMessage = new GcmMessage();
-        gcmMessage.setTo(token);
-        GcmMessageData data = new GcmMessageData();
-        data.setMessage(message);
-        gcmMessage.setData(data);
-        return serializer.serialize(gcmMessage);
     }
 }

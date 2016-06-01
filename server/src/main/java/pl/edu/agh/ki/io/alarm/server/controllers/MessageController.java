@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.edu.agh.ki.io.alarm.domain.User;
 import pl.edu.agh.ki.io.alarm.server.MessageService;
+import pl.edu.agh.ki.io.alarm.server.registry.UserRepository;
 
 @RestController
 @RequestMapping(path = "/alarm/message")
@@ -16,17 +18,23 @@ public class MessageController {
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageController.class);
 
     private final MessageService gcmService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public MessageController(MessageService messageService) {
+    public MessageController(MessageService messageService, UserRepository userRepository) {
         this.gcmService = messageService;
+        this.userRepository = userRepository;
     }
 
     @RequestMapping(path = "/send/{message}")
     public HttpStatus sendMessage(@PathVariable String message) {
         try {
-            gcmService.sendToAll(message);
+            for(User user : userRepository.getAll()) {
+                String token = user.getToken();
+                gcmService.sendTo(token, message);
+            }
             return HttpStatus.OK;
+
         } catch (Exception e) {
             LOGGER.warn("Error when sending message", e);
             return HttpStatus.INTERNAL_SERVER_ERROR;

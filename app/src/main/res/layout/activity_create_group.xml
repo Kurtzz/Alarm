@@ -10,27 +10,34 @@
     tools:context="pl.edu.agh.io.alarm.ui.activities.CreateGroupActivity">
 
     <EditText
+        android:id="@+id/createGroup_nameEditText"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/createGroup_nameEditText"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:hint="@string/createGroup_namePlaceholder" />
 
-    <ListView
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/createGroup_friendListView"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
         android:layout_below="@+id/createGroup_nameEditText"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/createGroup_createGroupButton" />
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/createGroup_createGroupButton"
-        android:id="@+id/createGroup_createGroupButton"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true">
+
+        <Button
+            android:id="@+id/createGroup_joinGroupButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/createGroup_joinGroupButton" />
+
+        <Button
+            android:id="@+id/createGroup_createGroupButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/createGroup_createGroupButton" />
+    </LinearLayout>
 
 </RelativeLayout>

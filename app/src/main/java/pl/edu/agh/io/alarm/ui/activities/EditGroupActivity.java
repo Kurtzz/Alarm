@@ -26,7 +26,6 @@ public class EditGroupActivity extends AppCompatActivity implements View.OnClick
     private Button button;
     private ListView friendList;
     private DefaultFriendListAdapter friendListAdapter;
-//    private List<Friend> oldFriendList;
 
     private DatabaseHelper helper;
 
@@ -49,17 +48,11 @@ public class EditGroupActivity extends AppCompatActivity implements View.OnClick
         spinner.setAdapter(adapter);
         spinner.setSelection(group.getGroupLevel() - 1);
 
-//        List<Friend> friends = helper.getFriends();
-
         friendList = (ListView) findViewById(R.id.editGroup_friendListView);
         friendListAdapter = new DefaultFriendListAdapter(getApplicationContext(), R.layout.friend_list_item);
 
         friendListAdapter.setArrayList(group.getFriends());
         friendList.setAdapter(friendListAdapter);
-
-        /*for (Friend friend: group.getFriends()) {
-            friendListAdapter.setItemChecked(friend);
-        }*/
 
         button = (Button) findViewById(R.id.editGroup_saveButton);
         button.setOnClickListener(this);
@@ -69,23 +62,7 @@ public class EditGroupActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        /*SparseBooleanArray checkedItems = friendListAdapter.getCheckedItems();
-        List<Friend> checkedFriends = new ArrayList<>();
-
-        for (int i = 0; i < checkedItems.size(); i++) {
-            int key = checkedItems.keyAt(i);
-            if (checkedItems.valueAt(i)) {
-                checkedFriends.add(friendListAdapter.getItem(key));
-            }
-        }
-
-        if (checkedFriends.size() < 2) {
-            Toast.makeText(this, "Group should consist of at least 2 members!", Toast.LENGTH_SHORT).show();
-            return;
-        }*/
-
         group.setGroupLevel(spinner.getSelectedItemPosition() + 1);
-//        group.setFriends(checkedFriends);
         helper.updateGroup(group);
 
         onBackPressed();

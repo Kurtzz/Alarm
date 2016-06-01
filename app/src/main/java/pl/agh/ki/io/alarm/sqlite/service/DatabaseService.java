@@ -137,15 +137,4 @@ public class DatabaseService extends Service {
             helper.createGroupFriend(group_id, friend.getId());
         }
     }
-
-
-
-
-
-
-
-
-
-
-
 }

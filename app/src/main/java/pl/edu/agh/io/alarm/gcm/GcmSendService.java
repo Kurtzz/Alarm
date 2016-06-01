@@ -44,6 +44,7 @@ public class GcmSendService extends Service {
                 URL serverUrl = new URL("http://www.jdabrowa.pl:8090/alarm/message/send/" + messages[0]);
                 HttpURLConnection connection = (HttpURLConnection) serverUrl.openConnection();
                 connection.setRequestMethod("PUT");
+
                 int responseCode = connection.getResponseCode();
                 connection.getInputStream();
                 Log.i(TAG, "Response code: " + responseCode);

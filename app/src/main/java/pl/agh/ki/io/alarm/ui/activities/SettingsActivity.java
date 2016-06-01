@@ -1,4 +1,4 @@
-package pl.agh.ki.io.alarm;
+package pl.agh.ki.io.alarm.ui.activities;
 
 
 import android.annotation.TargetApi;

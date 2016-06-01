@@ -1,13 +1,14 @@
-package pl.agh.ki.io.alarm;
+package pl.agh.ki.io.alarm.ui.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseBooleanArray;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -17,51 +18,56 @@ import pl.agh.ki.io.alarm.alarm.R;
 import pl.agh.ki.io.alarm.sqlite.helper.DatabaseHelper;
 import pl.agh.ki.io.alarm.sqlite.model.Friend;
 import pl.agh.ki.io.alarm.sqlite.model.Group;
+import pl.agh.ki.io.alarm.ui.adapters.MultiChoiceFriendListAdapter;
 
-public class CreateGroupActivity extends AppCompatActivity implements View.OnClickListener {
+public class EditGroupActivity extends AppCompatActivity implements View.OnClickListener {
+    private Spinner spinner;
+    private Group group;
+    private Button button;
     private ListView friendList;
     private MultiChoiceFriendListAdapter friendListAdapter;
-    private Button createGroupButton;
-    private EditText nameEditText;
+    private List<Friend> oldFriendList;
 
     private DatabaseHelper databaseHelper;
-
-    private static final int MAX_LEVEL = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_group);
+        setContentView(R.layout.activity_edit_group);
 
         databaseHelper = new DatabaseHelper(getApplicationContext());
 
-        nameEditText = (EditText) findViewById(R.id.createGroup_nameEditText);
+        group = databaseHelper.getGroup(getIntent().getIntExtra(SendMessageActivity.EXTRA_ID, 0));
 
-        createGroupButton = (Button) findViewById(R.id.createGroup_createGroupButton);
-        createGroupButton.setOnClickListener(this);
+        TextView textView = (TextView) findViewById(R.id.editGroup_nickTextView);
+        textView.setText(group.getGroupName());
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        spinner = (Spinner) findViewById(R.id.editGroup_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.alarmLevelsArray, android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setSelection(group.getGroupLevel() - 1);
 
         List<Friend> friends = databaseHelper.getFriends();
 
-        friendList = (ListView) findViewById(R.id.createGroup_friendListView);
+        friendList = (ListView) findViewById(R.id.editGroup_friendListView);
         friendListAdapter = new MultiChoiceFriendListAdapter(getApplicationContext());
 
         friendListAdapter.setArrayList(friends);
         friendList.setAdapter(friendListAdapter);
+
+        oldFriendList = databaseHelper.getAllMembersOfTheGroup(group.getId());
+        for (Friend friend: oldFriendList) {
+            friendListAdapter.setItemChecked(friend);
+        }
+
+        button = (Button) findViewById(R.id.editGroup_saveButton);
+        button.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        String groupName = nameEditText.getText().toString();
-        if (groupName.isEmpty()) {
-            Toast.makeText(this, "Group's name can't be blank!", Toast.LENGTH_SHORT).show();
-            return;
-        } else if (groupName.contains(" ") || groupName.contains("\t") || groupName.contains("\n")) {
-            Toast.makeText(this, "Group's name can't contains white spaces!", Toast.LENGTH_SHORT).show();
-            return;
-        }
         SparseBooleanArray checkedItems = friendListAdapter.getCheckedItems();
         List<Friend> checkedFriends = new ArrayList<>();
 
@@ -77,13 +83,10 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
             return;
         }
 
-        Group group = new Group();
-        group.setGroupName(nameEditText.getText().toString());
-        group.setGroupLevel(MAX_LEVEL);
+        group.setGroupLevel(spinner.getSelectedItemPosition() + 1);
         group.setFriends(checkedFriends);
-        databaseHelper.createGroup(group);
+        databaseHelper.updateGroup(group);
 
-        nameEditText.setText("");
         onBackPressed();
     }
 }

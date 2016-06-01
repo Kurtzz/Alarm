@@ -1,4 +1,4 @@
-package pl.agh.ki.io.alarm;
+package pl.agh.ki.io.alarm.ui.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.Collections;
 import java.util.List;
 
+import pl.agh.ki.io.alarm.ui.activities.SendMessageActivity;
 import pl.agh.ki.io.alarm.alarm.R;
 import pl.agh.ki.io.alarm.sqlite.model.Friend;
 import pl.agh.ki.io.alarm.sqlite.model.Group;

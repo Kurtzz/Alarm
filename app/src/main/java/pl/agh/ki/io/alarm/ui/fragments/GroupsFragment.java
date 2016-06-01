@@ -1,4 +1,4 @@
-package pl.agh.ki.io.alarm;
+package pl.agh.ki.io.alarm.ui.fragments;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -19,6 +19,10 @@ import java.util.List;
 import pl.agh.ki.io.alarm.alarm.R;
 import pl.agh.ki.io.alarm.sqlite.helper.DatabaseHelper;
 import pl.agh.ki.io.alarm.sqlite.model.Group;
+import pl.agh.ki.io.alarm.ui.activities.CreateGroupActivity;
+import pl.agh.ki.io.alarm.ui.activities.EditGroupActivity;
+import pl.agh.ki.io.alarm.ui.activities.SendMessageActivity;
+import pl.agh.ki.io.alarm.ui.adapters.GroupListAdapter;
 
 
 /**

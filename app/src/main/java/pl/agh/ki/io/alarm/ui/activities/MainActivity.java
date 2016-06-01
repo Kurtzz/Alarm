@@ -1,4 +1,4 @@
-package pl.agh.ki.io.alarm;
+package pl.agh.ki.io.alarm.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import pl.agh.ki.io.alarm.ui.fragments.FriendsFragment;
+import pl.agh.ki.io.alarm.ui.fragments.GroupsFragment;
 import pl.agh.ki.io.alarm.alarm.R;
 
 public class MainActivity extends AppCompatActivity {

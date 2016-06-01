@@ -65,7 +65,7 @@ public class FriendController {
 
     @RequestMapping(value = "/invitation/decline/")
     public void declineInvitation(@RequestBody Map<String, String> body) throws JsonProcessingException, UnirestException {
-        
+
         String senderToken = body.get("SENDER_TOKEN");
         String inviteeUid = body.get("INVITEE_UID");
         String groupId = body.get("GROUP_ID");

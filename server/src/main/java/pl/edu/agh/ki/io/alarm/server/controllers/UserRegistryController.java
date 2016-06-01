@@ -7,12 +7,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.agh.ki.io.alarm.domain.User;
 import pl.edu.agh.ki.io.alarm.server.communication.GoogleCloudService;
 import pl.edu.agh.ki.io.alarm.server.registry.UserRepository;
 
+import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -33,8 +35,11 @@ public class UserRegistryController {
     }
 
     // TODO: Should be secure
-    @RequestMapping(path = "/tokens/{token}/{nickname}")
-    public HttpStatus registerNewUser(@PathVariable String token, @PathVariable String nickname) throws UnirestException {
+    @RequestMapping(path = "/tokens/add")
+    public HttpStatus registerNewUser(@RequestBody Map<String, String> body) throws UnirestException {
+
+        String token = body.get("TOKEN");
+        String nickname = body.get("NICKNAME");
 
         LOGGER.info("Received token: {}", token);
         boolean isNew = userRepository.containsToken(token);

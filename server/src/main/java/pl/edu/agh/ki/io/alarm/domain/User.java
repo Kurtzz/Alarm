@@ -12,10 +12,12 @@ public class User {
 
     @Getter @Setter private String token;
     @Getter private final List<User> friends;
+    @Getter private final List<String> groupNames;
 
     public User(String UID) {
         this.UID = UID;
         this.friends = new LinkedList<>();
+        this.groupNames = new LinkedList<>();
     }
 
 }

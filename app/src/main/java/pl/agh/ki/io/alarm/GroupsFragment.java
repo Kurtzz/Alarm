@@ -106,7 +106,7 @@ public class GroupsFragment extends Fragment {
                 case R.id.groupMenu_alarm:
                     sendAlarm(info.packedPosition);
                     return true;
-                case R.id.groupdMenu_edit:
+                case R.id.groupMenu_edit:
                     editGroup(info.packedPosition);
                     return true;
                 case R.id.groupMenu_delete:
@@ -137,7 +137,7 @@ public class GroupsFragment extends Fragment {
         databaseHelper.deleteGroup(group.getId());
         List<Group> list = databaseHelper.getGroups();
         groupListAdapter.setArrayList(list);
-        Toast.makeText(getContext(), "Group \"" + group.getGroupName() + "\" deleted succesfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Group \"" + group.getGroupName() + "\" deleted successfully", Toast.LENGTH_SHORT).show();
     }
 
     /**

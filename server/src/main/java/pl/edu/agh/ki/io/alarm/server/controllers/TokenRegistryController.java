@@ -1,6 +1,7 @@
 package pl.edu.agh.ki.io.alarm.server.controllers;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.edu.agh.ki.io.alarm.domain.User;
 import pl.edu.agh.ki.io.alarm.server.communication.GoogleCloudService;
 import pl.edu.agh.ki.io.alarm.server.registry.TokenRegistry;
 import pl.edu.agh.ki.io.alarm.server.registry.UserRepository;
@@ -36,9 +38,13 @@ public class TokenRegistryController {
     public HttpStatus registerNewToken(@PathVariable String token) throws UnirestException {
 
         LOGGER.info("Received token: {}", token);
-        boolean isNew = userRepository.add(token);
-        
+        boolean isNew = userRepository.containsToken(token);
+
         if(isNew) {
+            String uid = RandomStringUtils.random(6, true, true); // TODO: Uniqueness
+            User user = new User(uid);
+            user.setToken(token);
+            userRepository.add(uid, user);
             LOGGER.info("Token {} has been added to repository", token);
         } else {
             LOGGER.info("Repository already contains token {}", token);

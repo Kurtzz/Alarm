@@ -7,5 +7,4 @@ public interface Repository<K, V> {
     void add(K key, V value);
     void remove(K key);
     List<V> getAll();
-    boolean contains()
 }

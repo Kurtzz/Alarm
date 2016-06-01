@@ -79,6 +79,13 @@ public class DatabaseService extends Service {
     }
 
     /**
+     * Update group
+     */
+    public void updateGroup(Group group) {
+        helper.updateGroup(group);
+    }
+
+    /**
      * Get single group
      */
     public Group getGroup(long group_id) {

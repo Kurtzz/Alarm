@@ -18,8 +18,8 @@ import pl.edu.agh.io.alarm.ui.activities.SendMessageActivity;
  */
 public class DefaultFriendListAdapter extends AbstractFriendListAdapter {
 
-    public DefaultFriendListAdapter(Context context) {
-        super(context, R.layout.friend_list_item);
+    public DefaultFriendListAdapter(Context context, int textViewResourceId) {
+        super(context, textViewResourceId);
     }
 
     @Override
@@ -44,15 +44,17 @@ public class DefaultFriendListAdapter extends AbstractFriendListAdapter {
         } else {
             holder.nick.setTextColor(Color.BLACK);
         }
-        holder.imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), SendMessageActivity.class);
-                intent.putExtra(SendMessageActivity.EXTRA_ID, friend.getId());
-                intent.putExtra(SendMessageActivity.EXTRA_ID_TYPE, SendMessageActivity.TYPE_FRIEND);
-                getContext().startActivity(intent);
-            }
-        });
+        if (holder.imageButton != null) {
+            holder.imageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getContext(), SendMessageActivity.class);
+                    intent.putExtra(SendMessageActivity.EXTRA_ID, friend.getId());
+                    intent.putExtra(SendMessageActivity.EXTRA_ID_TYPE, SendMessageActivity.TYPE_FRIEND);
+                    getContext().startActivity(intent);
+                }
+            });
+        }
 
         return convertView;
     }

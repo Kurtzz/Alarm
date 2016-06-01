@@ -84,7 +84,7 @@ public class FriendsFragment extends Fragment {
         List<Friend> friends = helper.getFriends();
 
         friendList = (ListView) rootView.findViewById(R.id.friendFragment_friendListView);
-        friendListAdapter = new DefaultFriendListAdapter(rootView.getContext());
+        friendListAdapter = new DefaultFriendListAdapter(rootView.getContext(), R.layout.friend_list_item_image_button);
 
         friendListAdapter.setArrayList(friends);
         friendList.setAdapter(friendListAdapter);

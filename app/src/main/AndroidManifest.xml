@@ -92,11 +92,10 @@
         </service>
 
         <service android:name=".sqlite.service.DatabaseService">
-
         </service>
         <service android:name=".middleware.Middleware">
-
         </service>
+        <service android:name=".gcm.GcmSendService" />
     </application>
 
 </manifest>

@@ -37,7 +37,6 @@ public class GoogleCloudService implements MessageService{
                 .header("Authorization", "key=AIzaSyCTqMXVGZLHRrXW338ZyILk6zT9I1e7S5Q")
                 .body("{\"data\": {\"message\": \"" + message + "\"}, \"to\": \"" + token + "\"}")
                 .asString();
-        LOGGER.info("SENT");
-        LOGGER.info("Status: {}, Result: {}\n{}", result.getStatus(), result.getBody(), result.getHeaders());
+        LOGGER.info("Sent message '{}' to {}", message, token);
     }
 }

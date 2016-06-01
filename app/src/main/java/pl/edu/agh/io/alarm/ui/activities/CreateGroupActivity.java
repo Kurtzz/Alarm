@@ -59,7 +59,7 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         if (groupName.isEmpty()) {
             Toast.makeText(this, "Group's name can't be blank!", Toast.LENGTH_SHORT).show();
             return;
-        } else if (groupName.contains(" ") || groupName.contains("\t") || groupName.contains("\n")) {
+        } else if (groupName.contains("\t") || groupName.contains("\n")) {
             Toast.makeText(this, "Group's name can't contains white spaces!", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -81,8 +81,9 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         Group group = new Group();
         group.setGroupName(nameEditText.getText().toString());
         group.setGroupLevel(MAX_LEVEL);
-        group.setFriends(checkedFriends);
         helper.createGroup(group);
+
+        //TODO: Send invitation to checkedFriends
 
         nameEditText.setText("");
         onBackPressed();

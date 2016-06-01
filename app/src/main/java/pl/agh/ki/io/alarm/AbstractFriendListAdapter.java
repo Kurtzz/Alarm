@@ -16,9 +16,9 @@ import static pl.agh.ki.io.alarm.sqlite.model.Friend.FriendComparator.*;
  * Created by P on 21.05.2016.
  */
 public abstract class AbstractFriendListAdapter extends ArrayAdapter<Friend> {
-    private Context context;
+    private final Context context;
+    private final int textViewResourceId;
     private List<Friend> friendList;
-    private int textViewResourceId;
 
     public AbstractFriendListAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);

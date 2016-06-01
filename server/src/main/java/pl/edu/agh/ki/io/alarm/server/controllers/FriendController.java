@@ -3,15 +3,15 @@ package pl.edu.agh.ki.io.alarm.server.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.ki.io.alarm.domain.User;
 import pl.edu.agh.ki.io.alarm.server.communication.GcmMessage;
 import pl.edu.agh.ki.io.alarm.server.communication.GcmMessageData;
 import pl.edu.agh.ki.io.alarm.server.communication.GoogleCloudService;
 import pl.edu.agh.ki.io.alarm.server.communication.MessageType;
 import pl.edu.agh.ki.io.alarm.server.registry.UserRepository;
+
+import java.util.Map;
 
 @RequestMapping("/alarm/friend")
 @RestController
@@ -23,11 +23,13 @@ public class FriendController {
     @Autowired
     private GoogleCloudService gcm;
 
-    @RequestMapping("/invite/{senderUid}/{senderToken}/{inviteeUid}/{groupId}")
-    public void invite(@PathVariable("senderUid") String senderUid,
-                       @PathVariable("senderToken") String senderToken,
-                       @PathVariable("inviteeUid") String inviteeUid,
-                       @PathVariable String groupId) throws JsonProcessingException, UnirestException {
+    @RequestMapping(value = "/invite", method = RequestMethod.POST)
+    public void invite(@RequestBody Map<String, String> body) throws JsonProcessingException, UnirestException {
+
+        String senderUid = body.get("SENDER_UID");
+        String senderToken = body.get("SENDER_TOKEN");
+        String inviteeUid = body.get("INVITEE_UID");
+        String groupId = body.get("GROUP_ID");
 
         User sender = userRepository.get(senderUid);
         if(senderToken.equals(sender.getToken())) {

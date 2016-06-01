@@ -23,7 +23,7 @@ import static pl.agh.ki.io.alarm.sqlite.model.Group.GroupComparator.*;
  * Created by P on 18.05.2016.
  */
 public class GroupListAdapter extends BaseExpandableListAdapter {
-    private Context context;
+    private final Context context;
     private List<Group> groupList;
 
     public GroupListAdapter(Context context) {

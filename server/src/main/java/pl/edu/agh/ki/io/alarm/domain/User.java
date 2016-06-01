@@ -8,7 +8,7 @@ import java.util.List;
 
 public class User {
 
-    private final String UID;
+    @Getter private final String UID;
 
     @Getter @Setter private String token;
     @Getter private final List<User> friends;

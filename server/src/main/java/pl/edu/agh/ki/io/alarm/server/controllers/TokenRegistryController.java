@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.agh.ki.io.alarm.domain.User;
 import pl.edu.agh.ki.io.alarm.server.communication.GoogleCloudService;
-import pl.edu.agh.ki.io.alarm.server.registry.TokenRegistry;
 import pl.edu.agh.ki.io.alarm.server.registry.UserRepository;
 
 import java.util.concurrent.Executor;
@@ -41,15 +40,20 @@ public class TokenRegistryController {
         boolean isNew = userRepository.containsToken(token);
 
         if(isNew) {
-            String uid = RandomStringUtils.random(6, true, true); // TODO: Uniqueness
-            User user = new User(uid);
-            user.setToken(token);
-            userRepository.add(uid, user);
-            LOGGER.info("Token {} has been added to repository", token);
+            User user = createNewUSer(token);
+            userRepository.add(user.getUID(), user);
+            LOGGER.info("User with uid {} has been added to repository", user.getUID());
         } else {
             LOGGER.info("Repository already contains token {}", token);
         }
         LOGGER.debug(userRepository.getAll().toString());
         return HttpStatus.OK;
+    }
+
+    private User createNewUSer(String token) {
+        String uid = RandomStringUtils.random(6, true, true); // TODO: Uniqueness
+        User user = new User(uid);
+        user.setToken(token);
+        return user;
     }
 }

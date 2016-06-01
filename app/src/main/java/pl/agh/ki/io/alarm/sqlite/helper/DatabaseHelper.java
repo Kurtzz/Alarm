@@ -117,13 +117,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
+        values.put(KEY_FRIEND_ID, friend.getId());
         values.put(KEY_NICK, friend.getNick());
         values.put(KEY_LEVEL, friend.getLevel());
         values.put(KEY_IS_BLOCKED, (friend.isBlocked()) ? 1 : 0);
 
-        long friend_id = db.insert(TABLE_FRIEND, null, values);
-
-        return friend_id;
+        return db.insert(TABLE_FRIEND, null, values);
     }
 
     /**
@@ -137,10 +136,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_LEVEL, friend.getLevel());
         values.put(KEY_IS_BLOCKED, (friend.isBlocked()) ? 1 : 0);
 
-        int result = db.update(TABLE_FRIEND, values, KEY_FRIEND_ID + " = ?",
+        return db.update(TABLE_FRIEND, values, KEY_FRIEND_ID + " = ?",
                 new String[]{String.valueOf(friend.getId())});
-
-        return result;
     }
 
     /**
@@ -164,6 +161,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         friend.setLevel(c.getInt(c.getColumnIndex(KEY_LEVEL)));
         friend.setBlocked(c.getInt(c.getColumnIndex(KEY_IS_BLOCKED)) != 0);
 
+        c.close();
         return friend;
     }
 
@@ -188,6 +186,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             } while (c.moveToNext());
         }
 
+        c.close();
         return friends;
     }
 
@@ -213,6 +212,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
+        values.put(KEY_GROUP_ID, group.getId());
         values.put(KEY_GROUP_NAME, group.getGroupName());
         values.put(KEY_GROUP_LEVEL, group.getGroupLevel());
 
@@ -275,6 +275,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         List<Friend> friends = getAllMembersOfTheGroup(group_id);
         group.setFriends(friends);
 
+        c.close();
         return group;
     }
 
@@ -301,6 +302,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             } while (c.moveToNext());
         }
 
+        c.close();
         return groups;
     }
 
@@ -360,6 +362,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             friends.add(friend);
         }
 
+        c.close();
         return friends;
     }
 

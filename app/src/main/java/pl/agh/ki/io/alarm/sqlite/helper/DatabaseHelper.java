@@ -117,13 +117,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
+        values.put(KEY_FRIEND_ID, friend.getId());
         values.put(KEY_NICK, friend.getNick());
         values.put(KEY_LEVEL, friend.getLevel());
         values.put(KEY_IS_BLOCKED, (friend.isBlocked()) ? 1 : 0);
 
-        long friend_id = db.insert(TABLE_FRIEND, null, values);
-
-        return friend_id;
+        return db.insert(TABLE_FRIEND, null, values);
     }
 
     /**
@@ -137,10 +136,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_LEVEL, friend.getLevel());
         values.put(KEY_IS_BLOCKED, (friend.isBlocked()) ? 1 : 0);
 
-        int result = db.update(TABLE_FRIEND, values, KEY_FRIEND_ID + " = ?",
+        return db.update(TABLE_FRIEND, values, KEY_FRIEND_ID + " = ?",
                 new String[]{String.valueOf(friend.getId())});
-
-        return result;
     }
 
     /**
@@ -164,6 +161,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         friend.setLevel(c.getInt(c.getColumnIndex(KEY_LEVEL)));
         friend.setBlocked(c.getInt(c.getColumnIndex(KEY_IS_BLOCKED)) != 0);
 
+        c.close();
         return friend;
     }
 
@@ -188,6 +186,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             } while (c.moveToNext());
         }
 
+        c.close();
         return friends;
     }
 
@@ -199,9 +198,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Friend friend = getFriend(friend_id);
 
         db.delete(TABLE_FRIEND, KEY_FRIEND_ID + " = ?", new String[]{String.valueOf(friend_id)});
-
-        //delete dependency
-        deleteGroupFriend(friend);
     }
 
     // ------------------------ "friends" table methods ----------------//
@@ -213,43 +209,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
+        values.put(KEY_GROUP_ID, group.getId());
         values.put(KEY_GROUP_NAME, group.getGroupName());
         values.put(KEY_GROUP_LEVEL, group.getGroupLevel());
 
-        long group_id = db.insert(TABLE_GROUP, null, values);
-        createGroupFriend(group_id, group.getFriends());
-
-        return group_id;
+        return db.insert(TABLE_GROUP, null, values);
     }
 
     /**
      * Update group
      */
-    public void updateGroup(Group group) {
+    public int updateGroup(Group group) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(KEY_GROUP_NAME, group.getGroupName());
         values.put(KEY_GROUP_LEVEL, group.getGroupLevel());
 
-        db.update(TABLE_GROUP, values, KEY_GROUP_ID + " = ?",
+        return db.update(TABLE_GROUP, values, KEY_GROUP_ID + " = ?",
                 new String[]{String.valueOf(group.getId())});
-
-        //Update linking tables
-        List<Friend> dbFriends = getAllMembersOfTheGroup(group.getId());
-        if (dbFriends.equals(group.getFriends())) {
-            return;
-        }
-        for (Friend friend : dbFriends) {
-            if (!group.getFriends().contains(friend)) {
-                deleteGroupFriend(group, friend);
-            }
-        }
-        for (Friend friend : group.getFriends()) {
-            if (!dbFriends.contains(friend)) {
-                createGroupFriend(group.getId(), friend.getId());
-            }
-        }
     }
 
     /**
@@ -275,6 +253,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         List<Friend> friends = getAllMembersOfTheGroup(group_id);
         group.setFriends(friends);
 
+        c.close();
         return group;
     }
 
@@ -301,6 +280,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             } while (c.moveToNext());
         }
 
+        c.close();
         return groups;
     }
 
@@ -312,9 +292,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Group group = getGroup(group_id);
 
         db.delete(TABLE_GROUP, KEY_GROUP_ID + " = ?", new String[]{String.valueOf(group_id)});
-
-        //delete dependency
-        deleteGroupFriend(group);
     }
 
     // ------------------------ "group friend" table methods ----------------//
@@ -330,12 +307,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_FRIEND_ID, friend_id);
 
         db.insert(TABLE_FRIEND_GROUP, null, values);
-    }
-
-    public void createGroupFriend(long group_id, List<Friend> friends) {
-        for (Friend friend : friends) {
-            createGroupFriend(group_id, friend.getId());
-        }
     }
 
     /**
@@ -360,6 +331,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             friends.add(friend);
         }
 
+        c.close();
         return friends;
     }
 

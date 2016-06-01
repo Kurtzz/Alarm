@@ -2,25 +2,11 @@ package pl.agh.ki.io.alarm.sqlite.model;
 
 import java.util.Comparator;
 
-/**
- * Created by P on 18.05.2016.
- */
 public class Friend {
     private int id;
     private String nick;
     private int level;
     private boolean isBlocked;
-
-    public Friend() {
-
-    }
-
-    public Friend(int id, String nick, int level, boolean isBlocked) {
-        this.id = id;
-        this.nick = nick;
-        this.level = level;
-        this.isBlocked = isBlocked;
-    }
 
     public int getId() {
         return id;

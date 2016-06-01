@@ -1,6 +1,7 @@
 package pl.edu.agh.ki.io.alarm.domain;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -11,6 +12,7 @@ public class Group {
 
     private final Set<User> members;
     @Getter private final String name;
+    @Getter @Setter private String ownerUid;
 
     public Group(String name) {
         this.name = name;

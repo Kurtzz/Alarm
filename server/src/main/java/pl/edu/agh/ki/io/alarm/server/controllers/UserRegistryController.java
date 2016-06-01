@@ -18,29 +18,29 @@ import java.util.concurrent.Executors;
 
 @RestController
 @RequestMapping("/alarm")
-public class TokenRegistryController {
+public class UserRegistryController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TokenRegistryController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserRegistryController.class);
 
     private final UserRepository userRepository;
     private final Executor executor = Executors.newSingleThreadExecutor();
     private final GoogleCloudService gcmService;
 
     @Autowired
-    public TokenRegistryController(UserRepository userRepository, GoogleCloudService gcmService) {
+    public UserRegistryController(UserRepository userRepository, GoogleCloudService gcmService) {
         this.userRepository = userRepository;
         this.gcmService = gcmService;
     }
 
     // TODO: Should be secure
-    @RequestMapping(path = "/tokens/{token}")
-    public HttpStatus registerNewToken(@PathVariable String token) throws UnirestException {
+    @RequestMapping(path = "/tokens/{token}/{nickname}")
+    public HttpStatus registerNewUser(@PathVariable String token, @PathVariable String nickname) throws UnirestException {
 
         LOGGER.info("Received token: {}", token);
         boolean isNew = userRepository.containsToken(token);
 
         if(isNew) {
-            User user = createNewUSer(token);
+            User user = createNewUSer(token, nickname);
             userRepository.add(user.getUID(), user);
             LOGGER.info("User with uid {} has been added to repository", user.getUID());
         } else {
@@ -50,10 +50,11 @@ public class TokenRegistryController {
         return HttpStatus.OK;
     }
 
-    private User createNewUSer(String token) {
+    private User createNewUSer(String token, String nickname) {
         String uid = RandomStringUtils.random(6, true, true); // TODO: Uniqueness
         User user = new User(uid);
         user.setToken(token);
+        user.setNick(nickname);
         return user;
     }
 }

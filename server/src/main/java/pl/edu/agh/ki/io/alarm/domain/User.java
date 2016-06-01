@@ -13,6 +13,7 @@ public class User {
     @Getter @Setter private String token;
     @Getter private final List<User> friends;
     @Getter private final List<String> groupNames;
+    @Getter @Setter private String nick;
 
     public User(String UID) {
         this.UID = UID;

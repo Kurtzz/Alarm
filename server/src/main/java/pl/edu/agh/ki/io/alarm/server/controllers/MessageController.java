@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.agh.ki.io.alarm.domain.User;
-import pl.edu.agh.ki.io.alarm.server.MessageService;
+import pl.edu.agh.ki.io.alarm.server.communication.GoogleCloudService;
 import pl.edu.agh.ki.io.alarm.server.registry.UserRepository;
 
 @RestController
@@ -17,21 +17,22 @@ public class MessageController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageController.class);
 
-    private final MessageService gcmService;
+    private final GoogleCloudService gcmService;
     private final UserRepository userRepository;
 
     @Autowired
-    public MessageController(MessageService messageService, UserRepository userRepository) {
+    public MessageController(GoogleCloudService messageService, UserRepository userRepository) {
         this.gcmService = messageService;
         this.userRepository = userRepository;
     }
 
     @RequestMapping(path = "/send/{message}")
     public HttpStatus sendMessage(@PathVariable String message) {
+        // TODO: Fix
         try {
             for(User user : userRepository.getAll()) {
                 String token = user.getToken();
-                gcmService.sendTo(token, message);
+//                gcmService.sendTo(token, message);
             }
             return HttpStatus.OK;
 

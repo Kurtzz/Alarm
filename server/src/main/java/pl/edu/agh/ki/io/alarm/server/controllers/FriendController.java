@@ -21,20 +21,27 @@ public class FriendController {
     private GoogleCloudService gcm;
 
     @RequestMapping(value = "/invite", method = RequestMethod.POST)
-    public void invite(@RequestBody Map<String, String> body) throws JsonProcessingException, UnirestException {
+    public String invite(@RequestBody Map<String, String> body) throws JsonProcessingException, UnirestException {
 
-        String senderUid = body.get("SENDER_UID");
-        String senderToken = body.get("SENDER_TOKEN");
-        String inviteeUid = body.get("INVITEE_UID");
-        String groupId = body.get("GROUP_ID");
+        String senderUid = body.get(RequestKeys.SENDER_UID);
+        String senderToken = body.get(RequestKeys.TOKEN);
+        String inviteeUid = body.get(RequestKeys.INVITEE_UID);
+
+        if(!userRepository.getAll().stream()
+                .map(User::getUID)
+                .filter(inviteeUid::equals)
+                .findFirst()
+                .isPresent()) {
+            return "User does not exist";
+        }
 
         User sender = userRepository.get(senderUid);
         if(senderToken.equals(sender.getToken())) {
             // TODO: IS user allowed to invite to the group?
-            GcmMessage message = composeInvitationMessage(inviteeUid, groupId, sender);
+            GcmMessage message = composeInvitationMessage(inviteeUid, sender);
             gcm.send(message);
         }
-
+        return "Invitation sent";
     }
 
     @RequestMapping(value = "/invitation/accept/")
@@ -51,6 +58,17 @@ public class FriendController {
         gcm.send(message);
     }
 
+    @RequestMapping(value = "/invitation/decline/")
+    public void declineInvitation(@RequestBody Map<String, String> body) throws JsonProcessingException, UnirestException {
+
+        String senderToken = body.get("SENDER_TOKEN");
+        String inviteeUid = body.get("INVITEE_UID");
+        String groupId = body.get("GROUP_ID");
+        String inviteeNick = userRepository.get(inviteeUid).getNick();
+        GcmMessage message = createInvitationResponseMessage(senderToken, groupId, inviteeNick, InvitationResponse.DECLINED);
+        gcm.send(message);
+    }
+
     private GcmMessage createInvitationResponseMessage(String senderToken, String groupId, String inviteeNick, InvitationResponse response) {
         GcmMessage message = new GcmMessage();
         message.setTo(senderToken);
@@ -63,19 +81,7 @@ public class FriendController {
         return message;
     }
 
-    @RequestMapping(value = "/invitation/decline/")
-    public void declineInvitation(@RequestBody Map<String, String> body) throws JsonProcessingException, UnirestException {
-
-        String senderToken = body.get("SENDER_TOKEN");
-        String inviteeUid = body.get("INVITEE_UID");
-        String groupId = body.get("GROUP_ID");
-        String inviteeNick = userRepository.get(inviteeUid).getNick();
-        GcmMessage message = createInvitationResponseMessage(senderToken, groupId, inviteeNick, InvitationResponse.DECLINED);
-        gcm.send(message);
-    }
-
-
-    private GcmMessage composeInvitationMessage(String inviteeUid, String groupId, User sender) {
+    private GcmMessage composeInvitationMessage(String inviteeUid, User sender) {
         String inviteeToken = userRepository.get(inviteeUid).getToken();
         GcmMessage message = new GcmMessage();
         message.setTo(inviteeToken);
@@ -83,7 +89,6 @@ public class FriendController {
         GcmMessageData data = new GcmMessageData();
         data.setMessageType(MessageType.INVITATION);
         data.setSenderNick(sender.getNick());
-        data.setGroupName(groupId);
         message.setData(data);
 
         return message;

@@ -39,15 +39,23 @@ public class StartActivity extends Activity implements View.OnClickListener {
 
     private boolean middlewareIsBound;
     private Middleware middlewareService;
+    private boolean alreadyRegistered;
 
     @Override
     public void onCreate(Bundle b) {
         super.onCreate(b);
-        setContentView(R.layout.activity_login);
-        Button send = (Button) findViewById(R.id.LOGINLoginbtn);
-        send.setOnClickListener(this);
-        System.out.println("LoginActivity : Create");
-        doBindServices();
+
+        if(!alreadyRegistered) {
+            setContentView(R.layout.activity_login);
+            Button send = (Button) findViewById(R.id.LOGINLoginbtn);
+            send.setOnClickListener(this);
+            System.out.println("LoginActivity : Create");
+            doBindServices();
+        } else {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     @Override
@@ -118,8 +126,14 @@ public class StartActivity extends Activity implements View.OnClickListener {
                 User user = new User();
                 user.setNickname(middlewareService.getNickname());
                 user.setToken(intent.getStringExtra(Constants.TOKEN));
-                user.setNickname(intent.getStringExtra(Constants.UUID));
-                middlewareService.user
+                user.setUid(intent.getStringExtra(Constants.UUID));
+
+                Log.i(TAG, "Token: " + user.getToken() + ", uuid: " + user.getUid());
+
+                if(user.getUid() != null ){
+                    middlewareService.createUser(user);
+                    alreadyRegistered = true;
+                }
             }
         };
 

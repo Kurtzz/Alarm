@@ -51,7 +51,7 @@ public class UserRegistryController {
             LOGGER.info("User with uid {} and nick {} has been added to repository", user.getUID(), user.getNick());
         } else {
             LOGGER.info("Repository already contains token {}", token);
-            user = userRepository.get(token);
+            user = userRepository.getAll().stream().filter(u -> u.getToken().equals(token)).findFirst().orElse(null);
         }
         LOGGER.debug(userRepository.getAll().toString());
         return user.getUID();

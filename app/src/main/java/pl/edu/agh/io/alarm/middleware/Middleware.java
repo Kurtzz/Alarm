@@ -32,6 +32,7 @@ public class    Middleware extends Service {
     private GcmSendService messagingService;
     private String nickname;
 
+
     public class LocalBinder extends Binder {
         public Middleware getService() {
             return Middleware.this;
@@ -155,6 +156,9 @@ public class    Middleware extends Service {
     }
 
 
+    public void addUserAsFriend(String nick) {
+        messagingService.addUserAsFriend(nick);
+    }
 
 
 

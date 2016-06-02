@@ -1,6 +1,11 @@
 package pl.edu.agh.io.alarm.ui.activities;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import pl.edu.agh.io.alarm.R;
+import pl.edu.agh.io.alarm.middleware.Middleware;
 import pl.edu.agh.io.alarm.sqlite.helper.DatabaseHelper;
 import pl.edu.agh.io.alarm.sqlite.model.Friend;
 
@@ -16,6 +22,7 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
     private DatabaseHelper databaseHelper;
     private EditText editText;
     private static final int MAX_LEVEL = 5;
+    private Middleware middleware;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +36,8 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
         addFriendButton.setOnClickListener(this);
 
         editText = (EditText) findViewById(R.id.addFriend_friendEditText);
+
+        bindService(new Intent(getApplicationContext(), Middleware.class), middlewareConnection, Context.BIND_AUTO_CREATE);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -46,7 +55,7 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
             return;
         }
 
-        //TODO: send request to server
+        middleware.addUserAsFriend(nick);
 
         friend.setId(editText.getText().toString()); //TODO: set ID from Server DB
         friend.setNick(editText.getText().toString());
@@ -55,4 +64,16 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
         databaseHelper.createFriend(friend);
         onBackPressed();
     }
+
+    private final ServiceConnection middlewareConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            AddFriendActivity.this.middleware = ((Middleware.LocalBinder)iBinder).getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            AddFriendActivity.this.middleware = null;
+        }
+    };
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,17 +93,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     CREATE_TABLE user (
         user_nick TEXT NOT NULL,
         user_token TEXT NOT NULL,
-        uuid TEXT PRIMARY KEY NOT NULL
+        user_uuid TEXT PRIMARY KEY NOT NULL
     );
     */
 
     private static final String KEY_USER_NICK = "user_nick";
     private static final String KEY_USER_TOKEN = "user_token";
-    private static final String KEY_USER_UUID = "user_UUID";
+    private static final String KEY_USER_UUID = "user_uuid";
 
     private static final String CREATE_TABLE_USER =
             "CREATE TABLE " + TABLE_USER + "(" +
-                    KEY_USER_UUID + "TEXT PRIKMARY KEY NOT NULL," +
+                    KEY_USER_UUID + " TEXT PRIMARY KEY NOT NULL," +
                     KEY_USER_NICK + " TEXT NOT NULL," +
                     KEY_USER_TOKEN + " TEXT NOT NULL);";
 
@@ -110,6 +111,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        Log.i("DB", "Constr! " + CREATE_TABLE_USER);
     }
 
     @Override
@@ -118,6 +120,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_GROUP);
         db.execSQL(CREATE_TABLE_FRIEND_GROUP);
         db.execSQL(CREATE_TABLE_USER);
+        Log.i("DB", "DUPAP! " + CREATE_TABLE_USER);
     }
 
     @Override

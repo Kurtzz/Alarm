@@ -10,6 +10,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -24,8 +25,10 @@ public class GcmSendService extends Service {
 
     private static final String TAG = GcmSendService.class.getSimpleName();
     public static final String SEND_MESSAGE_URL = "http://www.jdabrowa.pl:8090/alarm/message/send/";
+    public static final String SEND_INVITATION_URL = "http://www.jdabrowa.pl:8090/invite/";
 
     private final IBinder binder = new GcmSendBinder();
+
     public class GcmSendBinder extends Binder {
         public GcmSendService getService() {return GcmSendService.this;}
     }
@@ -52,6 +55,10 @@ public class GcmSendService extends Service {
         new SendGcmMessageAsync().execute("group", message, group, String.valueOf(level));
     }
 
+    public void addUserAsFriend(String nick) {
+        new InvitationGcmAsync().execute(nick);
+    }
+
     class SendGcmMessageAsync extends AsyncTask<String, Void, Void> {
 
         @Override
@@ -74,6 +81,38 @@ public class GcmSendService extends Service {
 
                 RestCommunication.ConnectionResponse response = rest.execute(requestParams, "PUT");
                 Log.i(TAG, "Response code: " + response.getStatus());
+                Log.i(TAG, "Message sent");
+            } catch (IOException e) {
+                Log.w(TAG, "Cannot execute REST call", e);
+            }
+            return null;
+        }
+    }
+
+    class InvitationGcmAsync extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            try {
+                Log.i(TAG, "Sending invitation");
+
+                User currentUser = middleware.getUser();
+
+                String sendMessageUrl = SEND_INVITATION_URL;
+                RestCommunication rest = new RestCommunication(sendMessageUrl);
+
+                Map<String, String> requestParams = new HashMap<>();
+                requestParams.put(Constants.TOKEN, currentUser.getToken());
+                requestParams.put(Constants.SENDER_UID, currentUser.getUid());
+                requestParams.put(Constants.INVITEE_UID, strings[0]);
+                requestParams.put(Constants.GROUP_NAME, strings[1]);
+
+                RestCommunication.ConnectionResponse response = rest.execute(requestParams, "PUT");
+
+                Log.i(TAG, "Response code: " + response.getStatus());
+                String responseAsString = response.getResponseAsString();
+                Log.i(TAG, "Response: " + responseAsString);
+                Toast.makeText(null, responseAsString, Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Message sent");
             } catch (IOException e) {
                 Log.w(TAG, "Cannot execute REST call", e);

@@ -8,8 +8,6 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -34,10 +32,10 @@ public class GcmSendService extends Service {
     }
 
     public void sendToAll(String message) throws Exception {
-        new AsyncGcm().execute(message);
+        new SendGcmMessageAsync().execute(message);
     }
 
-    class AsyncGcm extends AsyncTask<String, Void, Void> {
+    class SendGcmMessageAsync extends AsyncTask<String, Void, Void> {
 
         @Override
         protected Void doInBackground(String ... messages) {

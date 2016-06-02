@@ -2,6 +2,8 @@ package pl.edu.agh.ki.io.alarm.server.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.ki.io.alarm.domain.User;
@@ -13,6 +15,8 @@ import java.util.Map;
 @RequestMapping("/alarm/friend")
 @RestController
 public class FriendController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(FriendController.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -27,11 +31,14 @@ public class FriendController {
         String senderToken = body.get(RequestKeys.TOKEN);
         String inviteeUid = body.get(RequestKeys.INVITEE_UID);
 
+        LOGGER.info("Invitation from {} to {}", senderUid, inviteeUid);
+
         if(!userRepository.getAll().stream()
                 .map(User::getUID)
                 .filter(inviteeUid::equals)
                 .findFirst()
                 .isPresent()) {
+            LOGGER.warn("Invitee is not int the user repository");
             return "User does not exist";
         }
 

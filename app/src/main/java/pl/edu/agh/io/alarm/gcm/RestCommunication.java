@@ -1,6 +1,7 @@
 package pl.edu.agh.io.alarm.gcm;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import org.json.JSONObject;
 
@@ -30,6 +31,8 @@ public class RestCommunication {
         URL serverUrl = new URL(endpointURL);
         JSONObject bodyObject = new JSONObject(body);
         String requestBody = bodyObject.toString();
+
+        Log.i("REST", "Request: " + requestBody + ", URL: " + endpointURL);
 
         HttpURLConnection connection = getConnection(method, serverUrl);
 

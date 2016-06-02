@@ -1,11 +1,14 @@
 package pl.edu.agh.io.alarm.ui.activities;
 
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import pl.edu.agh.io.alarm.R;
+import pl.edu.agh.io.alarm.gcm.Constants;
 import pl.edu.agh.io.alarm.middleware.Middleware;
 import pl.edu.agh.io.alarm.sqlite.helper.DatabaseHelper;
 import pl.edu.agh.io.alarm.sqlite.model.Friend;
@@ -55,8 +59,17 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
             return;
         }
 
+        LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String status = intent.getStringExtra("status");
+                Toast.makeText(AddFriendActivity.this, status, Toast.LENGTH_SHORT).show();
+            }
+        }, new IntentFilter(Constants.INVITATION_SENT));
+
         middleware.addUserAsFriend(nick);
 
+        // TODO: Should be added to databse after invitation has been accepted
         friend.setId(editText.getText().toString()); //TODO: set ID from Server DB
         friend.setNick(editText.getText().toString());
         friend.setLevel(MAX_LEVEL);

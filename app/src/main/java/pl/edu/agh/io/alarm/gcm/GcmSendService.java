@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -25,7 +26,7 @@ public class GcmSendService extends Service {
 
     private static final String TAG = GcmSendService.class.getSimpleName();
     public static final String SEND_MESSAGE_URL = "http://www.jdabrowa.pl:8090/alarm/message/send/";
-    public static final String SEND_INVITATION_URL = "http://www.jdabrowa.pl:8090/invite/";
+    public static final String SEND_INVITATION_URL = "http://www.jdabrowa.pl:8090/alarm/friend/invite/";
 
     private final IBinder binder = new GcmSendBinder();
 
@@ -105,14 +106,16 @@ public class GcmSendService extends Service {
                 requestParams.put(Constants.TOKEN, currentUser.getToken());
                 requestParams.put(Constants.SENDER_UID, currentUser.getUid());
                 requestParams.put(Constants.INVITEE_UID, strings[0]);
-                requestParams.put(Constants.GROUP_NAME, strings[1]);
+                requestParams.put(Constants.GROUP_NAME, null);
 
-                RestCommunication.ConnectionResponse response = rest.execute(requestParams, "PUT");
+                RestCommunication.ConnectionResponse response = rest.execute(requestParams, "POST");
 
                 Log.i(TAG, "Response code: " + response.getStatus());
                 String responseAsString = response.getResponseAsString();
                 Log.i(TAG, "Response: " + responseAsString);
-                Toast.makeText(null, responseAsString, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Constants.INVITATION_SENT);
+                intent.putExtra("status", responseAsString);
+                LocalBroadcastManager.getInstance(GcmSendService.this).sendBroadcast(intent);
                 Log.i(TAG, "Message sent");
             } catch (IOException e) {
                 Log.w(TAG, "Cannot execute REST call", e);

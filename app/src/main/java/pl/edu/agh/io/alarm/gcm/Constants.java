@@ -14,4 +14,6 @@ public class Constants {
     public static final String GROUP_NAME = "GROUP_NAME";
     public static final String LEVEL = "LEVEL";
     public static final String INVITEE_UID = "INVITEE_UID";
+
+    public static final String INVITATION_SENT = "INVITATION_SENT";
 }

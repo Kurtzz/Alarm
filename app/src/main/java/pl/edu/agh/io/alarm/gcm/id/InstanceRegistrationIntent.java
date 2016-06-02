@@ -9,12 +9,7 @@ import android.util.Log;
 
 import com.google.android.gms.iid.InstanceID;
 
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,7 +40,7 @@ public class InstanceRegistrationIntent extends IntentService {
 
             String nickname = intent.getStringExtra(Constants.NICKNAME);
 
-            sendRegistrationToServer(nickname, token);
+            sendRegistrationToServerObtainUuid(nickname, token);
 
             sharedPreferences.edit().putBoolean(Constants.TOKEN_REGISTERED, true).apply();
         } catch (Exception e) {
@@ -57,7 +52,7 @@ public class InstanceRegistrationIntent extends IntentService {
         LocalBroadcastManager.getInstance(this).sendBroadcast(registrationComplete);
     }
 
-    private void sendRegistrationToServer(String nickname, String token) throws IOException {
+    private String sendRegistrationToServerObtainUuid(String nickname, String token) throws IOException {
 
         Log.i(TAG, "Registering token");
         RestCommunication rest = new RestCommunication(ADD_TOKEN_URL);
@@ -70,7 +65,9 @@ public class InstanceRegistrationIntent extends IntentService {
         int responseCode = response.getStatus();
 
         Log.i(TAG, "Response code: " + responseCode);
-        Log.i(TAG, "Response: " + response.getResponseAsString());
+        String uuid = response.getResponseAsString();
+        Log.i(TAG, "Response: " + uuid);
         Log.i(TAG, "Token registered in server");
+        return uuid;
     }
 }

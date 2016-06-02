@@ -26,9 +26,8 @@ public class MessageController {
         this.userRepository = userRepository;
     }
 
-    @RequestMapping(path = "/send/{message}")
+    @RequestMapping(path = "/send/user")
     public HttpStatus sendMessage(@PathVariable String message) {
-        // TODO: Fix
         try {
             for(User user : userRepository.getAll()) {
                 String token = user.getToken();
@@ -40,6 +39,11 @@ public class MessageController {
             LOGGER.warn("Error when sending message", e);
             return HttpStatus.INTERNAL_SERVER_ERROR;
         }
+    }
+
+    @RequestMapping(path = "/send/group")
+    public HttpStatus sendMessageToGroup() {
+
     }
 
 }

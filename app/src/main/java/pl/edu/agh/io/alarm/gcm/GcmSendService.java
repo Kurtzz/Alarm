@@ -11,10 +11,13 @@ import android.util.Log;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GcmSendService extends Service {
 
     private static final String TAG = GcmSendService.class.getSimpleName();
+    public static final String SEND_MESSAGE_URL = "http://www.jdabrowa.pl:8090/alarm/message/send/";
 
     private final IBinder binder = new GcmSendBinder();
     public class GcmSendBinder extends Binder {
@@ -27,11 +30,11 @@ public class GcmSendService extends Service {
         return binder;
     }
 
-    public void sendTo(String user, String message) {
+    public void sendToUser(String user, String message) {
         throw new UnsupportedOperationException("Not implemented");
     }
 
-    public void sendToAll(String message) throws Exception {
+    public void sendToGroup(String message, String group) throws Exception {
         new SendGcmMessageAsync().execute(message);
     }
 
@@ -41,12 +44,13 @@ public class GcmSendService extends Service {
         protected Void doInBackground(String ... messages) {
             try {
                 Log.i(TAG, "Sending message");
-                URL serverUrl = new URL("http://www.jdabrowa.pl:8090/alarm/message/send/" + messages[0]);
-                HttpURLConnection connection = (HttpURLConnection) serverUrl.openConnection();
-                connection.setRequestMethod("PUT");
 
-                int responseCode = connection.getResponseCode();
-                connection.getInputStream();
+                RestCommunication rest = new RestCommunication(SEND_MESSAGE_URL);
+
+                Map<String, String> requestParams = new HashMap<>();
+                requestParams.put("NICKNAME", nickname);
+                requestParams.put("")
+
                 Log.i(TAG, "Response code: " + responseCode);
                 Log.i(TAG, "Message sent");
             } catch (IOException e) {

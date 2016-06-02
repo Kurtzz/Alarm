@@ -124,6 +124,7 @@ public class StartActivity extends Activity implements View.OnClickListener {
             // Start IntentService to register this application with GCM.
             Log.i(TAG, "Starting ID intent...");
             Intent intent = new Intent(this, InstanceRegistrationIntent.class);
+            intent.putExtra(Constants.USER_NICKNAME, middlewareService.getNickname());
             startService(intent);
         }
     }

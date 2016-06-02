@@ -142,4 +142,8 @@ public class DatabaseService extends Service {
     public User getUser() {
         return helper.getUser();
     }
+
+    public void createUser(User user) {
+        helper.createUser(user);
+    }
 }

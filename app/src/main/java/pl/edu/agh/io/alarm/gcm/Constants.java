@@ -4,6 +4,8 @@ public class Constants {
     public static final String TOKEN_REGISTERED = "sentTokenToServer";
     public static final String REGISTRATION_COMPLETE = "registrationComplete";
 
+    public static final String UUID = "UUID";
+
     public static final String NICKNAME = "NICKNAME";
     public static final String MESSAGE = "MESSAGE";
     public static final String TOKEN = "TOKEN";

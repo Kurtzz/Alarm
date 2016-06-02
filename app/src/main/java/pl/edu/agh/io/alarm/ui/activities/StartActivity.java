@@ -24,6 +24,7 @@ import pl.edu.agh.io.alarm.R;
 import pl.edu.agh.io.alarm.gcm.Constants;
 import pl.edu.agh.io.alarm.gcm.id.InstanceRegistrationIntent;
 import pl.edu.agh.io.alarm.middleware.Middleware;
+import pl.edu.agh.io.alarm.sqlite.model.User;
 
 /**
  * Created by Mateusz on 2016-06-02.
@@ -114,6 +115,11 @@ public class StartActivity extends Activity implements View.OnClickListener {
                 boolean sentToken = sharedPreferences
                         .getBoolean(Constants.TOKEN_REGISTERED, false);
                 Log.i(TAG, "Received broadcast: tokenSent - " + sentToken);
+                User user = new User();
+                user.setNickname(middlewareService.getNickname());
+                user.setToken(intent.getStringExtra(Constants.TOKEN));
+                user.setNickname(intent.getStringExtra(Constants.UUID));
+                middlewareService.user
             }
         };
 

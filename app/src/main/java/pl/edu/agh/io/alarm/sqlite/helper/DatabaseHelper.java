@@ -90,18 +90,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /*
     CREATE_TABLE user (
-        user_nick TEXT PRIMARY KEY NOT NULL,
-        user_token TEXT NOT NULL
+        user_nick TEXT NOT NULL,
+        user_token TEXT NOT NULL,
+        uuid TEXT PRIMARY KEY NOT NULL
     );
     */
 
     private static final String KEY_USER_NICK = "user_nick";
     private static final String KEY_USER_TOKEN = "user_token";
+    private static final String KEY_USER_UUID = "user_UUID";
 
     private static final String CREATE_TABLE_USER =
             "CREATE TABLE " + TABLE_USER + "(" +
-                    KEY_USER_NICK + " TEXT PRIMARY KEY NOT NULL,"
-            +       KEY_USER_TOKEN + " TEXT NOT NULL);";
+                    KEY_USER_UUID + "TEXT PRIKMARY KEY NOT NULL," +
+                    KEY_USER_NICK + " TEXT NOT NULL," +
+                    KEY_USER_TOKEN + " TEXT NOT NULL);";
 
     // ------------------------ END TABLES ------------------------ //
 
@@ -409,6 +412,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_USER_NICK, user.getNickname());
         values.put(KEY_USER_TOKEN, user.getToken());
+        values.put(KEY_USER_UUID, user.getUid());
 
         return db.insert(TABLE_USER, null, values);
     }
@@ -426,6 +430,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         User user = new User();
         user.setNickname(c.getString(c.getColumnIndex(KEY_USER_NICK)));
         user.setToken(c.getString(c.getColumnIndex(KEY_USER_TOKEN)));
+        user.setUid(c.getString(c.getColumnIndex(KEY_USER_UUID)));
 
         return user;
     }

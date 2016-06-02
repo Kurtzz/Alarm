@@ -150,7 +150,9 @@ public class    Middleware extends Service {
         return databaseService.getUser();
     }
 
-
+    public void createUser(User user) {
+        databaseService.createUser(user);
+    }
 
 
 

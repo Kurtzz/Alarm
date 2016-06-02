@@ -32,16 +32,17 @@ public class InstanceRegistrationIntent extends IntentService {
     protected void onHandleIntent(Intent intent) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
+        String uuid = null;
+        String token = null;
         try {
             Log.i(TAG, "Registering token...");
             InstanceID instanceID = InstanceID.getInstance(this);
-            String token = instanceID.getToken(PROJECT_ID, SCOPE, null);
+            token = instanceID.getToken(PROJECT_ID, SCOPE, null);
             Log.i(TAG, "GCM Registration Token: " + token);
 
             String nickname = intent.getStringExtra(Constants.NICKNAME);
 
-            sendRegistrationToServerObtainUuid(nickname, token);
-
+            uuid = sendRegistrationToServerObtainUuid(nickname, token);
             sharedPreferences.edit().putBoolean(Constants.TOKEN_REGISTERED, true).apply();
         } catch (Exception e) {
             Log.d(TAG, "Failed to complete token refresh", e);
@@ -49,6 +50,8 @@ public class InstanceRegistrationIntent extends IntentService {
         }
         // Notify UI that registration has completed, so the progress indicator can be hidden.
         Intent registrationComplete = new Intent(Constants.REGISTRATION_COMPLETE);
+        registrationComplete.putExtra(Constants.UUID, uuid);
+        registrationComplete.putExtra(Constants.TOKEN, token);
         LocalBroadcastManager.getInstance(this).sendBroadcast(registrationComplete);
     }
 

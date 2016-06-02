@@ -84,9 +84,9 @@ public class Notifications extends IntentService {
         }
 
         // The PendingIntent to launch our activity if the user selects this notification
-        Intent myClassIntent = new Intent(getApplicationContext(), MyClass.class);
-        myClassIntent.putExtra("nickname",nickname );
-        myClassIntent.putExtra("text",text);
+        Intent myClassIntent = new Intent(getApplicationContext(), ShowNotificationActivity.class);
+        myClassIntent.putExtra(ShowNotificationActivity.NICKNAME,nickname );
+        myClassIntent.putExtra(ShowNotificationActivity.TEXT,text);
         Middleware.setMediaPlayer(mediaPlayer);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
@@ -106,6 +106,33 @@ public class Notifications extends IntentService {
 
         // Send the notification.
         mNM.notify(NOTIFICATION++, notification);
+
+    }
+
+    public void makeInvite(String nickname, String groupName) {
+        Intent myClassIntent = new Intent(getApplicationContext(), ShowInviteActivity.class);
+        String firstLine = "Uzytkownik "+nickname+" zaprosil Cie do grupy: ";
+        myClassIntent.putExtra(ShowInviteActivity.NICKNAME,nickname );
+        myClassIntent.putExtra(ShowInviteActivity.GROUP_NAME,groupName);
+
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+                myClassIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // Set the info for the views that show in the notification panel.
+        Notification notification = new Notification.Builder(this)
+                .setSmallIcon(android.R.drawable.ic_dialog_alert)  // the status icon
+                .setTicker(groupName)  // the status text
+                .setWhen(System.currentTimeMillis())  // the time stamp
+                .setContentTitle(firstLine)  // the label of the entry
+                .setContentText(groupName)  // the contents of the entry
+                .setContentIntent(contentIntent)  // The intent to send when the entry is clicked
+                .setAutoCancel(true)
+                .setOngoing(true)
+                .build();
+
+        // Send the notification.
+        mNM.notify(NOTIFICATION++, notification);
+
 
     }
 

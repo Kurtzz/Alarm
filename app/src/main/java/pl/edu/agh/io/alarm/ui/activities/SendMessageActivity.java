@@ -66,7 +66,7 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
         String msgContent = editText.getText().toString();
         int level = Integer.valueOf(spinner.getSelectedItem().toString().substring(6));
 
-        middlewareService.makeNotification("sd","sd");
+        middlewareService.makeInvite("sd","sd");
         // TODO: Send message
         //middlewareService.send...
 

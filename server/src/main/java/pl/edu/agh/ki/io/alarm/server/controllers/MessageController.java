@@ -67,6 +67,7 @@ public class MessageController {
         String message = requestBody.get(RequestKeys.MESSAGE);
         String senderNick = requestBody.get(RequestKeys.NICKNAME);
         String senderUid = requestBody.get(RequestKeys.SENDER_UID);
+        int level = Integer.valueOf(requestBody.get(RequestKeys.LEVEL));
 
         GcmMessage gcmMessage = new GcmMessage();
         GcmMessageData data = new GcmMessageData();
@@ -74,6 +75,8 @@ public class MessageController {
         data.setMessageType(MessageType.MESSAGE);
         data.setSenderNick(senderNick);
         data.setSenderUID(senderUid);
+        data.setLevel(level);
+
         gcmMessage.setData(data);
         return gcmMessage;
     }

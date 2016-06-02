@@ -10,6 +10,7 @@ import java.util.List;
 import pl.edu.agh.io.alarm.sqlite.helper.DatabaseHelper;
 import pl.edu.agh.io.alarm.sqlite.model.Friend;
 import pl.edu.agh.io.alarm.sqlite.model.Group;
+import pl.edu.agh.io.alarm.sqlite.model.User;
 
 public class DatabaseService extends Service {
 
@@ -136,5 +137,9 @@ public class DatabaseService extends Service {
         for (Friend friend : friends) {
             helper.createGroupFriend(group_id, friend.getId());
         }
+    }
+
+    public User getUser() {
+        return helper.getUser();
     }
 }

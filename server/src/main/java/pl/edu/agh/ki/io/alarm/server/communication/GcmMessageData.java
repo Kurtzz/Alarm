@@ -11,4 +11,5 @@ public class GcmMessageData {
     @Getter @Setter private String senderUID;
     @Getter @Setter private String groupName;
     @Getter @Setter private InvitationResponse invitationResponse;
+    @Getter @Setter private int level;
 }

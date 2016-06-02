@@ -7,4 +7,6 @@ public class RequestKeys {
     public static final String SENDER_UID = "SENDER_UID";
     public static final String MESSAGE_RECEIVER = "MESSAGE_RECEIVER";
     public static final String GROUP_NAME = "GROUP_NAME";
+    public static final String LEVEL = "LEVEL";
+
 }

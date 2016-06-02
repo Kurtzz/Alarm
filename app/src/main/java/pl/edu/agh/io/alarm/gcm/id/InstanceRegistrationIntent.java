@@ -43,7 +43,7 @@ public class InstanceRegistrationIntent extends IntentService {
             String token = instanceID.getToken(PROJECT_ID, SCOPE, null);
             Log.i(TAG, "GCM Registration Token: " + token);
 
-            String nickname = intent.getStringExtra(Constants.USER_NICKNAME);
+            String nickname = intent.getStringExtra(Constants.NICKNAME);
 
             sendRegistrationToServer(nickname, token);
 //            subscribeTopics(token);

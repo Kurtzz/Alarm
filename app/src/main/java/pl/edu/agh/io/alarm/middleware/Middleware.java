@@ -15,6 +15,7 @@ import pl.edu.agh.io.alarm.gcm.GcmSendService;
 import pl.edu.agh.io.alarm.notifications.Notifications;
 import pl.edu.agh.io.alarm.sqlite.model.Friend;
 import pl.edu.agh.io.alarm.sqlite.model.Group;
+import pl.edu.agh.io.alarm.sqlite.model.User;
 import pl.edu.agh.io.alarm.sqlite.service.DatabaseService;
 
 public class    Middleware extends Service {
@@ -65,9 +66,17 @@ public class    Middleware extends Service {
         notificationService.makeNotification(nickname,text);
     }
 
-    public void sendMessageToGroup(String message, String group) {
+    public void sendMessageToGroup(String message, String group, int level) {
         try {
-            messagingService.sendToGroup(message, group);
+            messagingService.sendToGroup(group, message, level);
+        } catch (Exception e) {
+            Log.i(TAG, "Sending error", e);
+        }
+    }
+
+    private void sendMessageToUser(String message, String userId, int level) {
+        try {
+            messagingService.sendToGroup(userId, message, level);
         } catch (Exception e) {
             Log.i(TAG, "Sending error", e);
         }
@@ -125,7 +134,9 @@ public class    Middleware extends Service {
         databaseService.deleteGroup(group);
     }
 
-
+    public User getUser() {
+        return databaseService.getUser();
+    }
 
 
 
@@ -188,8 +199,8 @@ public class    Middleware extends Service {
                 Notifications.class), notificationConnection, Context.BIND_AUTO_CREATE);
         notificationIsBound = true;
 
-        bindService(new Intent(getApplicationContext(), GcmSendService.class),
-                gcmConnection, Context.BIND_AUTO_CREATE);
+        Intent gcmBindIntent = new Intent(getApplicationContext(), GcmSendService.class);
+        bindService(gcmBindIntent, gcmConnection, Context.BIND_AUTO_CREATE);
         gcmIsBound = true;
     }
 

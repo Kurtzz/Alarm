@@ -4,6 +4,15 @@ public class User {
 
     private String nickname;
     private String token;
+    private String uid;
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
     public String getNickname() {
         return nickname;
@@ -28,15 +37,12 @@ public class User {
 
         User user = (User) o;
 
-        if (!nickname.equals(user.nickname)) return false;
-        return token.equals(user.token);
+        return uid.equals(user.uid);
 
     }
 
     @Override
     public int hashCode() {
-        int result = nickname.hashCode();
-        result = 31 * result + token.hashCode();
-        return result;
+        return uid.hashCode();
     }
 }

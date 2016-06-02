@@ -57,9 +57,9 @@ public class    Middleware extends Service {
         notificationService.makeNotification(nickname,text);
     }
 
-    public void sendMessageToAll(String message) {
+    public void sendMessageToGroup(String message, String group) {
         try {
-            messagingService.sendToAll(message);
+            messagingService.sendToGroup(message, group);
         } catch (Exception e) {
             Log.i(TAG, "Sending error", e);
         }

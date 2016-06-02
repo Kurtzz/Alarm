@@ -6,13 +6,18 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.IOException;
+
 import pl.edu.agh.io.alarm.R;
+import pl.edu.agh.io.alarm.middleware.Middleware;
 
 public class Notifications extends IntentService {
     private NotificationManager mNM;
@@ -37,14 +42,53 @@ public class Notifications extends IntentService {
         makeNotification("testNickname","testText");
     }
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    public void makeNotification(String nickname, String text) {
+    public void makeNotification(String nickname, String text){
+        makeNotification(nickname,text,0);
+    }
+    public void makeNotification(String nickname, String text, int level) {
+
+        if(Middleware.getMediaPlayer() != null){
+            Middleware.getMediaPlayer().stop();
+        }
+        MediaPlayer mediaPlayer = new MediaPlayer();
+
+        try {
+            AssetFileDescriptor afd;
+            switch (level){
+                case 1:
+                    afd = getAssets().openFd("Tone.mp3");
+                    break;
+                case 2:
+                    afd = getAssets().openFd("Tone.mp3");
+                    break;
+                case 3:
+                    afd = getAssets().openFd("Tone.mp3");
+                    break;
+                case 4:
+                    afd = getAssets().openFd("Tone.mp3");
+                    break;
+                case 5:
+                    afd = getAssets().openFd("Tone.mp3");
+                    break;
+                default:
+                    afd = getAssets().openFd("Tone.mp3");
+
+            }
+            //mediaPlayer.setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
+            mediaPlayer.setDataSource(afd.getFileDescriptor());
+            mediaPlayer.prepare();
+            mediaPlayer.setLooping(true);
+            mediaPlayer.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // The PendingIntent to launch our activity if the user selects this notification
         Intent myClassIntent = new Intent(getApplicationContext(), MyClass.class);
         myClassIntent.putExtra("nickname",nickname );
         myClassIntent.putExtra("text",text);
+        Middleware.setMediaPlayer(mediaPlayer);
 
-        System.out.println("NOTIFICATION CONTEXT:   "+getApplicationContext().toString());
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
                 myClassIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -57,6 +101,7 @@ public class Notifications extends IntentService {
                 .setContentText(text)  // the contents of the entry
                 .setContentIntent(contentIntent)  // The intent to send when the entry is clicked
                 .setAutoCancel(true)
+                .setOngoing(true)
                 .build();
 
         // Send the notification.

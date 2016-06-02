@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
@@ -206,6 +207,14 @@ public class    Middleware extends Service {
             unbindService(gcmConnection);
             gcmIsBound = false;
         }
+    }
+
+    private static MediaPlayer mediaPlayer = null;
+    public static MediaPlayer getMediaPlayer(){
+        return mediaPlayer;
+    }
+    public static void setMediaPlayer(MediaPlayer p){
+        mediaPlayer  = p;
     }
 
 

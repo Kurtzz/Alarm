@@ -29,6 +29,9 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
     public static final String TYPE_FRIEND = "TYPE_FRIEND";
     public static final String TYPE_GROUP = "TYPE_GROUP";
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +53,9 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
         Intent intent = getIntent();
         receiversId = intent.getIntExtra(EXTRA_ID, 0);
         idType = intent.getStringExtra(EXTRA_ID_TYPE);
+
+
+        doBindService();
     }
 
     @Override
@@ -60,7 +66,9 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
         String msgContent = editText.getText().toString();
         int level = Integer.valueOf(spinner.getSelectedItem().toString().substring(6));
 
+        middlewareService.makeNotification("sd","sd");
         // TODO: Send message
+        //middlewareService.send...
 
         spinner.setSelection(0);
         editText.setText("");
@@ -95,4 +103,6 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
         super.onDestroy();
         doUnbindService();
     }
+
+
 }

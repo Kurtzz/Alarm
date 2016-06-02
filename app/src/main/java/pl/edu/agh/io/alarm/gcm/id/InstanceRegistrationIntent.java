@@ -43,7 +43,9 @@ public class InstanceRegistrationIntent extends IntentService {
             String token = instanceID.getToken(PROJECT_ID, SCOPE, null);
             Log.i(TAG, "GCM Registration Token: " + token);
 
-            sendRegistrationToServer(token);
+            String nickname = intent.getStringExtra(Constants.USER_NICKNAME);
+
+            sendRegistrationToServer(nickname, token);
 //            subscribeTopics(token);
 
             sharedPreferences.edit().putBoolean(Constants.TOKEN_REGISTERED, true).apply();
@@ -56,15 +58,15 @@ public class InstanceRegistrationIntent extends IntentService {
         LocalBroadcastManager.getInstance(this).sendBroadcast(registrationComplete);
     }
 
-    private void sendRegistrationToServer(String token) throws IOException {
+    private void sendRegistrationToServer(String nickname, String token) throws IOException {
 
         Log.i(TAG, "Registering token");
         RestCommunication rest = new RestCommunication(ADD_TOKEN_URL);
 
         Map<String, String> body = new HashMap<>();
         body.put("TOKEN", token);
-        body.put("NICKNAME", "nickname");
-        int responseCode = rest.execute(body, "PUT");
+        body.put("NICKNAME", nickname);
+        int responseCode = rest.execute(body, "PUT").getStatus();
 
         Log.i(TAG, "Response code: " + responseCode);
         Log.i(TAG, "Token registered in server");

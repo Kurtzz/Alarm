@@ -42,7 +42,7 @@ public class UserRegistryController {
         String nickname = body.get(RequestKeys.NICKNAME);
 
         LOGGER.info("Received token: {}", token);
-        boolean isNew = userRepository.containsToken(token);
+        boolean isNew = !userRepository.containsToken(token);
 
         if(isNew) {
             User user = createNewUSer(token, nickname);

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.agh.ki.io.alarm.domain.User;
 import pl.edu.agh.ki.io.alarm.server.communication.GoogleCloudService;
+import pl.edu.agh.ki.io.alarm.server.communication.RequestKeys;
 import pl.edu.agh.ki.io.alarm.server.registry.UserRepository;
 
 import java.util.Map;
@@ -38,8 +39,8 @@ public class UserRegistryController {
     @RequestMapping(path = "/tokens/add")
     public HttpStatus registerNewUser(@RequestBody Map<String, String> body) throws UnirestException {
 
-        String token = body.get("TOKEN");
-        String nickname = body.get("NICKNAME");
+        String token = body.get(RequestKeys.TOKEN);
+        String nickname = body.get(RequestKeys.NICKNAME);
 
         LOGGER.info("Received token: {}", token);
         boolean isNew = userRepository.containsToken(token);

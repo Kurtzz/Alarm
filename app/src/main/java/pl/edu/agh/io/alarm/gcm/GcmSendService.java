@@ -31,21 +31,23 @@ public class GcmSendService extends Service {
     }
 
     public void sendToUser(String user, String message) {
-        throw new UnsupportedOperationException("Not implemented");
+        new SendGcmMessageAsync().execute("user", message);
     }
 
     public void sendToGroup(String message, String group) throws Exception {
-        new SendGcmMessageAsync().execute(message);
+        new SendGcmMessageAsync().execute("group", message);
     }
 
     class SendGcmMessageAsync extends AsyncTask<String, Void, Void> {
 
         @Override
-        protected Void doInBackground(String ... messages) {
+        protected Void doInBackground(String ... params) {
             try {
                 Log.i(TAG, "Sending message");
 
-                RestCommunication rest = new RestCommunication(SEND_MESSAGE_URL);
+                String messageType = params[0];
+                String sendMessageUrl = SEND_MESSAGE_URL + messageType;
+                RestCommunication rest = new RestCommunication(sendMessageUrl);
 
                 Map<String, String> requestParams = new HashMap<>();
                 requestParams.put("NICKNAME", nickname);

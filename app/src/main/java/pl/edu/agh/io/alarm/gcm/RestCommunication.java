@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -48,19 +49,25 @@ public class RestCommunication {
 
     public static class ConnectionResponse {
         private final int status;
-        private final InputStream responseStream;
-
-        public ConnectionResponse(int status, InputStream responseStream) {
+        private final String response;
+        public ConnectionResponse(int status, InputStream responseStream) throws IOException {
             this.status = status;
-            this.responseStream = responseStream;
+
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            int b;
+            while((b=responseStream.read()) != -1) {
+                bos.write(b);
+            }
+            this.response = new String(bos.toByteArray());
+            responseStream.close();
         }
 
-        public int getStatus() {
+        public int getStatus() throws IOException {
             return status;
         }
 
-        public InputStream getResponseStream() {
-            return responseStream;
+        public String getResponseAsString() throws IOException {
+            return response;
         }
     }
 }

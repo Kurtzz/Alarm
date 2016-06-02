@@ -36,23 +36,25 @@ public class UserRegistryController {
 
     // TODO: Should be secure
     @RequestMapping(path = "/tokens/add")
-    public HttpStatus registerNewUser(@RequestBody Map<String, String> body) throws UnirestException {
+    public String registerNewUser(@RequestBody Map<String, String> body) throws UnirestException {
 
         String token = body.get(RequestKeys.TOKEN);
         String nickname = body.get(RequestKeys.NICKNAME);
 
         LOGGER.info("Received token: {}", token);
         boolean isNew = !userRepository.containsToken(token);
+        User user;
 
         if(isNew) {
-            User user = createNewUSer(token, nickname);
+            user = createNewUSer(token, nickname);
             userRepository.add(user.getUID(), user);
             LOGGER.info("User with uid {} and nick {} has been added to repository", user.getUID(), user.getNick());
         } else {
             LOGGER.info("Repository already contains token {}", token);
+            user = userRepository.get(token);
         }
         LOGGER.debug(userRepository.getAll().toString());
-        return HttpStatus.OK;
+        return user.getUID();
     }
 
     private User createNewUSer(String token, String nickname) {

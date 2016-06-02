@@ -46,7 +46,6 @@ public class InstanceRegistrationIntent extends IntentService {
             String nickname = intent.getStringExtra(Constants.NICKNAME);
 
             sendRegistrationToServer(nickname, token);
-//            subscribeTopics(token);
 
             sharedPreferences.edit().putBoolean(Constants.TOKEN_REGISTERED, true).apply();
         } catch (Exception e) {
@@ -66,9 +65,12 @@ public class InstanceRegistrationIntent extends IntentService {
         Map<String, String> body = new HashMap<>();
         body.put("TOKEN", token);
         body.put("NICKNAME", nickname);
-        int responseCode = rest.execute(body, "PUT").getStatus();
+        RestCommunication.ConnectionResponse response = rest.execute(body, "PUT");
+
+        int responseCode = response.getStatus();
 
         Log.i(TAG, "Response code: " + responseCode);
+        Log.i(TAG, "Response: " + response.getResponseAsString());
         Log.i(TAG, "Token registered in server");
     }
 }

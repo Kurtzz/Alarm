@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
@@ -61,6 +62,13 @@ public class    Middleware extends Service {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+    public void makeInvite(String nickname, String groupName){
+        notificationService.makeInvite(nickname,groupName);
+    }
+
+    public void makeNotification(String nickname, String text, int level){
+        notificationService.makeNotification(nickname,text,level);
+    }
 
     public void makeNotification(String nickname, String text){
         notificationService.makeNotification(nickname,text);
@@ -74,7 +82,7 @@ public class    Middleware extends Service {
         }
     }
 
-    private void sendMessageToUser(String message, String userId, int level) {
+    public void sendMessageToUser(String message, String userId, int level) {
         try {
             messagingService.sendToGroup(userId, message, level);
         } catch (Exception e) {
@@ -217,6 +225,14 @@ public class    Middleware extends Service {
             unbindService(gcmConnection);
             gcmIsBound = false;
         }
+    }
+
+    private static MediaPlayer mediaPlayer = null;
+    public static MediaPlayer getMediaPlayer(){
+        return mediaPlayer;
+    }
+    public static void setMediaPlayer(MediaPlayer p){
+        mediaPlayer  = p;
     }
 
 

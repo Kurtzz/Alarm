@@ -15,6 +15,7 @@ import java.util.List;
 import pl.edu.agh.io.alarm.R;
 import pl.edu.agh.io.alarm.sqlite.model.Friend;
 import pl.edu.agh.io.alarm.sqlite.model.Group;
+import pl.edu.agh.io.alarm.ui.Constants;
 import pl.edu.agh.io.alarm.ui.activities.SendMessageActivity;
 
 import static pl.edu.agh.io.alarm.sqlite.model.Friend.FriendComparator.NICK_SORT;
@@ -90,8 +91,8 @@ public class GroupListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, SendMessageActivity.class);
-                intent.putExtra(SendMessageActivity.EXTRA_ID, getGroupId(groupPosition));
-                intent.putExtra(SendMessageActivity.EXTRA_ID_TYPE, SendMessageActivity.TYPE_GROUP);
+                intent.putExtra(Constants.EXTRA_ID, getGroup(groupPosition).getNameId());
+                intent.putExtra(Constants.EXTRA_ID_TYPE, Constants.IdType.GROUP);
                 context.startActivity(intent);
             }
         });

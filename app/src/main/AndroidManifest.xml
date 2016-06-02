@@ -106,7 +106,8 @@
             android:enabled="true"
             android:exported="false"></service>
 
-        <activity android:name=".notifications.MyClass"></activity>
+        <activity android:name=".notifications.ShowNotificationActivity"></activity>
+        <activity android:name=".notifications.ShowInviteActivity"></activity>
 
         <service android:name=".notifications.Notifications"></service>
         <service android:name=".sqlite.service.DatabaseService"></service>

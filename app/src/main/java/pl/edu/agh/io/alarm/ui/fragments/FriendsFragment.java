@@ -20,6 +20,8 @@ import java.util.List;
 import pl.edu.agh.io.alarm.R;
 import pl.edu.agh.io.alarm.sqlite.helper.DatabaseHelper;
 import pl.edu.agh.io.alarm.sqlite.model.Friend;
+import pl.edu.agh.io.alarm.ui.Constants;
+import pl.edu.agh.io.alarm.ui.Constants.IdType;
 import pl.edu.agh.io.alarm.ui.activities.AddFriendActivity;
 import pl.edu.agh.io.alarm.ui.activities.EditFriendActivity;
 import pl.edu.agh.io.alarm.ui.activities.SendMessageActivity;
@@ -127,14 +129,14 @@ public class FriendsFragment extends Fragment {
 
     private void sendAlarm(int position) {
         Intent intent = new Intent(getContext(), SendMessageActivity.class);
-        intent.putExtra(SendMessageActivity.EXTRA_ID, friendListAdapter.getItem(position).getId());
-        intent.putExtra(SendMessageActivity.EXTRA_ID_TYPE, SendMessageActivity.TYPE_FRIEND);
+        intent.putExtra(Constants.EXTRA_ID, friendListAdapter.getItem(position).getId());
+        intent.putExtra(Constants.EXTRA_ID_TYPE, IdType.FRIEND);
         startActivity(intent);
     }
 
     private void editFriend(int position) {
         Intent intent = new Intent(getContext(), EditFriendActivity.class);
-        intent.putExtra(SendMessageActivity.EXTRA_ID, friendListAdapter.getItem(position).getId());
+        intent.putExtra(Constants.EXTRA_ID, friendListAdapter.getItem(position).getId());
         startActivity(intent);
     }
 

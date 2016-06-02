@@ -16,21 +16,15 @@ import android.widget.Spinner;
 
 import pl.edu.agh.io.alarm.R;
 import pl.edu.agh.io.alarm.middleware.Middleware;
+import pl.edu.agh.io.alarm.ui.Constants;
+import pl.edu.agh.io.alarm.ui.Constants.IdType;
 
 public class SendMessageActivity extends AppCompatActivity implements View.OnClickListener {
-    private int receiversId;
-    private String idType;
+    private String receiverId;
+    private IdType idType;
 
     private boolean middlewareIsBound;
     private Middleware middlewareService;
-
-    public static final String EXTRA_ID = "pl.agh.ki.io.alarm.SendMessage.Activity.ID";
-    public static final String EXTRA_ID_TYPE = "pl.agh.ki.io.alarm.SendMessage.Activity.ID_TYPE";
-    public static final String TYPE_FRIEND = "TYPE_FRIEND";
-    public static final String TYPE_GROUP = "TYPE_GROUP";
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +45,8 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        receiversId = intent.getIntExtra(EXTRA_ID, 0);
-        idType = intent.getStringExtra(EXTRA_ID_TYPE);
-
+        receiverId = intent.getStringExtra(Constants.EXTRA_ID);
+        idType = (IdType) intent.getSerializableExtra(Constants.EXTRA_ID_TYPE);
 
         doBindService();
     }
@@ -69,6 +62,16 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
         middlewareService.makeNotification("sd","sd");
         // TODO: Send message
         //middlewareService.send...
+        switch (idType) {
+            case FRIEND:
+                //TODO: Send message to friend
+                break;
+            case GROUP:
+                //TODO:Send message to group
+                break;
+            default:
+                break;
+        }
 
         spinner.setSelection(0);
         editText.setText("");

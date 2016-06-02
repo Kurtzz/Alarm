@@ -19,6 +19,7 @@ import pl.edu.agh.io.alarm.R;
 import pl.edu.agh.io.alarm.sqlite.helper.DatabaseHelper;
 import pl.edu.agh.io.alarm.sqlite.model.Friend;
 import pl.edu.agh.io.alarm.sqlite.model.Group;
+import pl.edu.agh.io.alarm.ui.Constants;
 import pl.edu.agh.io.alarm.ui.adapters.DefaultFriendListAdapter;
 
 public class EditGroupActivity extends AppCompatActivity implements View.OnClickListener {
@@ -38,7 +39,7 @@ public class EditGroupActivity extends AppCompatActivity implements View.OnClick
 
         helper = new DatabaseHelper(getApplicationContext());
 
-        group = helper.getGroup(getIntent().getStringExtra(SendMessageActivity.EXTRA_ID));
+        group = helper.getGroup(getIntent().getStringExtra(Constants.EXTRA_ID));
 
         TextView textView = (TextView) findViewById(R.id.editGroup_nickTextView);
         textView.setText(group.getNameId());
@@ -75,7 +76,7 @@ public class EditGroupActivity extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.editGroup_inviteFriends:
                 Intent intent = new Intent(getApplicationContext(), InviteFriendsActivity.class);
-                intent.putExtra(SendMessageActivity.EXTRA_ID, group.getNameId());
+                intent.putExtra(Constants.EXTRA_ID, group.getNameId());
                 startActivity(intent);
                 break;
         }

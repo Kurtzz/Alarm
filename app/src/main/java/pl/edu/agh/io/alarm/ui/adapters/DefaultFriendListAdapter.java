@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import pl.edu.agh.io.alarm.R;
 import pl.edu.agh.io.alarm.sqlite.model.Friend;
+import pl.edu.agh.io.alarm.ui.Constants;
 import pl.edu.agh.io.alarm.ui.activities.SendMessageActivity;
 
 /**
@@ -49,8 +50,8 @@ public class DefaultFriendListAdapter extends AbstractFriendListAdapter {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getContext(), SendMessageActivity.class);
-                    intent.putExtra(SendMessageActivity.EXTRA_ID, friend.getId());
-                    intent.putExtra(SendMessageActivity.EXTRA_ID_TYPE, SendMessageActivity.TYPE_FRIEND);
+                    intent.putExtra(Constants.EXTRA_ID, friend.getId());
+                    intent.putExtra(Constants.EXTRA_ID_TYPE, Constants.IdType.FRIEND);
                     getContext().startActivity(intent);
                 }
             });

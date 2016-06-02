@@ -15,6 +15,7 @@ import pl.edu.agh.io.alarm.R;
 import pl.edu.agh.io.alarm.sqlite.helper.DatabaseHelper;
 import pl.edu.agh.io.alarm.sqlite.model.Friend;
 import pl.edu.agh.io.alarm.sqlite.model.Group;
+import pl.edu.agh.io.alarm.ui.Constants;
 import pl.edu.agh.io.alarm.ui.adapters.MultiChoiceFriendListAdapter;
 
 public class InviteFriendsActivity extends AppCompatActivity implements View.OnClickListener {
@@ -31,7 +32,7 @@ public class InviteFriendsActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_invite_friends);
 
         helper = new DatabaseHelper(getApplicationContext());
-        group = helper.getGroup(getIntent().getStringExtra(SendMessageActivity.EXTRA_ID));
+        group = helper.getGroup(getIntent().getStringExtra(Constants.EXTRA_ID));
 
         TextView textView = (TextView) findViewById(R.id.inviteFriends_nickTextView);
         textView.setText(group.getNameId());

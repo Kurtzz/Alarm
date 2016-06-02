@@ -28,6 +28,7 @@ public class    Middleware extends Service {
     private boolean gcmIsBound;
     private Notifications notificationService;
     private GcmSendService messagingService;
+    private String nickname;
 
     public class LocalBinder extends Binder {
         public Middleware getService() {
@@ -36,7 +37,6 @@ public class    Middleware extends Service {
     }
     @Override
     public IBinder onBind(Intent intent) {
-        System.out.println("ONBIND !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         return mBinder;
     }
 
@@ -52,6 +52,14 @@ public class    Middleware extends Service {
         doUnbindService();
     }
 
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
     public void makeNotification(String nickname, String text){
         notificationService.makeNotification(nickname,text);

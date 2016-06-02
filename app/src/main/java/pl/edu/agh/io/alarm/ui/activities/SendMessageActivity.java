@@ -59,6 +59,8 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
         String msgContent = editText.getText().toString();
         int level = Integer.valueOf(spinner.getSelectedItem().toString().substring(6));
 
+
+
         // TODO: Send message
         switch (idType) {
             case FRIEND:

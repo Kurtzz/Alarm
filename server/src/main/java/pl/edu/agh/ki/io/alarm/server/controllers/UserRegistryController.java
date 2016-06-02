@@ -47,7 +47,7 @@ public class UserRegistryController {
         if(isNew) {
             User user = createNewUSer(token, nickname);
             userRepository.add(user.getUID(), user);
-            LOGGER.info("User with uid {} has been added to repository", user.getUID());
+            LOGGER.info("User with uid {} and nick {} has been added to repository", user.getUID(), user.getNick());
         } else {
             LOGGER.info("Repository already contains token {}", token);
         }

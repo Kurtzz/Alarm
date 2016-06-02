@@ -84,6 +84,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     + "FOREIGN KEY (" + KEY_GROUP_NAME_ID + ") REFERENCES " + TABLE_GROUP + "(" + KEY_GROUP_NAME_ID + "), "
                     + "PRIMARY KEY (" + KEY_FRIEND_ID + ", " + KEY_GROUP_NAME_ID + "))";
 
+    // ----------------------------- TABLE USER ----------------------------- //
+    private static final String TABLE_USER = "user";
+
+    private static final String KEY_USER_NICK = "user_nick";
+
+
     // ------------------------ END TABLES ------------------------ //
 
     public DatabaseHelper(Context context) {

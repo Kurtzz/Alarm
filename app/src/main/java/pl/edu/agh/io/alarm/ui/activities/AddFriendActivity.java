@@ -47,6 +47,7 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
 
         //TODO: send request to server
 
+        friend.setId(editText.getText().toString()); //TODO: set ID from Server DB
         friend.setNick(editText.getText().toString());
         friend.setLevel(MAX_LEVEL);
         editText.setText("");

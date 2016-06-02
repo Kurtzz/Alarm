@@ -38,10 +38,10 @@ public class EditGroupActivity extends AppCompatActivity implements View.OnClick
 
         helper = new DatabaseHelper(getApplicationContext());
 
-        group = helper.getGroup(getIntent().getIntExtra(SendMessageActivity.EXTRA_ID, 0));
+        group = helper.getGroup(getIntent().getStringExtra(SendMessageActivity.EXTRA_ID));
 
         TextView textView = (TextView) findViewById(R.id.editGroup_nickTextView);
-        textView.setText(group.getGroupName());
+        textView.setText(group.getNameId());
 
         spinner = (Spinner) findViewById(R.id.editGroup_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -75,7 +75,7 @@ public class EditGroupActivity extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.editGroup_inviteFriends:
                 Intent intent = new Intent(getApplicationContext(), InviteFriendsActivity.class);
-                intent.putExtra(SendMessageActivity.EXTRA_ID, group.getId());
+                intent.putExtra(SendMessageActivity.EXTRA_ID, group.getNameId());
                 startActivity(intent);
                 break;
         }
@@ -108,7 +108,7 @@ public class EditGroupActivity extends AppCompatActivity implements View.OnClick
 
         helper.deleteGroupFriend(group, friend);
 
-        group = helper.getGroup(group.getId());
+        group = helper.getGroup(group.getNameId());
         friendListAdapter.setArrayList(group.getFriends());
 
         Toast.makeText(getApplicationContext(), "Member \"" + friend.getNick() + "\" deleted successfully", Toast.LENGTH_SHORT).show();

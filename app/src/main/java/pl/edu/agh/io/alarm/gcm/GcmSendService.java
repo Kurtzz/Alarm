@@ -8,15 +8,16 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GcmSendService extends Service {
 
     private static final String TAG = GcmSendService.class.getSimpleName();
+    public static final String SEND_MESSAGE_URL = "http://www.jdabrowa.pl:8090/alarm/message/send/";
 
     private final IBinder binder = new GcmSendBinder();
     public class GcmSendBinder extends Binder {
@@ -29,26 +30,29 @@ public class GcmSendService extends Service {
         return binder;
     }
 
-    public void sendTo(String user, String message) {
-        throw new UnsupportedOperationException("Not implemented");
+    public void sendToUser(String user, String message) {
+        new SendGcmMessageAsync().execute("user", message);
     }
 
-    public void sendToAll(String message) throws Exception {
-        new AsyncGcm().execute(message);
+    public void sendToGroup(String message, String group) throws Exception {
+        new SendGcmMessageAsync().execute("group", message);
     }
 
-    class AsyncGcm extends AsyncTask<String, Void, Void> {
+    class SendGcmMessageAsync extends AsyncTask<String, Void, Void> {
 
         @Override
-        protected Void doInBackground(String ... messages) {
+        protected Void doInBackground(String ... params) {
             try {
                 Log.i(TAG, "Sending message");
-                URL serverUrl = new URL(RestEndpoints.MESSAGE_SEND_URL + messages[0]);
-                HttpURLConnection connection = (HttpURLConnection) serverUrl.openConnection();
-                connection.setRequestMethod("PUT");
-                
-                int responseCode = connection.getResponseCode();
-                connection.getInputStream();
+
+                String messageType = params[0];
+                String sendMessageUrl = SEND_MESSAGE_URL + messageType;
+                RestCommunication rest = new RestCommunication(sendMessageUrl);
+
+                Map<String, String> requestParams = new HashMap<>();
+                requestParams.put("NICKNAME", nickname);
+                requestParams.put("")
+
                 Log.i(TAG, "Response code: " + responseCode);
                 Log.i(TAG, "Message sent");
             } catch (IOException e) {

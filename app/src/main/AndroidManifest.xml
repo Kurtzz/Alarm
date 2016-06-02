@@ -110,7 +110,7 @@
             android:label="@string/invite_friends">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="pl.edu.agh.io.alarm.ui.activities.EditGroupActivity" />
+                android:value="pl.edu.agh.io.alarm.ui.activities.MainActivity" />
         </activity>
     </application>
 

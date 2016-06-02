@@ -9,12 +9,17 @@ import android.util.Log;
 
 import com.google.android.gms.iid.InstanceID;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import pl.edu.agh.io.alarm.gcm.Constants;
+import pl.edu.agh.io.alarm.gcm.RestCommunication;
 
 public class InstanceRegistrationIntent extends IntentService {
 
@@ -22,6 +27,7 @@ public class InstanceRegistrationIntent extends IntentService {
 
     private static final String PROJECT_ID = "1001998105077";
     private static final String SCOPE = "GCM";
+    public static final String ADD_TOKEN_URL = "http://www.jdabrowa.pl:8090/alarm/tokens/add";
 
     public InstanceRegistrationIntent() {
         super(TAG);
@@ -51,12 +57,15 @@ public class InstanceRegistrationIntent extends IntentService {
     }
 
     private void sendRegistrationToServer(String token) throws IOException {
+
         Log.i(TAG, "Registering token");
-        URL serverUrl = new URL("http://www.jdabrowa.pl:8090/alarm/tokens/" + token);
-        HttpURLConnection connection = (HttpURLConnection) serverUrl.openConnection();
-        connection.setRequestMethod("PUT");
-        int responseCode = connection.getResponseCode();
-        connection.getInputStream();
+        RestCommunication rest = new RestCommunication(ADD_TOKEN_URL);
+
+        Map<String, String> body = new HashMap<>();
+        body.put("TOKEN", token);
+        body.put("NICKNAME", "nickname");
+        int responseCode = rest.execute(body, "PUT");
+
         Log.i(TAG, "Response code: " + responseCode);
         Log.i(TAG, "Token registered in server");
     }

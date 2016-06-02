@@ -82,6 +82,7 @@
     <string name="title_activity_editGroup">Edit Group</string>
     <string name="local_service_started">Local_service_started</string>
     <string name="invite_friends">Invite Friends</string>
+    <string name="createGroup_joinGroupButton">Join Group</string>
     <string-array name="alarmLevelsArray">
         <item>Level 1</item>
         <item>Level 2</item>

@@ -4,25 +4,16 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Group {
-    private int id;
-    private String groupName;
+    private String nameId;
     private int groupLevel;
     private List<Friend> friends;
 
-    public int getId() {
-        return id;
+    public String getNameId() {
+        return nameId;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getGroupName() {
-        return groupName;
-    }
-
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
+    public void setNameId(String nameId) {
+        this.nameId = nameId;
     }
 
     public int getGroupLevel() {
@@ -48,24 +39,19 @@ public class Group {
 
         Group group = (Group) o;
 
-        return getId() == group.getId();
+        return getNameId().equals(group.getNameId());
 
     }
 
     @Override
     public int hashCode() {
-        return getId();
+        return getNameId().hashCode();
     }
 
     public enum  GroupComparator implements Comparator<Group> {
-        GROUP_ID_SORT {
+        GROUP_NAME_ID_SORT {
             public int compare(Group lhs, Group rhs) {
-                return ((Integer)lhs.getId()).compareTo(rhs.getId());
-            }
-        },
-        GROUP_NAME_SORT {
-            public int compare(Group lhs, Group rhs) {
-                return lhs.getGroupName().compareToIgnoreCase(rhs.getGroupName());
+                return lhs.getNameId().compareToIgnoreCase(rhs.getNameId());
             }
         },
         GROUP_LEVEL_SORT {

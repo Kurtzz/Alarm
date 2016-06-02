@@ -41,7 +41,7 @@ public class DatabaseService extends Service {
         return helper.createFriend(friend);
     }
 
-    public Friend getFriend(long friend_id) {
+    public Friend getFriend(String friend_id) {
         return helper.getFriend(friend_id);
     }
 
@@ -76,7 +76,7 @@ public class DatabaseService extends Service {
      */
     public long createGroup(Group group) {
         long result = helper.createGroup(group);
-        createGroupFriend(group.getId(), group.getFriends());
+        createGroupFriend(group.getNameId(), group.getFriends());
         return result;
     }
 
@@ -87,7 +87,7 @@ public class DatabaseService extends Service {
         helper.updateGroup(group);
 
         //Update linking tables
-        List<Friend> dbFriends = helper.getAllMembersOfTheGroup(group.getId());
+        List<Friend> dbFriends = helper.getAllMembersOfTheGroup(group.getNameId());
         if (dbFriends.equals(group.getFriends())) {
             return;
         }
@@ -98,7 +98,7 @@ public class DatabaseService extends Service {
         }
         for (Friend friend : group.getFriends()) {
             if (!dbFriends.contains(friend)) {
-                helper.createGroupFriend(group.getId(), friend.getId());
+                helper.createGroupFriend(group.getNameId(), friend.getId());
             }
         }
     }
@@ -106,7 +106,7 @@ public class DatabaseService extends Service {
     /**
      * Get single group
      */
-    public Group getGroup(long group_id) {
+    public Group getGroup(String group_id) {
         return helper.getGroup(group_id);
     }
 
@@ -121,7 +121,7 @@ public class DatabaseService extends Service {
      * Delete Group
      */
     public void deleteGroup(Group group) {
-        helper.deleteGroup(group.getId());
+        helper.deleteGroup(group.getNameId());
 
         //delete dependency
         helper.deleteGroupFriend(group);
@@ -132,7 +132,7 @@ public class DatabaseService extends Service {
     /**
      * Create multiple group_friend
      */
-    public void createGroupFriend(long group_id, List<Friend> friends) {
+    public void createGroupFriend(String group_id, List<Friend> friends) {
         for (Friend friend : friends) {
             helper.createGroupFriend(group_id, friend.getId());
         }

@@ -69,7 +69,7 @@ public class    Middleware extends Service {
         return databaseService.createFriend(friend);
     }
 
-    public Friend getFriend(long friend_id) {
+    public Friend getFriend(String friend_id) {
         return databaseService.getFriend(friend_id);
     }
 
@@ -99,7 +99,7 @@ public class    Middleware extends Service {
     /**
      * Get single group
      */
-    public Group getGroup(long group_id) {
+    public Group getGroup(String group_id) {
         return databaseService.getGroup(group_id);
     }
 

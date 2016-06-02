@@ -3,16 +3,16 @@ package pl.edu.agh.io.alarm.sqlite.model;
 import java.util.Comparator;
 
 public class Friend {
-    private int id;
+    private String id;
     private String nick;
     private int level;
     private boolean isBlocked;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -47,19 +47,19 @@ public class Friend {
 
         Friend friend = (Friend) o;
 
-        return getId() == friend.getId();
+        return getId().equals(friend.getId());
 
     }
 
     @Override
     public int hashCode() {
-        return getId();
+        return getId().hashCode();
     }
 
     public enum  FriendComparator implements Comparator<Friend> {
         FRIEND_ID_SORT {
             public int compare(Friend lhs, Friend rhs) {
-                return ((Integer)lhs.getId()).compareTo(rhs.getId());
+                return lhs.getId().compareTo(rhs.getId());
             }
         },
         NICK_SORT {

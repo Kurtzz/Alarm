@@ -122,23 +122,23 @@ public class GroupsFragment extends Fragment {
 
     private void sendAlarm(long packagePosition) {
         Intent intent = new Intent(getContext(), SendMessageActivity.class);
-        intent.putExtra(SendMessageActivity.EXTRA_ID, groupListAdapter.getGroup(groupList.getFlatListPosition(packagePosition)).getId());
+        intent.putExtra(SendMessageActivity.EXTRA_ID, groupListAdapter.getGroup(groupList.getFlatListPosition(packagePosition)).getNameId());
         intent.putExtra(SendMessageActivity.EXTRA_ID_TYPE, SendMessageActivity.TYPE_GROUP);
         startActivity(intent);
     }
 
     private void editGroup(long packagePosition) {
         Intent intent = new Intent(getContext(), EditGroupActivity.class);
-        intent.putExtra(SendMessageActivity.EXTRA_ID, groupListAdapter.getGroup(groupList.getFlatListPosition(packagePosition)).getId());
+        intent.putExtra(SendMessageActivity.EXTRA_ID, groupListAdapter.getGroup(groupList.getFlatListPosition(packagePosition)).getNameId());
         startActivity(intent);
     }
 
     private void deleteGroup(long packagePosition) {
         Group group = groupListAdapter.getGroup(groupList.getFlatListPosition(packagePosition));
-        helper.deleteGroup(group.getId());
+        helper.deleteGroup(group.getNameId());
         List<Group> list = helper.getGroups();
         groupListAdapter.setArrayList(list);
-        Toast.makeText(getContext(), "Group \"" + group.getGroupName() + "\" deleted successfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Group \"" + group.getNameId() + "\" deleted successfully", Toast.LENGTH_SHORT).show();
     }
 
     /**

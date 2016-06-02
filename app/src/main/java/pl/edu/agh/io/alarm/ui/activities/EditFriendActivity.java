@@ -28,7 +28,7 @@ public class EditFriendActivity extends AppCompatActivity implements View.OnClic
 
         helper = new DatabaseHelper(getApplicationContext());
 
-        friend = helper.getFriend(getIntent().getIntExtra(SendMessageActivity.EXTRA_ID, 0));
+        friend = helper.getFriend(getIntent().getStringExtra(SendMessageActivity.EXTRA_ID));
 
         TextView textView = (TextView) findViewById(R.id.editFriend_nickTextView);
         textView.setText(friend.getNick());

@@ -1,5 +1,6 @@
 package pl.edu.agh.io.alarm.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
@@ -23,7 +24,8 @@ import pl.edu.agh.io.alarm.ui.adapters.DefaultFriendListAdapter;
 public class EditGroupActivity extends AppCompatActivity implements View.OnClickListener {
     private Spinner spinner;
     private Group group;
-    private Button button;
+    private Button saveButton;
+    private Button inviteFriendsButton;
     private ListView friendList;
     private DefaultFriendListAdapter friendListAdapter;
 
@@ -36,10 +38,10 @@ public class EditGroupActivity extends AppCompatActivity implements View.OnClick
 
         helper = new DatabaseHelper(getApplicationContext());
 
-        group = helper.getGroup(getIntent().getIntExtra(SendMessageActivity.EXTRA_ID, 0));
+        group = helper.getGroup(getIntent().getStringExtra(SendMessageActivity.EXTRA_ID));
 
         TextView textView = (TextView) findViewById(R.id.editGroup_nickTextView);
-        textView.setText(group.getGroupName());
+        textView.setText(group.getNameId());
 
         spinner = (Spinner) findViewById(R.id.editGroup_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -54,18 +56,30 @@ public class EditGroupActivity extends AppCompatActivity implements View.OnClick
         friendListAdapter.setArrayList(group.getFriends());
         friendList.setAdapter(friendListAdapter);
 
-        button = (Button) findViewById(R.id.editGroup_saveButton);
-        button.setOnClickListener(this);
+        saveButton = (Button) findViewById(R.id.editGroup_saveButton);
+        saveButton.setOnClickListener(this);
+
+        inviteFriendsButton = (Button) findViewById(R.id.editGroup_inviteFriends);
+        inviteFriendsButton.setOnClickListener(this);
 
         registerForContextMenu(friendList);
     }
 
     @Override
     public void onClick(View v) {
-        group.setGroupLevel(spinner.getSelectedItemPosition() + 1);
-        helper.updateGroup(group);
+        switch (v.getId()) {
+            case R.id.editGroup_saveButton:
+                group.setGroupLevel(spinner.getSelectedItemPosition() + 1);
+                helper.updateGroup(group);
+                onBackPressed();
+                break;
+            case R.id.editGroup_inviteFriends:
+                Intent intent = new Intent(getApplicationContext(), InviteFriendsActivity.class);
+                intent.putExtra(SendMessageActivity.EXTRA_ID, group.getNameId());
+                startActivity(intent);
+                break;
+        }
 
-        onBackPressed();
     }
 
     @Override
@@ -94,7 +108,7 @@ public class EditGroupActivity extends AppCompatActivity implements View.OnClick
 
         helper.deleteGroupFriend(group, friend);
 
-        group = helper.getGroup(group.getId());
+        group = helper.getGroup(group.getNameId());
         friendListAdapter.setArrayList(group.getFriends());
 
         Toast.makeText(getApplicationContext(), "Member \"" + friend.getNick() + "\" deleted successfully", Toast.LENGTH_SHORT).show();

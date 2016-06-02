@@ -9,10 +9,14 @@ import android.util.Log;
 
 import com.google.android.gms.iid.InstanceID;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import pl.edu.agh.io.alarm.gcm.Constants;
 
@@ -52,9 +56,23 @@ public class InstanceRegistrationIntent extends IntentService {
 
     private void sendRegistrationToServer(String token) throws IOException {
         Log.i(TAG, "Registering token");
-        URL serverUrl = new URL("http://www.jdabrowa.pl:8090/alarm/tokens/" + token);
+        URL serverUrl = new URL("http://www.jdabrowa.pl:8090/alarm/tokens/add");
+
+        Map<String, String> body = new HashMap<>();
+        body.put("TOKEN", token);
+        body.put("NICKNAME", "nickname");
+        JSONObject bodyObject = new JSONObject(body);
+        String requestBody = bodyObject.toString();
+
+        Log.i(TAG, "Request Body: " + requestBody);
+
         HttpURLConnection connection = (HttpURLConnection) serverUrl.openConnection();
         connection.setRequestMethod("PUT");
+        connection.setRequestProperty("Content-Type", "application/json");
+        Log.i(TAG, "After PUT");
+        connection.getOutputStream().write(requestBody.getBytes());
+        connection.getOutputStream().flush();
+        connection.getOutputStream().close();
         int responseCode = connection.getResponseCode();
         connection.getInputStream();
         Log.i(TAG, "Response code: " + responseCode);

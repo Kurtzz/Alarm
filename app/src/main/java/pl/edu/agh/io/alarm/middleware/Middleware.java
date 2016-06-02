@@ -61,6 +61,9 @@ public class    Middleware extends Service {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+    public void makeInvite(String nickname, String groupName){
+        
+    }
 
     public void makeNotification(String nickname, String text, int level){
         notificationService.makeNotification(nickname,text,level);

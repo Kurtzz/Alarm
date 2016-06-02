@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,12 +42,12 @@ public class UserRegistryController {
         String nickname = body.get(RequestKeys.NICKNAME);
 
         LOGGER.info("Received token: {}", token);
-        boolean isNew = userRepository.containsToken(token);
+        boolean isNew = !userRepository.containsToken(token);
 
         if(isNew) {
             User user = createNewUSer(token, nickname);
             userRepository.add(user.getUID(), user);
-            LOGGER.info("User with uid {} has been added to repository", user.getUID());
+            LOGGER.info("User with uid {} and nick {} has been added to repository", user.getUID(), user.getNick());
         } else {
             LOGGER.info("Repository already contains token {}", token);
         }

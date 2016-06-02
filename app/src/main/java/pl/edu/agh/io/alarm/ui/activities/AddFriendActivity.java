@@ -23,6 +23,7 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_add_friend);
 
         databaseHelper = new DatabaseHelper(getApplicationContext());
+        //za kazdym razem nowy database helper
 
         Button addFriendButton = (Button) findViewById(R.id.addFriend_addFriendButton);
         addFriendButton.setOnClickListener(this);

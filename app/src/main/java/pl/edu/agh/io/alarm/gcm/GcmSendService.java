@@ -50,11 +50,12 @@ public class GcmSendService extends Service {
                 RestCommunication rest = new RestCommunication(sendMessageUrl);
 
                 Map<String, String> requestParams = new HashMap<>();
-                requestParams.put("NICKNAME", nickname);
-                requestParams.put("")
-
-                Log.i(TAG, "Response code: " + responseCode);
-                Log.i(TAG, "Message sent");
+//                requestParams.put("NICKNAME", nickname);
+//                requestParams.put("")
+//
+//                Log.i(TAG, "Response code: " + responseCode);
+//                Log.i(TAG, "Message sent");
+                rest.execute(requestParams, "PUT");
             } catch (IOException e) {
                 Log.w(TAG, "Cannot execute REST call", e);
             }

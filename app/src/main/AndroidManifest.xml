@@ -18,12 +18,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.activities.StartActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".ui.activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -98,7 +106,8 @@
             android:enabled="true"
             android:exported="false"></service>
 
-        <activity android:name=".notifications.MyClass"></activity>
+        <activity android:name=".notifications.ShowNotificationActivity"></activity>
+        <activity android:name=".notifications.ShowInviteActivity"></activity>
 
         <service android:name=".notifications.Notifications"></service>
         <service android:name=".sqlite.service.DatabaseService"></service>

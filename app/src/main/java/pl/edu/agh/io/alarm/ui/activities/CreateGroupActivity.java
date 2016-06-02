@@ -15,6 +15,7 @@ import pl.edu.agh.io.alarm.R;
 import pl.edu.agh.io.alarm.sqlite.helper.DatabaseHelper;
 import pl.edu.agh.io.alarm.sqlite.model.Friend;
 import pl.edu.agh.io.alarm.sqlite.model.Group;
+import pl.edu.agh.io.alarm.ui.Constants;
 
 public class CreateGroupActivity extends AppCompatActivity implements View.OnClickListener {
     private Button createGroupButton;
@@ -72,7 +73,7 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
                 //TODO: Send invitation to checkedFriends
 
                 Intent intent = new Intent(getApplicationContext(), InviteFriendsActivity.class);
-                intent.putExtra(SendMessageActivity.EXTRA_ID, group.getNameId());
+                intent.putExtra(Constants.EXTRA_ID, group.getNameId());
                 startActivity(intent);
 
                 onBackPressed();

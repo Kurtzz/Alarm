@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
@@ -28,6 +29,7 @@ public class    Middleware extends Service {
     private boolean gcmIsBound;
     private Notifications notificationService;
     private GcmSendService messagingService;
+    private String nickname;
 
     public class LocalBinder extends Binder {
         public Middleware getService() {
@@ -36,7 +38,6 @@ public class    Middleware extends Service {
     }
     @Override
     public IBinder onBind(Intent intent) {
-        System.out.println("ONBIND !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         return mBinder;
     }
 
@@ -53,13 +54,32 @@ public class    Middleware extends Service {
     }
 
 
-    public void makeNotification(String nickname, String text){
-        notificationService.makeNotification(nickname,text);
+    public String getNickname() {
+        return nickname;
     }
 
-    public void sendMessageToAll(String message) {
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void makeNotification(String title,String text){
+        notificationService.makeNotification(title,text);
+    }
+    public void makeInvite(String nickname, String groupName){
+        notificationService.makeInvite(nickname,groupName);
+    }
+
+    public void makeAlarm(String nickname, String text, int level){
+        notificationService.makeAlarm(nickname,text,level);
+    }
+
+    public void makeAlarm(String nickname, String text){
+        notificationService.makeAlarm(nickname,text);
+    }
+
+    public void sendMessageToGroup(String message, String group) {
         try {
-            messagingService.sendToAll(message);
+            messagingService.sendToGroup(message, group);
         } catch (Exception e) {
             Log.i(TAG, "Sending error", e);
         }
@@ -198,6 +218,14 @@ public class    Middleware extends Service {
             unbindService(gcmConnection);
             gcmIsBound = false;
         }
+    }
+
+    private static MediaPlayer mediaPlayer = null;
+    public static MediaPlayer getMediaPlayer(){
+        return mediaPlayer;
+    }
+    public static void setMediaPlayer(MediaPlayer p){
+        mediaPlayer  = p;
     }
 
 

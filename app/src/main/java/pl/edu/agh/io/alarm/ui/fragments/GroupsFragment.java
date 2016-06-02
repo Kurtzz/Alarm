@@ -19,6 +19,8 @@ import java.util.List;
 import pl.edu.agh.io.alarm.R;
 import pl.edu.agh.io.alarm.sqlite.helper.DatabaseHelper;
 import pl.edu.agh.io.alarm.sqlite.model.Group;
+import pl.edu.agh.io.alarm.ui.Constants;
+import pl.edu.agh.io.alarm.ui.Constants.IdType;
 import pl.edu.agh.io.alarm.ui.activities.CreateGroupActivity;
 import pl.edu.agh.io.alarm.ui.activities.EditGroupActivity;
 import pl.edu.agh.io.alarm.ui.activities.SendMessageActivity;
@@ -122,14 +124,14 @@ public class GroupsFragment extends Fragment {
 
     private void sendAlarm(long packagePosition) {
         Intent intent = new Intent(getContext(), SendMessageActivity.class);
-        intent.putExtra(SendMessageActivity.EXTRA_ID, groupListAdapter.getGroup(groupList.getFlatListPosition(packagePosition)).getNameId());
-        intent.putExtra(SendMessageActivity.EXTRA_ID_TYPE, SendMessageActivity.TYPE_GROUP);
+        intent.putExtra(Constants.EXTRA_ID, groupListAdapter.getGroup(groupList.getFlatListPosition(packagePosition)).getNameId());
+        intent.putExtra(Constants.EXTRA_ID_TYPE, IdType.GROUP);
         startActivity(intent);
     }
 
     private void editGroup(long packagePosition) {
         Intent intent = new Intent(getContext(), EditGroupActivity.class);
-        intent.putExtra(SendMessageActivity.EXTRA_ID, groupListAdapter.getGroup(groupList.getFlatListPosition(packagePosition)).getNameId());
+        intent.putExtra(Constants.EXTRA_ID, groupListAdapter.getGroup(groupList.getFlatListPosition(packagePosition)).getNameId());
         startActivity(intent);
     }
 

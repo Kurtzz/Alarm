@@ -11,6 +11,7 @@ import java.util.List;
 
 import pl.edu.agh.io.alarm.sqlite.model.Friend;
 import pl.edu.agh.io.alarm.sqlite.model.Group;
+import pl.edu.agh.io.alarm.sqlite.model.User;
 
 /**
  * Created by P on 18.05.2016.
@@ -84,6 +85,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     + "FOREIGN KEY (" + KEY_GROUP_NAME_ID + ") REFERENCES " + TABLE_GROUP + "(" + KEY_GROUP_NAME_ID + "), "
                     + "PRIMARY KEY (" + KEY_FRIEND_ID + ", " + KEY_GROUP_NAME_ID + "))";
 
+    // ----------------------------- TABLE USER ----------------------------- //
+    private static final String TABLE_USER = "user";
+
+    /*
+    CREATE_TABLE user (
+        user_nick TEXT PRIMARY KEY NOT NULL,
+        user_token TEXT NOT NULL
+    );
+    */
+
+    private static final String KEY_USER_NICK = "user_nick";
+    private static final String KEY_USER_TOKEN = "user_token";
+
+    private static final String CREATE_TABLE_USER =
+            "CREATE TABLE " + TABLE_USER + "(" +
+                    KEY_USER_NICK + " TEXT PRIMARY KEY NOT NULL,"
+            +       KEY_USER_TOKEN + " TEXT NOT NULL);";
+
     // ------------------------ END TABLES ------------------------ //
 
     public DatabaseHelper(Context context) {
@@ -95,6 +114,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_FRIEND);
         db.execSQL(CREATE_TABLE_GROUP);
         db.execSQL(CREATE_TABLE_FRIEND_GROUP);
+        db.execSQL(CREATE_TABLE_USER);
     }
 
     @Override
@@ -103,6 +123,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_FRIEND);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_GROUP);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_FRIEND_GROUP);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
 
         // create new tables
         onCreate(db);
@@ -380,5 +401,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_FRIEND_GROUP, KEY_GROUP_NAME_ID + " = ? and " + KEY_FRIEND_ID + " = ?",
                 new String[]{String.valueOf(group.getNameId()), String.valueOf(friend.getId())});
+    }
+
+    public long createUser(User user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_USER_NICK, user.getNickname());
+        values.put(KEY_USER_TOKEN, user.getToken());
+
+        return db.insert(TABLE_USER, null, values);
+    }
+
+    public User getUser() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery =
+                "SELECT * FROM " + TABLE_USER;
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c != null) {
+            c.moveToFirst();
+        }
+
+        User user = new User();
+        user.setNickname(c.getString(c.getColumnIndex(KEY_USER_NICK)));
+        user.setToken(c.getString(c.getColumnIndex(KEY_USER_TOKEN)));
+
+        return user;
     }
 }

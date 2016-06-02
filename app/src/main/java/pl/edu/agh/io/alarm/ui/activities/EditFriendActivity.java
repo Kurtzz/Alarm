@@ -12,6 +12,7 @@ import android.widget.TextView;
 import pl.edu.agh.io.alarm.R;
 import pl.edu.agh.io.alarm.sqlite.helper.DatabaseHelper;
 import pl.edu.agh.io.alarm.sqlite.model.Friend;
+import pl.edu.agh.io.alarm.ui.Constants;
 
 public class EditFriendActivity extends AppCompatActivity implements View.OnClickListener {
     private Spinner spinner;
@@ -28,7 +29,7 @@ public class EditFriendActivity extends AppCompatActivity implements View.OnClic
 
         helper = new DatabaseHelper(getApplicationContext());
 
-        friend = helper.getFriend(getIntent().getStringExtra(SendMessageActivity.EXTRA_ID));
+        friend = helper.getFriend(getIntent().getStringExtra(Constants.EXTRA_ID));
 
         TextView textView = (TextView) findViewById(R.id.editFriend_nickTextView);
         textView.setText(friend.getNick());

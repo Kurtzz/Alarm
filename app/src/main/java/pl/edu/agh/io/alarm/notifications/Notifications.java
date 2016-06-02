@@ -38,14 +38,14 @@ public class Notifications extends IntentService {
         super("Notifications Service");
     }
 
-    public void makeNotification(){
-        makeNotification("testNickname","testText");
+    public void makeAlarm(){
+        makeAlarm("testNickname","testText");
     }
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    public void makeNotification(String nickname, String text){
-        makeNotification(nickname,text,0);
+    public void makeAlarm(String nickname, String text){
+        makeAlarm(nickname,text,0);
     }
-    public void makeNotification(String nickname, String text, int level) {
+    public void makeAlarm(String nickname, String text, int level) {
 
         if(Middleware.getMediaPlayer() != null){
             Middleware.getMediaPlayer().stop();
@@ -133,6 +133,23 @@ public class Notifications extends IntentService {
         // Send the notification.
         mNM.notify(NOTIFICATION++, notification);
 
+
+    }
+
+    public void makeNotification(String title, String text) {
+
+        // Set the info for the views that show in the notification panel.
+        Notification notification = new Notification.Builder(this)
+                .setSmallIcon(android.R.drawable.ic_dialog_alert)  // the status icon
+                .setTicker(text)  // the status text
+                .setWhen(System.currentTimeMillis())  // the time stamp
+                .setContentTitle(title)  // the label of the entry
+                .setContentText(text)  // the contents of the entry
+                .setAutoCancel(true)
+                .build();
+
+        // Send the notification.
+        mNM.notify(NOTIFICATION++, notification);
 
     }
 

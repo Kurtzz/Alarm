@@ -32,7 +32,7 @@ public class AlarmGcmListenerService extends GcmListenerService{
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Message: " + message);
         while(middlewareService == null) {}
-        middlewareService.makeNotification("Message!", message);
+        middlewareService.makeAlarm("Message!", message);
     }
 
     private ServiceConnection mConnection = new ServiceConnection() {

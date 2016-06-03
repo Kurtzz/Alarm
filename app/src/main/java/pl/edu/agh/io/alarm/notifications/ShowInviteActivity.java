@@ -52,8 +52,6 @@ public class ShowInviteActivity extends Activity {
             }
         });
 
-
-
         final Intent intent = getIntent();
         final Bundle bundle  = intent.getExtras();
         if(bundle != null) {

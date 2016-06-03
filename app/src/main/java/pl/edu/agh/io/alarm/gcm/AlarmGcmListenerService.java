@@ -33,9 +33,6 @@ public class AlarmGcmListenerService extends GcmListenerService{
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Message: " + message);
         while(middlewareService == null) {}
-        middlewareService.makeAlarm("Message!", message);
-
-
 
         String messageType = data.getString("messageType");
 
@@ -49,6 +46,7 @@ public class AlarmGcmListenerService extends GcmListenerService{
                 intent.putExtra(Constants.INVITATION_RESPONSE, invitationResponse);
                 intent.putExtra(Constants.NICKNAME, nick);
                 LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+                Log.i(TAG, "Invitation response: " + invitationResponse);
                 break;
             case "INVITATION":
                 String groupName = data.getString("GROUP_ID");

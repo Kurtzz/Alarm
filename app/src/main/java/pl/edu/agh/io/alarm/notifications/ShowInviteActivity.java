@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import pl.edu.agh.io.alarm.R;
-import pl.edu.agh.io.alarm.gcm.Constants;
 import pl.edu.agh.io.alarm.middleware.Middleware;
 import pl.edu.agh.io.alarm.sqlite.model.Friend;
 

@@ -60,7 +60,6 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
         int level = Integer.valueOf(spinner.getSelectedItem().toString().substring(6));
 
         // TODO: Send message
-        //middlewareService.send...
         switch (idType) {
             case FRIEND:
                 middlewareService.sendMessageToUser(msgContent, receiverId, level);

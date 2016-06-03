@@ -21,7 +21,7 @@ public class ShowInviteActivity extends Activity {
 
     private String groupName;
     private String nickname;
-    private String senderUid;
+    private int invitationId;
     private TextView nicknameTextView;
     private TextView textTextView;
     private Button btnYes;
@@ -40,24 +40,14 @@ public class ShowInviteActivity extends Activity {
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.putExtra(NICKNAME,nickname);
-                intent.putExtra(GROUP_NAME,groupName);
-                intent.putExtra(Constants.SENDER_UID, senderUid);
-                intent.putExtra(ANSWER,true);
-                sendBroadcast(intent);
+                middleware.acceptInvitation(invitationId);
                 finish();
             }
         });
         btnNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.putExtra(NICKNAME,nickname);
-                intent.putExtra(GROUP_NAME,groupName);
-                intent.putExtra(ANSWER,false);
-                intent.putExtra(Constants.SENDER_UID, senderUid);
-                sendBroadcast(intent);
+                middleware.declineInvitation(invitationId);
                 finish();
             }
         });
@@ -67,7 +57,7 @@ public class ShowInviteActivity extends Activity {
         if(bundle != null) {
             groupName = bundle.getString(GROUP_NAME);
             nickname = bundle.getString(NICKNAME);
-            int invitationId = bundle.getInt("invitationId");
+            invitationId = bundle.getInt("invitationId");
             nicknameTextView = (TextView) findViewById(R.id.NOTIFICATION_nickname);
             nicknameTextView.setText("Uzytkownik "+nickname+" zaprosil Cie do grupy: "); // TODO: String from resources
 
@@ -87,5 +77,5 @@ public class ShowInviteActivity extends Activity {
         public void onServiceDisconnected(ComponentName componentName) {
             ShowInviteActivity.this.middleware = null;
         }
-    }
+    };
 }

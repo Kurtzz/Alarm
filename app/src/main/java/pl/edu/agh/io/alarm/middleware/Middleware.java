@@ -160,7 +160,13 @@ public class    Middleware extends Service {
         messagingService.addUserAsFriend(nick);
     }
 
+    public void acceptInvitation(int invitationId) {
+        messagingService.acceptInvitation(invitationId);
+    }
 
+    public void declineInvitation(int invitationId) {
+        messagingService.declineInvitation(invitationId);
+    }
 
 
 

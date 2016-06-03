@@ -49,7 +49,7 @@ public class FriendController {
         if(senderToken.equals(sender.getToken())) {
             // TODO: IS user allowed to invite to the group?
             int invitationId = storeInvitation(senderUid, inviteeUid);
-            GcmMessage message = composeInvitationMessage(inviteeUid, sender, invitationID);
+            GcmMessage message = composeInvitationMessage(inviteeUid, sender, invitationId);
             gcm.send(message);
         }
         return "Invitation sent";

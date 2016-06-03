@@ -39,7 +39,7 @@ public class MessageController {
         try {
 
             GcmMessage gcmMessage = composeMessage(requestBody);
-            gcmMessage.setTo(requestBody.get(RequestKeys.MESSAGE_RECEIVER));
+            gcmMessage.setTo(userRepository.get(requestBody.get(RequestKeys.MESSAGE_RECEIVER)).getToken());
             gcmService.send(gcmMessage);
             LOGGER.info("Sent message to {}", gcmMessage.getTo());
             return HttpStatus.OK;

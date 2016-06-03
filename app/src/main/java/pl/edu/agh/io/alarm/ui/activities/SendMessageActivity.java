@@ -8,6 +8,7 @@ import android.os.IBinder;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -62,9 +63,11 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
         // TODO: Send message
         switch (idType) {
             case FRIEND:
+                Log.i("SendMessage", "Sending to friend");
                 middlewareService.sendMessageToUser(msgContent, receiverId, level);
                 break;
             case GROUP:
+                Log.i("SendMessage", "Sending to user");
                 middlewareService.sendMessageToGroup(msgContent, receiverId, level);
                 break;
             default:

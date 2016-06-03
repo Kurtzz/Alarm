@@ -89,7 +89,7 @@ public class Middleware extends Service {
 
     public void sendMessageToUser(String message, String userId, int level) {
         try {
-            messagingService.sendToGroup(userId, message, level);
+            messagingService.sendToUser(userId, message, level);
         } catch (Exception e) {
             Log.i(TAG, "Sending error", e);
         }

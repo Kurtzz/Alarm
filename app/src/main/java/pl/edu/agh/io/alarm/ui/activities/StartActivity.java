@@ -45,22 +45,12 @@ public class StartActivity extends Activity implements View.OnClickListener {
     public void onCreate(Bundle b) {
         super.onCreate(b);
 
-        if (!middlewareIsBound) {
-            doBindServices();
-        }
+        doBindServices();
 
         setContentView(R.layout.activity_login);
         Button send = (Button) findViewById(R.id.LOGINLoginbtn);
         send.setOnClickListener(this);
         System.out.println("LoginActivity : Create");
-
-        while (middlewareService == null) {
-        }
-        if (middlewareService.getNickname() != null) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
 }
 
     @Override
@@ -78,6 +68,7 @@ public class StartActivity extends Activity implements View.OnClickListener {
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
                     registerIdentityWithGoogle();
+                    finish();
                 }
                 break;
         }
@@ -92,6 +83,11 @@ public class StartActivity extends Activity implements View.OnClickListener {
     private ServiceConnection middlewareConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             middlewareService = ((Middleware.LocalBinder) service).getService();
+            if (middlewareService.getNickname() != null) {
+                Intent intent = new Intent(StartActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
 
         public void onServiceDisconnected(ComponentName className) {

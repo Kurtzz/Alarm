@@ -49,6 +49,7 @@ public class ShowInviteActivity extends Activity {
                 friend.setNick(nickname);
                 friend.setId(senderUid);
                 middleware.acceptInvitation(invitationId);
+                middleware.createFriend(friend);
                 finish();
             }
         });

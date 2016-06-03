@@ -55,15 +55,8 @@ public class FriendController {
         return "Invitation sent";
     }
 
-    private int storeInvitation(String senderUid, String inviteeUid) {
-        Invitation invitation = Invitation.newInvitation();
-        invitation.setInviteeUid(inviteeUid);
-        invitation.setSenderUid(senderUid);
-        invitations.put(invitation.getId(), invitation);
-        return invitation.getId();
-    }
 
-    @RequestMapping(value = "/invitation/accept/", method = RequestMethod.POST)
+    @RequestMapping(value = "/invitation/accept", method = RequestMethod.POST)
     public void acceptInvitation(@RequestBody Map<String, String> body) throws JsonProcessingException, UnirestException {
 
         int invitationId = Integer.valueOf(body.get("INVITATION_ID"));
@@ -76,7 +69,7 @@ public class FriendController {
         LOGGER.info("User {} accepted invitation from {}", invitation.getInviteeUid(), invitation.getSenderUid());
     }
 
-    @RequestMapping(value = "/invitation/decline/", method = RequestMethod.POST)
+    @RequestMapping(value = "/invitation/decline", method = RequestMethod.POST)
     public void declineInvitation(@RequestBody Map<String, String> body) throws JsonProcessingException, UnirestException {
 
         int invitationId = Integer.valueOf(body.get("INVITATION_ID"));
@@ -87,6 +80,14 @@ public class FriendController {
         GcmMessage message = createInvitationResponseMessage(senderToken, groupId, inviteeNick, InvitationResponse.DECLINED, invitation.getInviteeUid());
         gcm.send(message);
         LOGGER.info("User {} declined invitation from {}", invitation.getInviteeUid(), invitation.getSenderUid());
+    }
+
+    private int storeInvitation(String senderUid, String inviteeUid) {
+        Invitation invitation = Invitation.newInvitation();
+        invitation.setInviteeUid(inviteeUid);
+        invitation.setSenderUid(senderUid);
+        invitations.put(invitation.getId(), invitation);
+        return invitation.getId();
     }
 
     private GcmMessage createInvitationResponseMessage(String senderToken, String groupId, String inviteeNick, InvitationResponse response, String inviteeUuid) {

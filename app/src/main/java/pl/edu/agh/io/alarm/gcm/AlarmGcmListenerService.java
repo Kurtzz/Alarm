@@ -51,8 +51,8 @@ public class AlarmGcmListenerService extends GcmListenerService{
             case "INVITATION":
                 String groupName = data.getString("GROUP_ID");
                 if(groupName == null) groupName = "friend";
-                int invitationId = data.getInt("invitationId");
-                middlewareService.makeInvite(nick, groupName, invitationId);
+                int invitationId = Integer.valueOf(data.getString("invitationId"));
+                middlewareService.makeInvite(nick, groupName, invitationId, senderUuid);
                 break;
 
             case "MESSAGE":

@@ -30,7 +30,7 @@ public class Middleware extends Service {
     private boolean gcmIsBound;
     private Notifications notificationService;
     private GcmSendService messagingService;
-    private String nickname;
+    private String nickname = null;
 
 
     public class LocalBinder extends Binder {
@@ -67,8 +67,8 @@ public class Middleware extends Service {
     public void makeNotification(String title,String text){
         notificationService.makeNotification(title,text);
     }
-    public void makeInvite(String nickname, String groupName, int invitationId){
-        notificationService.makeInvite(nickname,groupName, invitationId);
+    public void makeInvite(String nickname, String groupName, int invitationId, String senderUid){
+        notificationService.makeInvite(nickname,groupName, invitationId, senderUid);
     }
 
     public void makeAlarm(String nickname, String text, int level){

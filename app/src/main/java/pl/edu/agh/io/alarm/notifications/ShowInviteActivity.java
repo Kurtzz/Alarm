@@ -15,6 +15,7 @@ import android.widget.TextView;
 import pl.edu.agh.io.alarm.R;
 import pl.edu.agh.io.alarm.gcm.Constants;
 import pl.edu.agh.io.alarm.middleware.Middleware;
+import pl.edu.agh.io.alarm.sqlite.model.Friend;
 
 public class ShowInviteActivity extends Activity {
     public static final String GROUP_NAME = "groupName";
@@ -24,6 +25,7 @@ public class ShowInviteActivity extends Activity {
     private String groupName;
     private String nickname;
     private int invitationId;
+    private String senderUid;
     private TextView nicknameTextView;
     private TextView textTextView;
     private Button btnYes;
@@ -44,6 +46,9 @@ public class ShowInviteActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Log.i("ShowInvite", "Accepting invitation with id " + invitationId);
+                Friend friend = new Friend();
+                friend.setNick(nickname);
+                friend.setId(senderUid);
                 middleware.acceptInvitation(invitationId);
                 finish();
             }
@@ -65,7 +70,7 @@ public class ShowInviteActivity extends Activity {
             invitationId = bundle.getInt("invitationId");
             nicknameTextView = (TextView) findViewById(R.id.NOTIFICATION_nickname);
             nicknameTextView.setText("Uzytkownik "+nickname+" zaprosil Cie do grupy: "); // TODO: String from resources
-
+            senderUid = bundle.getString("senderUid");
             textTextView = (TextView) findViewById(R.id.NOTIFICATION_text);
             textTextView.setText(groupName);
 

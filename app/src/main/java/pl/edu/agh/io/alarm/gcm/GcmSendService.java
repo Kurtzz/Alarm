@@ -138,7 +138,7 @@ public class GcmSendService extends Service {
         protected Void doInBackground(String... strings) {
             String result = strings[0];
             Log.i(TAG, "Sending invitation response: " + result);
-            RestCommunication rest = new RestCommunication("http://jdabrowa.pl:8090/alaram/invitation/" + result);
+            RestCommunication rest = new RestCommunication("http://jdabrowa.pl:8090/alarm/friend/invitation/" + result);
             Map<String, String> messageBody = new HashMap<>();
             messageBody.put("INVITATION_ID", strings[1]);
             try {

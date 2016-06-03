@@ -45,18 +45,23 @@ public class StartActivity extends Activity implements View.OnClickListener {
     public void onCreate(Bundle b) {
         super.onCreate(b);
 
-        if(!alreadyRegistered) {
-            setContentView(R.layout.activity_login);
-            Button send = (Button) findViewById(R.id.LOGINLoginbtn);
-            send.setOnClickListener(this);
-            System.out.println("LoginActivity : Create");
+        if (!middlewareIsBound) {
             doBindServices();
-        } else {
+        }
+
+        setContentView(R.layout.activity_login);
+        Button send = (Button) findViewById(R.id.LOGINLoginbtn);
+        send.setOnClickListener(this);
+        System.out.println("LoginActivity : Create");
+
+        while (middlewareService == null) {
+        }
+        if (middlewareService.getNickname() != null) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
         }
-    }
+}
 
     @Override
     protected void onStart() {
@@ -65,10 +70,10 @@ public class StartActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.LOGINLoginbtn:
                 EditText loginText = (EditText) findViewById(R.id.LOGINloginText);
-                if(!loginText.getText().toString().equals("")){
+                if (!loginText.getText().toString().equals("")) {
                     middlewareService.setNickname(loginText.getText().toString());
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
@@ -86,15 +91,13 @@ public class StartActivity extends Activity implements View.OnClickListener {
 
     private ServiceConnection middlewareConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
-            middlewareService = ((Middleware.LocalBinder)service).getService();
+            middlewareService = ((Middleware.LocalBinder) service).getService();
         }
 
         public void onServiceDisconnected(ComponentName className) {
             middlewareService = null;
         }
     };
-
-
 
 
     void doBindServices() {
@@ -130,7 +133,7 @@ public class StartActivity extends Activity implements View.OnClickListener {
 
                 Log.i(TAG, "Token: " + user.getToken() + ", uuid: " + user.getUid());
 
-                if(user.getUid() != null ){
+                if (user.getUid() != null) {
                     middlewareService.createUser(user);
                     alreadyRegistered = true;
                 }
@@ -149,8 +152,8 @@ public class StartActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    private void registerReceiver(){
-        if(!isReceiverRegistered) {
+    private void registerReceiver() {
+        if (!isReceiverRegistered) {
             LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                     new IntentFilter(Constants.REGISTRATION_COMPLETE));
             isReceiverRegistered = true;

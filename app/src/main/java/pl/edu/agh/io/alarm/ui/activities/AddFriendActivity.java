@@ -11,6 +11,7 @@ import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -64,9 +65,9 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
         friend.setId(editText.getText().toString());
         friend.setLevel(MAX_LEVEL);
 
-        middleware.addUserAsFriend(friendUuid);
         createToastStatusReceiver();
         createInvitationResultCallbackReceiver(friend, friendUuid);
+        middleware.addUserAsFriend(friendUuid);
 
         editText.setText("");
         onBackPressed();
@@ -80,10 +81,11 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
                 String nick = intent.getStringExtra(Constants.NICKNAME);
                 if(result.equals(Constants.INVITATION_ACCEPTED)) {
                     friend.setNick(nick);
+                    Log.i("AddFriendAct", "Confirmed - Adding friend to database");
                     databaseHelper.createFriend(friend);
                     middleware.makeNotification("Invitation accepted", nick + " accepted your friend invitation");
                 } else if (result.equals(Constants.INVITATION_DECLINED)) {
-                    middleware.makeNotification("Invitation accepted", nick + " rejected your friend invitation");
+                    middleware.makeNotification("Invitation declined", nick + " rejected your friend invitation");
                 }
             }
         }, new IntentFilter(Constants.INVITATION_PREFIX + friendUuid));

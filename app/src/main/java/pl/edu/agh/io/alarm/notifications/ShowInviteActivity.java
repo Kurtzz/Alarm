@@ -2,10 +2,12 @@ package pl.edu.agh.io.alarm.notifications;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -32,6 +34,7 @@ public class ShowInviteActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        bindService(new Intent(this, Middleware.class), middlewareConnection, Context.BIND_AUTO_CREATE);
 
         setContentView(R.layout.activity_show_invite);
 
@@ -40,6 +43,7 @@ public class ShowInviteActivity extends Activity {
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i("ShowInvite", "Accepting invitation with id " + invitationId);
                 middleware.acceptInvitation(invitationId);
                 finish();
             }
@@ -47,6 +51,7 @@ public class ShowInviteActivity extends Activity {
         btnNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i("ShowInvite", "Rejecting invitation with id " + invitationId);
                 middleware.declineInvitation(invitationId);
                 finish();
             }

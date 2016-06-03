@@ -142,7 +142,7 @@ public class GcmSendService extends Service {
             Map<String, String> messageBody = new HashMap<>();
             messageBody.put("INVITATION_ID", strings[1]);
             try {
-                rest.execute(messageBody, "PUT");
+                rest.execute(messageBody, "POST");
             } catch (IOException e) {
                 Log.w("Communication error", e);
             }

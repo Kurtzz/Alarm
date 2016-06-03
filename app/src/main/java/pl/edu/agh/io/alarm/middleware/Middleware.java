@@ -19,7 +19,7 @@ import pl.edu.agh.io.alarm.sqlite.model.Group;
 import pl.edu.agh.io.alarm.sqlite.model.User;
 import pl.edu.agh.io.alarm.sqlite.service.DatabaseService;
 
-public class    Middleware extends Service {
+public class Middleware extends Service {
 
     private static final String TAG = Middleware.class.getSimpleName();
 

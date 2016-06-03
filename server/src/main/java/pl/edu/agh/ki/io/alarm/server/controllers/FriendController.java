@@ -63,7 +63,7 @@ public class FriendController {
         return invitation.getId();
     }
 
-    @RequestMapping(value = "/invitation/accept/")
+    @RequestMapping(value = "/invitation/accept/", method = RequestMethod.POST)
     public void acceptInvitation(@RequestBody Map<String, String> body) throws JsonProcessingException, UnirestException {
 
         int invitationId = Integer.valueOf(body.get("INVITATION_ID"));
@@ -76,7 +76,7 @@ public class FriendController {
         LOGGER.info("User {} accepted invitation from {}", invitation.getInviteeUid(), invitation.getSenderUid());
     }
 
-    @RequestMapping(value = "/invitation/decline/")
+    @RequestMapping(value = "/invitation/decline/", method = RequestMethod.POST)
     public void declineInvitation(@RequestBody Map<String, String> body) throws JsonProcessingException, UnirestException {
 
         int invitationId = Integer.valueOf(body.get("INVITATION_ID"));

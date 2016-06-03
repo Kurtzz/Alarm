@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
@@ -33,6 +34,32 @@ public class AlarmGcmListenerService extends GcmListenerService{
         Log.d(TAG, "Message: " + message);
         while(middlewareService == null) {}
         middlewareService.makeAlarm("Message!", message);
+
+
+
+        String messageType = data.getString("messageType");
+
+        String invitationResponse = data.getString("invitationResponse");
+        String nick = data.getString("senderNick");
+        String senderUuid = data.getString("senderUID");
+
+        switch (messageType) {
+            case "INVITATION_RESPONSE":
+                Intent intent = new Intent(Constants.INVITATION_PREFIX + senderUuid);
+                intent.putExtra(Constants.INVITATION_RESPONSE, invitationResponse);
+                intent.putExtra(Constants.NICKNAME, nick);
+                LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+                break;
+            case "INVITATION":
+                String groupName = data.getString("GROUP_ID");
+                if(groupName == null) groupName = "friend";
+                middlewareService.makeInvite(nick, groupName);
+                break;
+
+            case "MESSAGE":
+                middlewareService.makeAlarm(nick, data.getString("message"));
+        }
+
     }
 
     private ServiceConnection mConnection = new ServiceConnection() {

@@ -60,7 +60,7 @@ public class FriendController {
 
         String inviteeNick = userRepository.get(inviteeUid).getNick();
 
-        GcmMessage message = createInvitationResponseMessage(senderToken, groupId, inviteeNick, InvitationResponse.ACCEPTED);
+        GcmMessage message = createInvitationResponseMessage(senderToken, groupId, inviteeNick, InvitationResponse.ACCEPTED, inviteeUid);
 
         gcm.send(message);
     }
@@ -72,11 +72,11 @@ public class FriendController {
         String inviteeUid = body.get("INVITEE_UID");
         String groupId = body.get("GROUP_ID");
         String inviteeNick = userRepository.get(inviteeUid).getNick();
-        GcmMessage message = createInvitationResponseMessage(senderToken, groupId, inviteeNick, InvitationResponse.DECLINED);
+        GcmMessage message = createInvitationResponseMessage(senderToken, groupId, inviteeNick, InvitationResponse.DECLINED, inviteeUid);
         gcm.send(message);
     }
 
-    private GcmMessage createInvitationResponseMessage(String senderToken, String groupId, String inviteeNick, InvitationResponse response) {
+    private GcmMessage createInvitationResponseMessage(String senderToken, String groupId, String inviteeNick, InvitationResponse response, String inviteeUuid) {
         GcmMessage message = new GcmMessage();
         message.setTo(senderToken);
         GcmMessageData data = new GcmMessageData();
@@ -84,6 +84,7 @@ public class FriendController {
         data.setInvitationResponse(response);
         data.setSenderNick(inviteeNick);
         data.setGroupName(groupId);
+        data.setSenderUID(inviteeUuid);
         message.setData(data);
         return message;
     }

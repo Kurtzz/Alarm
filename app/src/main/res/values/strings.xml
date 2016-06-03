@@ -64,7 +64,7 @@
     <string name="pref_title_vibrate">Vibrate</string>
 
     <string name="addFriend_addFriendButton">Add Friend</string>
-    <string name="addFriend_nickPlaceholder">Enter nickname</string>
+    <string name="addFriend_nickPlaceholder">Enter friend's UUID</string>
     <string name="createGroup_createGroupButton">Create Group</string>
     <string name="createGroup_namePlaceholder">Enter group name</string>
     <string name="sendMessage_sendButton">Send Alarm</string>

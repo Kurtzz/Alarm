@@ -16,4 +16,10 @@ public class Constants {
     public static final String INVITEE_UID = "INVITEE_UID";
 
     public static final String INVITATION_SENT = "INVITATION_SENT";
+    public static final String INVITATION_PREFIX = "INVITAION_PREFIX";
+    public static final String INVITATION_RESPONSE = "INVITATION_RESPONSE";
+
+    public static final String INVITATION_ACCEPTED = "ACCEPTED";
+    public static final String INVITATION_DECLINED = "DECLINED";
+
 }

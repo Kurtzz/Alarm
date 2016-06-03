@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.concurrent.ConcurrentLinkedDeque;
+
 import pl.edu.agh.io.alarm.R;
 import pl.edu.agh.io.alarm.gcm.Constants;
 import pl.edu.agh.io.alarm.middleware.Middleware;
@@ -49,16 +51,45 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        Friend friend = new Friend();
-        String nick = editText.getText().toString();
-        if (nick.isEmpty()) {
-            Toast.makeText(this, "Nick can't be blank!", Toast.LENGTH_SHORT).show();
+        final Friend friend = new Friend();
+        String friendUuid = editText.getText().toString();
+        if (friendUuid.isEmpty()) {
+            Toast.makeText(this, "Uuid can't be blank!", Toast.LENGTH_SHORT).show();
             return;
-        } else if (nick.contains(" ") || nick.contains("\t") || nick.contains("\n")) {
-            Toast.makeText(this, "Nick can't contain white spaces!", Toast.LENGTH_SHORT).show();
+        } else if (friendUuid.contains(" ") || friendUuid.contains("\t") || friendUuid.contains("\n")) {
+            Toast.makeText(this, "Uuid can't contain white spaces!", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        friend.setId(editText.getText().toString());
+        friend.setLevel(MAX_LEVEL);
+
+        middleware.addUserAsFriend(friendUuid);
+        createToastStatusReceiver();
+        createInvitationResultCallbackReceiver(friend, friendUuid);
+
+        editText.setText("");
+        onBackPressed();
+    }
+
+    private void createInvitationResultCallbackReceiver(final Friend friend, String friendUuid) {
+        LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String result = intent.getStringExtra(Constants.INVITATION_RESPONSE);
+                String nick = intent.getStringExtra(Constants.NICKNAME);
+                if(result.equals(Constants.INVITATION_ACCEPTED)) {
+                    friend.setNick(nick);
+                    databaseHelper.createFriend(friend);
+                    middleware.makeNotification("Invitation accepted", nick + " accepted your friend invitation");
+                } else if (result.equals(Constants.INVITATION_DECLINED)) {
+                    middleware.makeNotification("Invitation accepted", nick + " rejected your friend invitation");
+                }
+            }
+        }, new IntentFilter(Constants.INVITATION_PREFIX + friendUuid));
+    }
+
+    private void createToastStatusReceiver() {
         LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -66,16 +97,6 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
                 Toast.makeText(AddFriendActivity.this, status, Toast.LENGTH_SHORT).show();
             }
         }, new IntentFilter(Constants.INVITATION_SENT));
-
-        middleware.addUserAsFriend(nick);
-
-        // TODO: Should be added to databse after invitation has been accepted
-        friend.setId(editText.getText().toString()); //TODO: set ID from Server DB
-        friend.setNick(editText.getText().toString());
-        friend.setLevel(MAX_LEVEL);
-        editText.setText("");
-        databaseHelper.createFriend(friend);
-        onBackPressed();
     }
 
     private final ServiceConnection middlewareConnection = new ServiceConnection() {

@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import pl.edu.agh.io.alarm.R;
-import pl.edu.agh.io.alarm.gcm.Constants;
 import pl.edu.agh.io.alarm.middleware.Middleware;
 
 public class ShowInviteActivity extends Activity {
@@ -65,7 +64,6 @@ public class ShowInviteActivity extends Activity {
             invitationId = bundle.getInt("invitationId");
             nicknameTextView = (TextView) findViewById(R.id.NOTIFICATION_nickname);
             nicknameTextView.setText("Uzytkownik "+nickname+" zaprosil Cie do grupy: "); // TODO: String from resources
-
             textTextView = (TextView) findViewById(R.id.NOTIFICATION_text);
             textTextView.setText(groupName);
 

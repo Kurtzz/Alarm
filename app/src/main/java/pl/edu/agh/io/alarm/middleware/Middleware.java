@@ -67,8 +67,8 @@ public class    Middleware extends Service {
     public void makeNotification(String title,String text){
         notificationService.makeNotification(title,text);
     }
-    public void makeInvite(String nickname, String groupName){
-        notificationService.makeInvite(nickname,groupName);
+    public void makeInvite(String nickname, String groupName, int invitationId){
+        notificationService.makeInvite(nickname,groupName, invitationId);
     }
 
     public void makeAlarm(String nickname, String text, int level){

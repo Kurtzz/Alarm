@@ -10,6 +10,7 @@ import pl.edu.agh.ki.io.alarm.domain.User;
 import pl.edu.agh.ki.io.alarm.server.communication.*;
 import pl.edu.agh.ki.io.alarm.server.registry.UserRepository;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RequestMapping("/alarm/friend")
@@ -17,6 +18,8 @@ import java.util.Map;
 public class FriendController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FriendController.class);
+
+    private final Map<Integer, Invitation> invitations = new HashMap<>();
 
     @Autowired
     private UserRepository userRepository;
@@ -45,35 +48,45 @@ public class FriendController {
         User sender = userRepository.get(senderUid);
         if(senderToken.equals(sender.getToken())) {
             // TODO: IS user allowed to invite to the group?
-            GcmMessage message = composeInvitationMessage(inviteeUid, sender);
+            int invitationId = storeInvitation(senderUid, inviteeUid);
+            GcmMessage message = composeInvitationMessage(inviteeUid, sender, invitationID);
             gcm.send(message);
         }
         return "Invitation sent";
     }
 
+    private int storeInvitation(String senderUid, String inviteeUid) {
+        Invitation invitation = Invitation.newInvitation();
+        invitation.setInviteeUid(inviteeUid);
+        invitation.setSenderUid(senderUid);
+        invitations.put(invitation.getId(), invitation);
+        return invitation.getId();
+    }
+
     @RequestMapping(value = "/invitation/accept/")
     public void acceptInvitation(@RequestBody Map<String, String> body) throws JsonProcessingException, UnirestException {
 
-        String senderToken = body.get("SENDER_TOKEN");
-        String inviteeUid = body.get("INVITEE_UID");
-        String groupId = body.get("GROUP_ID");
-
-        String inviteeNick = userRepository.get(inviteeUid).getNick();
-
-        GcmMessage message = createInvitationResponseMessage(senderToken, groupId, inviteeNick, InvitationResponse.ACCEPTED, inviteeUid);
-
+        int invitationId = Integer.valueOf(body.get("INVITATION_ID"));
+        Invitation invitation = invitations.get(invitationId);
+        String senderToken = userRepository.get(invitation.getSenderUid()).getToken();
+        String groupId = "FRIEND";
+        String inviteeNick = userRepository.get(invitation.getInviteeUid()).getNick();
+        GcmMessage message = createInvitationResponseMessage(senderToken, groupId, inviteeNick, InvitationResponse.ACCEPTED, invitation.getInviteeUid());
         gcm.send(message);
+        LOGGER.info("User {} accepted invitation from {}", invitation.getInviteeUid(), invitation.getSenderUid());
     }
 
     @RequestMapping(value = "/invitation/decline/")
     public void declineInvitation(@RequestBody Map<String, String> body) throws JsonProcessingException, UnirestException {
 
-        String senderToken = body.get("SENDER_TOKEN");
-        String inviteeUid = body.get("INVITEE_UID");
-        String groupId = body.get("GROUP_ID");
-        String inviteeNick = userRepository.get(inviteeUid).getNick();
-        GcmMessage message = createInvitationResponseMessage(senderToken, groupId, inviteeNick, InvitationResponse.DECLINED, inviteeUid);
+        int invitationId = Integer.valueOf(body.get("INVITATION_ID"));
+        Invitation invitation = invitations.get(invitationId);
+        String senderToken = userRepository.get(invitation.getSenderUid()).getToken();
+        String groupId = "FRIEND";
+        String inviteeNick = userRepository.get(invitation.getInviteeUid()).getNick();
+        GcmMessage message = createInvitationResponseMessage(senderToken, groupId, inviteeNick, InvitationResponse.DECLINED, invitation.getInviteeUid());
         gcm.send(message);
+        LOGGER.info("User {} declined invitation from {}", invitation.getInviteeUid(), invitation.getSenderUid());
     }
 
     private GcmMessage createInvitationResponseMessage(String senderToken, String groupId, String inviteeNick, InvitationResponse response, String inviteeUuid) {
@@ -89,14 +102,16 @@ public class FriendController {
         return message;
     }
 
-    private GcmMessage composeInvitationMessage(String inviteeUid, User sender) {
+    private GcmMessage composeInvitationMessage(String inviteeUid, User sender, int invitationId) {
         String inviteeToken = userRepository.get(inviteeUid).getToken();
         GcmMessage message = new GcmMessage();
         message.setTo(inviteeToken);
 
         GcmMessageData data = new GcmMessageData();
+        data.setInvitationId(invitationId);
         data.setMessageType(MessageType.INVITATION);
         data.setSenderNick(sender.getNick());
+        data.setSenderUID(sender.getUID());
         message.setData(data);
 
         return message;

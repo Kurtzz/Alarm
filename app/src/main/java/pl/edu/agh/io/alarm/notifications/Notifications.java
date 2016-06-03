@@ -109,11 +109,12 @@ public class Notifications extends IntentService {
 
     }
 
-    public void makeInvite(String nickname, String groupName) {
+    public void makeInvite(String nickname, String groupName, int invitationId) {
         Intent myClassIntent = new Intent(getApplicationContext(), ShowInviteActivity.class);
         String firstLine = "Uzytkownik "+nickname+" zaprosil Cie do grupy: ";
         myClassIntent.putExtra(ShowInviteActivity.NICKNAME,nickname );
         myClassIntent.putExtra(ShowInviteActivity.GROUP_NAME,groupName);
+        myClassIntent.putExtra("invitationId", invitationId);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
                 myClassIntent,  PendingIntent.FLAG_UPDATE_CURRENT);

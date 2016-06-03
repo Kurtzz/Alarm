@@ -60,6 +60,14 @@ public class GcmSendService extends Service {
         new InvitationGcmAsync().execute(nick);
     }
 
+    public void acceptInvitation(int invitationId) {
+        new GcmInviteResponse().execute("accept", String.valueOf(invitationId));
+    }
+
+    public void declineInvitation(int invitationId) {
+        new GcmInviteResponse().execute("decline", String.valueOf(invitationId));
+    }
+
     class SendGcmMessageAsync extends AsyncTask<String, Void, Void> {
 
         @Override
@@ -120,6 +128,25 @@ public class GcmSendService extends Service {
             } catch (IOException e) {
                 Log.w(TAG, "Cannot execute REST call", e);
             }
+            return null;
+        }
+    }
+
+    class GcmInviteResponse extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            String result = strings[0];
+            Log.i(TAG, "Sending invitation response: " + result);
+            RestCommunication rest = new RestCommunication("http://jdabrowa.pl:8090/alaram/invitation/" + result);
+            Map<String, String> messageBody = new HashMap<>();
+            messageBody.put("INVITATION_ID", strings[1]);
+            try {
+                rest.execute(messageBody, "PUT");
+            } catch (IOException e) {
+                Log.w("Communication error", e);
+            }
+
             return null;
         }
     }

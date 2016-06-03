@@ -1,13 +1,18 @@
 package pl.edu.agh.io.alarm.notifications;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import pl.edu.agh.io.alarm.R;
+import pl.edu.agh.io.alarm.gcm.Constants;
+import pl.edu.agh.io.alarm.middleware.Middleware;
 
 public class ShowInviteActivity extends Activity {
     public static final String GROUP_NAME = "groupName";
@@ -16,10 +21,13 @@ public class ShowInviteActivity extends Activity {
 
     private String groupName;
     private String nickname;
+    private String senderUid;
     private TextView nicknameTextView;
     private TextView textTextView;
     private Button btnYes;
     private Button btnNo;
+
+    private Middleware middleware;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +43,7 @@ public class ShowInviteActivity extends Activity {
                 Intent intent = new Intent();
                 intent.putExtra(NICKNAME,nickname);
                 intent.putExtra(GROUP_NAME,groupName);
+                intent.putExtra(Constants.SENDER_UID, senderUid);
                 intent.putExtra(ANSWER,true);
                 sendBroadcast(intent);
                 finish();
@@ -47,6 +56,7 @@ public class ShowInviteActivity extends Activity {
                 intent.putExtra(NICKNAME,nickname);
                 intent.putExtra(GROUP_NAME,groupName);
                 intent.putExtra(ANSWER,false);
+                intent.putExtra(Constants.SENDER_UID, senderUid);
                 sendBroadcast(intent);
                 finish();
             }
@@ -57,13 +67,25 @@ public class ShowInviteActivity extends Activity {
         if(bundle != null) {
             groupName = bundle.getString(GROUP_NAME);
             nickname = bundle.getString(NICKNAME);
-
+            int invitationId = bundle.getInt("invitationId");
             nicknameTextView = (TextView) findViewById(R.id.NOTIFICATION_nickname);
-            nicknameTextView.setText("Uzytkownik "+nickname+" zaprosil Cie do grupy: ");
+            nicknameTextView.setText("Uzytkownik "+nickname+" zaprosil Cie do grupy: "); // TODO: String from resources
 
             textTextView = (TextView) findViewById(R.id.NOTIFICATION_text);
             textTextView.setText(groupName);
 
+        }
+    }
+
+    private ServiceConnection middlewareConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            ShowInviteActivity.this.middleware = ((Middleware.LocalBinder)iBinder).getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            ShowInviteActivity.this.middleware = null;
         }
     }
 }
